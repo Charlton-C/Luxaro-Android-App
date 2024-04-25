@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "330026649071",
+    "project_id": "luxaro-6ccd8",
+    "storage_bucket": "luxaro-6ccd8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330026649071:android:ef4f5511ffc86013abe21a",
+        "android_client_info": {
+          "package_name": "com.example.luxaro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6_tZU55i5AtY-cWN4HtmnaMnHOnJ_S-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
