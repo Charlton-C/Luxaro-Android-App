@@ -39,9 +39,9 @@
             android:text="@string/name"
             android:textSize="27sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.092"
+            app:layout_constraintHorizontal_bias="0.109"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signUpTitle" />
+            app:layout_constraintTop_toBottomOf="@id/signUpTitle" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextNameLayout"
@@ -50,75 +50,23 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="30dp"
-            android:backgroundTint="@color/medium_persian_blue"
-            android:textColorHint="@color/white"
-            app:boxCornerRadiusBottomEnd="6dp"
-            app:boxCornerRadiusBottomStart="6dp"
-            app:boxCornerRadiusTopEnd="6dp"
-            app:boxCornerRadiusTopStart="6dp"
+            app:cursorColor="@color/white"
             app:boxStrokeColor="@color/white"
             app:boxStrokeWidth="0dp"
-            app:cursorColor="@color/white"
+            app:boxCornerRadiusTopEnd="6dp"
+            app:boxCornerRadiusBottomEnd="6dp"
+            app:boxCornerRadiusTopStart="6dp"
+            app:boxCornerRadiusBottomStart="6dp"
             app:hintTextColor="@color/white"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/medium_persian_blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.194"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameTextView">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextTextName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="name"
-                android:backgroundTint="@color/medium_persian_blue"
-                android:inputType="text"
-                android:paddingStart="12dp"
-                android:paddingTop="9dp"
-                android:paddingEnd="12dp"
-                android:paddingBottom="9dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="23sp"
-                app:boxStrokeColor="@color/white" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/usernameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/username"
-            android:textSize="27sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.109"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextNameLayout" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextTextUsernameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="30dp"
-            app:cursorColor="@color/white"
-            app:boxStrokeColor="@color/white"
-            app:boxStrokeWidth="0dp"
-            app:boxCornerRadiusTopEnd="6dp"
-            app:boxCornerRadiusBottomEnd="6dp"
-            app:boxCornerRadiusTopStart="6dp"
-            app:boxCornerRadiusBottomStart="6dp"
-            app:hintTextColor="@color/white"
-            android:textColorHint="@color/white"
-            android:backgroundTint="@color/medium_persian_blue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.194"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/usernameTextView">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextTextUsername"
+                android:id="@+id/editTextTextNameInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:autofillHints="username"
@@ -144,7 +92,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextUsernameLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextNameLayout" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextEmailAddressLayout"
@@ -169,7 +117,7 @@
             app:layout_constraintTop_toBottomOf="@+id/emailTextView">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextTextEmailAddress"
+                android:id="@+id/editTextTextEmailAddressInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:autofillHints="emailAddress"
@@ -207,8 +155,6 @@
             app:cursorColor="@color/white"
             app:boxStrokeColor="@color/white"
             app:boxStrokeWidth="0dp"
-            app:endIconMode="password_toggle"
-            app:endIconTint="@color/white"
             app:boxCornerRadiusTopEnd="6dp"
             app:boxCornerRadiusBottomEnd="6dp"
             app:boxCornerRadiusTopStart="6dp"
@@ -216,13 +162,15 @@
             app:hintTextColor="@color/white"
             android:textColorHint="@color/white"
             android:backgroundTint="@color/medium_persian_blue"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordTextView">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/editTextTextPasswordInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:autofillHints="password"
@@ -260,8 +208,6 @@
             app:cursorColor="@color/white"
             app:boxStrokeColor="@color/white"
             app:boxStrokeWidth="0dp"
-            app:endIconMode="password_toggle"
-            app:endIconTint="@color/white"
             app:boxCornerRadiusTopEnd="6dp"
             app:boxCornerRadiusBottomEnd="6dp"
             app:boxCornerRadiusTopStart="6dp"
@@ -269,13 +215,15 @@
             app:hintTextColor="@color/white"
             android:textColorHint="@color/white"
             android:backgroundTint="@color/medium_persian_blue"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.194"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTextView">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextTextConfirmPassword"
+                android:id="@+id/editTextTextConfirmPasswordInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:autofillHints="password"
