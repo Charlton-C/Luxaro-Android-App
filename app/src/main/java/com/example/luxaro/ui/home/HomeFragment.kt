@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.luxaro.databinding.FragmentHomeBinding
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class HomeFragment : Fragment() {
 
@@ -22,6 +24,8 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val firebaseDB = Firebase.firestore
+
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
