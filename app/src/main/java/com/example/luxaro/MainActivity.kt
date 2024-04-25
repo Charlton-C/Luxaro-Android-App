@@ -2,16 +2,18 @@ package com.example.luxaro
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.luxaro.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -37,10 +39,27 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_favorites, R.id.navigation_profile
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.setOnItemSelectedListener { item ->
+            navView.menu.getItem(0).setIcon(R.drawable.home_icon_outline_24)
+            navView.menu.getItem(1).setIcon(R.drawable.baseline_favorite_border_24)
+            navView.menu.getItem(2).setIcon(R.drawable.baseline_person_outline_24)
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    item.icon = AppCompatResources.getDrawable(this@MainActivity, R.drawable.home_icon_filled_24)
+                }
+                R.id.navigation_favorites -> {
+                    item.icon = AppCompatResources.getDrawable(this@MainActivity, R.drawable.baseline_favorite_24)
+                }
+                R.id.navigation_profile -> {
+                    item.icon = AppCompatResources.getDrawable(this@MainActivity, R.drawable.baseline_person_24)
+                }
+            }
+            false
+        }
     }
 }
