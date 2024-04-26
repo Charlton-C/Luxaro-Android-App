@@ -1,6 +1,7 @@
 package com.example.luxaro
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -44,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.ateneo_blue)))
+
         navView.setOnItemSelectedListener { item ->
             navView.menu.getItem(0).setIcon(R.drawable.home_icon_outline_24)
             navView.menu.getItem(1).setIcon(R.drawable.baseline_favorite_border_24)
