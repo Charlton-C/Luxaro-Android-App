@@ -3,6 +3,7 @@
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
     <string name="dark_mode">Dark mode</string>
+    <string name="light_mode_not_added_yet">Light mode not added yet</string>
     <string name="log_in">Log In</string>
     <string name="sign_up">Sign Up</string>
     <string name="name">Name</string>

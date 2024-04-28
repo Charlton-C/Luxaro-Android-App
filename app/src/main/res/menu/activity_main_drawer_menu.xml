@@ -4,7 +4,7 @@
     tools:showIn="navigation_view">
 
     <item
-        android:id="@+id/navigation_dark_mode"
+        android:id="@+id/navigation_drawer_dark_mode"
         android:icon="@drawable/light_or_dark_mode_icon_filled"
         android:checkable="true"
         android:contentDescription="@string/dark_mode"
