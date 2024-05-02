@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -40,10 +41,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val drawerLayout: DrawerLayout = binding.activityMainNavigationDrawer
-        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
-
+        val lightdarkModeDrawerButton = binding.activityMainNavigationView.menu.findItem(R.id.navigation_drawer_light_dark_mode)
+        actionBarDrawerToggle = ActionBarDrawerToggle(this@MainActivity, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+        lightdarkModeDrawerButton.setOnMenuItemClickListener {
+            Toast.makeText(this@MainActivity, R.string.light_mode_not_added_yet, Toast.LENGTH_SHORT).show()
+            true
+        }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.ateneo_blue)))
 
@@ -60,6 +66,11 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // Apply dark mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        delegate.applyDayNight()
+        lightdarkModeDrawerButton.setChecked(true)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -69,9 +80,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            true
-        } else if(item.itemId == R.id.navigation_drawer_dark_mode){
-            Toast.makeText(this@MainActivity, R.string.light_mode_not_added_yet, Toast.LENGTH_LONG).show()
+            // Change the navigation bar color for android phone to match the drawer background color
+            if (window.navigationBarColor == resources.getColor(R.color.ocean_boat_blue_1)){
+                window.navigationBarColor = resources.getColor(R.color.medium_persian_blue_2)
+            }
+            else{
+                window.navigationBarColor = resources.getColor(R.color.ocean_boat_blue_1)
+            }
             true
         } else {
             super.onOptionsItemSelected(item)
