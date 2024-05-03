@@ -178,7 +178,9 @@ fun DisplayProperties(properties: List<PropertyModelPackage>, modifier: Modifier
                     .fillMaxWidth()
                     .align(Alignment.Center),
                 )
-                {}
+                {
+                    DisplaySpecificPropertyContactCard(property = specificPropertyToDisplay)
+                }
             }
         }
     }
@@ -399,6 +401,153 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
             )
         }
         Spacer(modifier = modifier.height(32.dp))
+    }
+}
+
+@Composable
+fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier: Modifier = Modifier){
+    val localContext = LocalContext.current
+    val inquiryOnText = stringResource(id = R.string.inquiry_on)
+    Card(modifier = modifier
+            .padding(bottom = 62.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.ocean_boat_blue_2),
+            contentColor = Color.White
+        )) {
+        Spacer(modifier = modifier.height(45.dp))
+        Column(modifier = modifier.align(Alignment.CenterHorizontally)) {
+            Button(
+                onClick = {
+                    localContext.startActivity(
+                        Intent(
+                            Intent.ACTION_DIAL,
+                            Uri.parse("tel:" + property.phonenumber)
+                        )
+                    )
+                },
+                contentPadding = PaddingValues(0.dp),
+                shape = RoundedCornerShape(6.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                modifier = modifier
+                    .padding(25.dp, 0.dp)
+                    .height(42.dp)
+                    .fillMaxWidth(),
+            ) {
+                Text(
+                    text = stringResource(id = R.string.call_us),
+                    modifier = modifier
+                        .background(
+                            color = colorResource(id = R.color.vivid_cerulean),
+                            shape = RoundedCornerShape(6.dp)
+                        )
+                        .fillMaxWidth()
+                        .padding(top = 6.dp)
+                        .align(Alignment.CenterVertically)
+                        .height(42.dp),
+                    fontSize = 21.sp,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            Spacer(modifier = modifier.height(35.dp))
+            Button(
+                onClick = {
+                    val intent = Intent(Intent.ACTION_SENDTO)
+                        .setData(Uri.parse("mailto:"))
+                        .putExtra(Intent.EXTRA_EMAIL, arrayOf(property.emailaddress))
+                        .putExtra(Intent.EXTRA_SUBJECT, inquiryOnText + " " + property.title)
+                        .putExtra(Intent.EXTRA_TEXT, inquiryOnText + " " + property.title)
+                    localContext.startActivity(Intent.createChooser(intent, "Choose an Email client: "))
+                },
+                contentPadding = PaddingValues(0.dp),
+                shape = RoundedCornerShape(6.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                modifier = modifier
+                    .padding(25.dp, 0.dp)
+                    .height(42.dp)
+                    .fillMaxWidth(),
+            ) {
+                Text(
+                    text = stringResource(id = R.string.email_us),
+                    modifier = modifier
+                        .background(
+                            color = colorResource(id = R.color.vivid_cerulean),
+                            shape = RoundedCornerShape(6.dp)
+                        )
+                        .fillMaxWidth()
+                        .padding(top = 6.dp)
+                        .align(Alignment.CenterVertically)
+                        .height(42.dp),
+                    fontSize = 21.sp,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            Spacer(modifier = modifier.height(35.dp))
+            Button(
+                onClick = {
+                    localContext.startActivity(
+                        Intent(
+                            Intent.ACTION_SENDTO,
+                            Uri.parse("smsto:" + property.phonenumber)
+                        ).putExtra("sms_body", inquiryOnText + " " + property.title)
+                    )
+                },
+                contentPadding = PaddingValues(0.dp),
+                shape = RoundedCornerShape(6.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                modifier = modifier
+                    .padding(25.dp, 0.dp)
+                    .height(42.dp)
+                    .fillMaxWidth(),
+            ) {
+                Text(
+                    text = stringResource(id = R.string.text_us),
+                    modifier = modifier
+                        .background(
+                            color = colorResource(id = R.color.vivid_cerulean),
+                            shape = RoundedCornerShape(6.dp)
+                        )
+                        .fillMaxWidth()
+                        .padding(top = 6.dp)
+                        .align(Alignment.CenterVertically)
+                        .height(42.dp),
+                    fontSize = 21.sp,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            Spacer(modifier = modifier.height(35.dp))
+            Button(
+                onClick = {
+                    localContext.startActivity(Intent(
+                        Intent.ACTION_VIEW, Uri.parse(
+                            String.format("https://api.whatsapp.com/send?phone=%s&text=%s",
+                                property.phonenumber, inquiryOnText + " " + property.title)
+                        )))
+                },
+                contentPadding = PaddingValues(0.dp),
+                shape = RoundedCornerShape(6.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                modifier = modifier
+                    .padding(25.dp, 0.dp)
+                    .height(42.dp)
+                    .fillMaxWidth(),
+            ) {
+                Text(
+                    text = stringResource(id = R.string.whatsapp),
+                    modifier = modifier
+                        .background(
+                            color = colorResource(id = R.color.malachite),
+                            shape = RoundedCornerShape(6.dp)
+                        )
+                        .fillMaxWidth()
+                        .padding(top = 6.dp)
+                        .align(Alignment.CenterVertically)
+                        .height(42.dp),
+                    fontSize = 21.sp,
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+        Spacer(modifier = modifier.height(45.dp))
     }
 }
 
