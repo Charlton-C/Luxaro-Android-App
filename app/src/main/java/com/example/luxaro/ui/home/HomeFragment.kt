@@ -1,5 +1,7 @@
 package com.example.luxaro.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +50,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -59,6 +62,7 @@ import com.example.luxaro.likeProperty
 import com.example.luxaro.model.PropertyModelPackage
 import com.example.luxaro.propertiesAvailable
 import com.example.luxaro.unlikeProperty
+import java.util.Locale
 
 
 class HomeFragment : Fragment() {
@@ -134,7 +138,16 @@ fun DisplayProperties(properties: List<PropertyModelPackage>, modifier: Modifier
                     .fillMaxWidth()
                     .align(Alignment.Center),
                 )
-                {}
+                {
+                    DisplaySpecificPropertyDetailsCard(
+                        property = specificPropertyToDisplay,
+                        onCardClickAction = {
+                            displayMoreInfo = false
+                        },
+                        onContactUsClickAction = {
+                            displayContactUs = true
+                        })
+                }
             }
         }
         AnimatedVisibility(
@@ -262,6 +275,130 @@ fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> 
             }
         }
         Spacer(modifier = modifier.height(20.dp))
+    }
+}
+
+@Composable
+fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardClickAction: () -> Unit, onContactUsClickAction: () -> Unit, modifier: Modifier = Modifier){
+    var likedText by remember { mutableStateOf("") }
+    var favoriteIcon by remember { mutableIntStateOf(0) }
+    likedText = if(property.liked.value){
+        stringResource(id = R.string.unlike)
+    }
+    else{
+        stringResource(id = R.string.like)
+    }
+    favoriteIcon = if(property.liked.value){
+        R.drawable.baseline_favorite_24
+    }
+    else{
+        R.drawable.baseline_favorite_border_24
+    }
+    Card(
+        modifier = modifier
+            .padding(bottom = 62.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.medium_persian_blue_1),
+            contentColor = Color.White
+        )
+    ) {
+        Box {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(property.image)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = property.title + " - " + property.shortdescription,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(195.dp),
+                contentScale = ContentScale.Crop
+            )
+            IconButton(
+                modifier = modifier
+                    .align(Alignment.TopEnd),
+                onClick = { onCardClickAction() },
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.baseline_close_24),
+                    contentDescription = stringResource(id = R.string.close),
+                    modifier = modifier
+                        .size(36.dp),
+                )
+            }
+        }
+        Spacer(modifier = modifier.height(9.dp))
+        Row(
+            modifier = modifier
+                .padding(20.dp, 0.dp)
+                .fillMaxWidth(),
+        ) {
+            Text(
+                text = property.title,
+                modifier = modifier
+                    .width(295.dp),
+                fontSize = 24.sp,
+            )
+            IconButton(
+                modifier = modifier
+                    .padding(0.dp)
+                    .align(Alignment.CenterVertically),
+                onClick = {
+                    property.liked.value = !property.liked.value
+                    if(property.liked.value){
+                        likeProperty(property = property)
+                    }
+                    else{
+                        unlikeProperty(property = property)
+                    }
+                },
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = favoriteIcon),
+                    contentDescription = likedText,
+                    modifier = modifier
+                        .size(45.dp)
+                        .padding(0.dp),
+                )
+            }
+        }
+        Spacer(modifier = modifier.height(6.dp))
+        Text(
+            text = property.shortdescription,
+            modifier = modifier
+                .padding(20.dp, 0.dp),
+            fontSize = 20.sp,
+        )
+        Spacer(modifier = modifier.height(10.dp))
+        Text(
+            text = property.longdescription.format(),
+            modifier = modifier
+                .padding(20.dp, 0.dp),
+            fontSize = 20.sp,
+        )
+        Spacer(modifier = modifier.height(15.dp))
+        Text(
+            text = property.currencysymbol+String.format(Locale.getDefault(), "%,.2f", property.price.toFloat()),
+            modifier = modifier
+                .align(alignment = Alignment.CenterHorizontally)
+                .padding(20.dp, 0.dp),
+            fontSize = 22.sp,
+        )
+        Spacer(modifier = modifier.height(20.dp))
+        Button(
+            onClick = { onContactUsClickAction() },
+            modifier = modifier
+                .align(alignment = Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.persian_green))
+        ) {
+            Text(
+                text = "Contact Us",
+                modifier = modifier
+                    .background(Color.Transparent),
+                fontSize = 21.sp,
+            )
+        }
+        Spacer(modifier = modifier.height(32.dp))
     }
 }
 
