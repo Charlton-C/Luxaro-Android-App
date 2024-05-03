@@ -105,7 +105,9 @@ class MainActivity : AppCompatActivity() {
 
 
 var propertiesAvailable = mutableStateListOf<PropertyModelPackage>()
+var propertiesLikedByUser = mutableStateListOf<PropertyModelPackage>()
 var runFunGetPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable = getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable()
+var runFunGetPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable = getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable()
 
 fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() {
     val firebaseDB = Firebase.firestore
@@ -121,4 +123,33 @@ fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() 
         .addOnFailureListener { exception ->
             Log.e("Firestone", "Error getting properties.", exception)
         }
+}
+
+fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
+    val likedPropertiesIds = mutableStateListOf<String>()
+    val firebaseRealtimeDatabase = FirebaseDatabase.getInstance()
+    val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.getReference(FirebaseAuth.getInstance().currentUser?.uid.toString())
+    firebaseRealtimeDatabaseReference.addValueEventListener(object :ValueEventListener{
+        override fun onDataChange(snapshot: DataSnapshot) {
+            snapshot.children.forEach {
+                if(it.getValue(String::class.java) == "true"){
+                    likedPropertiesIds.add(it.key.toString())
+                }
+            }
+            for (id in likedPropertiesIds){
+                propertiesLikedByUser.add(propertiesAvailable.find{ property -> id == property.id }!!)
+            }
+            for (propertyOriginal in propertiesAvailable){
+                for (property in propertiesLikedByUser){
+                    if (property.id == propertyOriginal.id) {
+                        propertyOriginal.liked.value = true
+                    }
+                }
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            Log.e("Firebase Realtime DB Error", error.toString())
+        }
+    })
 }
