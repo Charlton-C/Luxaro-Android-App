@@ -16,4 +16,13 @@
     <string name="title_home">Home</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_profile">Profile</string>
+    <string name="like">like</string>
+    <string name="unlike">unlike</string>
+    <string name="no_properties_to_display">No properties to show</string>
+    <string name="try_checking_again_later">Try checking again later</string>
+    <string name="inquiry_on">Inquiry on</string>
+    <string name="call_us">Call Us</string>
+    <string name="email_us">Email Us</string>
+    <string name="text_us">Text Us</string>
+    <string name="whatsapp">WhatsApp</string>
 </resources>
