@@ -3,11 +3,14 @@ package com.example.luxaro
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.mutableStateListOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,10 +18,16 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.luxaro.databinding.ActivityMainBinding
+import com.example.luxaro.model.PropertyModelPackage
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.firestore
 
 
 class MainActivity : AppCompatActivity() {
@@ -92,4 +101,24 @@ class MainActivity : AppCompatActivity() {
             super.onOptionsItemSelected(item)
         }
     }
+}
+
+
+var propertiesAvailable = mutableStateListOf<PropertyModelPackage>()
+var runFunGetPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable = getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable()
+
+fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() {
+    val firebaseDB = Firebase.firestore
+    firebaseDB.collection("properties").get()
+        .addOnSuccessListener { properties ->
+            for (property in properties) {
+                val singleProperty = property.toObject(PropertyModelPackage::class.java)
+                singleProperty.id = property.id
+                propertiesAvailable.add(singleProperty)
+                Log.e("something", singleProperty.title)
+            }
+        }
+        .addOnFailureListener { exception ->
+            Log.e("Firestone", "Error getting properties.", exception)
+        }
 }
