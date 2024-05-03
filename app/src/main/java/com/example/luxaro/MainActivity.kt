@@ -153,3 +153,19 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
         }
     })
 }
+
+fun likeProperty(property: PropertyModelPackage){
+    val propertyID: String = property.id.replace('/', '_').replace('.', '_').replace('#', '_').replace('$', '_').replace('[', '_').replace(']', '_')
+    val firebaseRealtimeDatabase = FirebaseDatabase.getInstance()
+    val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
+    firebaseRealtimeDatabaseReference.setValue("true")
+    propertiesLikedByUser.add(property)
+}
+
+fun unlikeProperty(property: PropertyModelPackage){
+    val propertyID: String = property.id.replace('/', '_').replace('.', '_').replace('#', '_').replace('$', '_').replace('[', '_').replace(']', '_')
+    val firebaseRealtimeDatabase = FirebaseDatabase.getInstance()
+    val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
+    firebaseRealtimeDatabaseReference.setValue("false")
+    propertiesLikedByUser.remove(property)
+}
