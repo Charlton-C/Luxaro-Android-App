@@ -117,7 +117,6 @@ fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() 
                 val singleProperty = property.toObject(PropertyModelPackage::class.java)
                 singleProperty.id = property.id
                 propertiesAvailable.add(singleProperty)
-                Log.e("something", singleProperty.title)
             }
         }
         .addOnFailureListener { exception ->
@@ -129,7 +128,7 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
     val likedPropertiesIds = mutableStateListOf<String>()
     val firebaseRealtimeDatabase = FirebaseDatabase.getInstance()
     val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.getReference(FirebaseAuth.getInstance().currentUser?.uid.toString())
-    firebaseRealtimeDatabaseReference.addValueEventListener(object :ValueEventListener{
+    firebaseRealtimeDatabaseReference.addListenerForSingleValueEvent(object :ValueEventListener{
         override fun onDataChange(snapshot: DataSnapshot) {
             snapshot.children.forEach {
                 if(it.getValue(String::class.java) == "true"){
