@@ -116,6 +116,9 @@ fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() 
             for (property in properties) {
                 val singleProperty = property.toObject(PropertyModelPackage::class.java)
                 singleProperty.id = property.id
+                singleProperty.title = singleProperty.title.replace("\\t", "\t").replace("\\b", "\b").replace("\\n", "\n").replace("\\r", "\r")
+                singleProperty.shortdescription = singleProperty.shortdescription.replace("\\t", "\t").replace("\\b", "\b").replace("\\n", "\n").replace("\\r", "\r")
+                singleProperty.longdescription = singleProperty.longdescription.replace("\\t", "\t").replace("\\b", "\b").replace("\\n", "\n").replace("\\r", "\r")
                 propertiesAvailable.add(singleProperty)
             }
         }
