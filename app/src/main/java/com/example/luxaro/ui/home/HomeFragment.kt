@@ -278,19 +278,15 @@ fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> 
 
 @Composable
 fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardClickAction: () -> Unit, onContactUsClickAction: () -> Unit, modifier: Modifier = Modifier){
-    var likedText by remember { mutableStateOf("") }
-    var favoriteIcon by remember { mutableIntStateOf(0) }
-    likedText = if(property.liked.value){
-        stringResource(id = R.string.unlike)
+    val likedText = remember { mutableStateOf(R.string.like) }
+    val favoriteIcon = remember { mutableStateOf(R.drawable.baseline_favorite_border_24) }
+    if(property.liked.value){
+        likedText.value = R.string.unlike
+        favoriteIcon.value = R.drawable.baseline_favorite_24
     }
     else{
-        stringResource(id = R.string.like)
-    }
-    favoriteIcon = if(property.liked.value){
-        R.drawable.baseline_favorite_24
-    }
-    else{
-        R.drawable.baseline_favorite_border_24
+        likedText.value = R.string.like
+        favoriteIcon.value = R.drawable.baseline_favorite_border_24
     }
     Card(
         modifier = modifier
@@ -352,8 +348,8 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
                 },
             ) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(id = favoriteIcon),
-                    contentDescription = likedText,
+                    imageVector = ImageVector.vectorResource(id = favoriteIcon.value),
+                    contentDescription = stringResource(likedText.value),
                     modifier = modifier
                         .size(45.dp)
                         .padding(0.dp),
@@ -369,7 +365,7 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
         )
         Spacer(modifier = modifier.height(10.dp))
         Text(
-            text = property.longdescription.format(),
+            text = property.longdescription,
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 20.sp,
