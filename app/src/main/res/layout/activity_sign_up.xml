@@ -216,6 +216,7 @@
             android:id="@+id/signUpButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
             android:backgroundTint="@color/blue_cola"
             android:text="@string/sign_up"
