@@ -24,48 +24,51 @@
              android:text="@string/log_in"
              android:textSize="28sp" />
 
-        <TextView
-            android:id="@+id/emailTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="@string/email"
-            android:textSize="27sp" />
+         <TextView
+             android:id="@+id/emailTextView"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="20dp"
+             android:layout_marginStart="30dp"
+             android:layout_marginEnd="30dp"
+             android:text="@string/email"
+             android:textSize="20sp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextTextEmailAddressLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@color/medium_persian_blue_1"
-            android:textColorHint="@color/white"
-            app:boxCornerRadiusBottomEnd="6dp"
-            app:boxCornerRadiusBottomStart="6dp"
-            app:boxCornerRadiusTopEnd="6dp"
-            app:boxCornerRadiusTopStart="6dp"
-            app:boxStrokeColor="@color/white"
-            app:boxStrokeWidth="0dp"
-            app:cursorColor="@color/white"
-            app:hintTextColor="@color/white">
+         <com.google.android.material.textfield.TextInputLayout
+             android:id="@+id/editTextTextEmailAddressLayout"
+             android:layout_width="match_parent"
+             android:layout_height="40dp"
+             android:layout_gravity="center_horizontal"
+             android:layout_marginTop="12dp"
+             android:layout_marginStart="30dp"
+             android:layout_marginEnd="30dp"
+             android:backgroundTint="@color/medium_persian_blue_1"
+             android:textColorHint="@color/white"
+             app:boxCornerRadiusBottomEnd="6dp"
+             app:boxCornerRadiusBottomStart="6dp"
+             app:boxCornerRadiusTopEnd="6dp"
+             app:boxCornerRadiusTopStart="6dp"
+             app:boxStrokeColor="@color/white"
+             app:boxStrokeWidth="0dp"
+             app:cursorColor="@color/white"
+             app:hintTextColor="@color/white">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextTextEmailAddressInput"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="emailAddress"
-                android:backgroundTint="@color/medium_persian_blue_1"
-                android:inputType="textEmailAddress"
-                android:paddingStart="12dp"
-                android:paddingTop="9dp"
-                android:paddingEnd="12dp"
-                android:paddingBottom="9dp"
-                android:textColor="@color/white"
-                android:textSize="23sp"
-                app:boxStrokeColor="@color/white" />
+             <com.google.android.material.textfield.TextInputEditText
+                 android:id="@+id/editTextTextEmailAddressInput"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:layout_gravity="center_horizontal"
+                 android:autofillHints="emailAddress"
+                 android:backgroundTint="@color/medium_persian_blue_1"
+                 android:inputType="textEmailAddress"
+                 android:paddingStart="12dp"
+                 android:paddingTop="9dp"
+                 android:paddingEnd="12dp"
+                 android:paddingBottom="9dp"
+                 android:textColor="@color/white"
+                 app:boxStrokeColor="@color/white" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/passwordTextView"
