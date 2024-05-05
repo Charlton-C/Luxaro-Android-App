@@ -121,13 +121,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:text="@string/password"
             android:textSize="20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextPasswordLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="30dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="30dp"
@@ -148,13 +151,14 @@
                 android:id="@+id/editTextTextPasswordInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
                 android:autofillHints="password"
                 android:backgroundTint="@color/medium_persian_blue_1"
                 android:inputType="textPassword"
                 android:paddingStart="12dp"
-                android:paddingTop="5dp"
+                android:paddingTop="9dp"
                 android:paddingEnd="12dp"
-                android:paddingBottom="5dp"
+                android:paddingBottom="9dp"
                 android:textColor="@color/white"
                 app:boxStrokeColor="@color/white" />
 
