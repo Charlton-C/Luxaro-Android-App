@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Luxaro</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="light_mode_not_added_yet">Light mode not added yet</string>
     <string name="log_in">Log In</string>
     <string name="sign_up">Sign Up</string>
     <string name="name">Name</string>
@@ -10,6 +14,16 @@
     <string name="dont_have_an_account">Don\'t have an account?</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_profile">Profile</string>
+    <string name="like">like</string>
+    <string name="unlike">unlike</string>
+    <string name="no_properties_to_display">No properties to show</string>
+    <string name="try_checking_again_later">Try checking again later</string>
+    <string name="try_liking_one">Try liking one</string>
+    <string name="inquiry_on">Inquiry on</string>
+    <string name="call_us">Call Us</string>
+    <string name="email_us">Email Us</string>
+    <string name="text_us">Text Us</string>
+    <string name="whatsapp">WhatsApp</string>
 </resources>
