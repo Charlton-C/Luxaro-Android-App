@@ -16,15 +16,11 @@
         android:paddingBottom="80dp"
         android:orientation="vertical">
 
-        <Space
-            android:id="@+id/spaceTop"
-            android:layout_width="match_parent"
-            android:layout_height="60dp" />
-
         <TextView
             android:id="@+id/signUpTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:text="@string/sign_up"
             android:textSize="28sp" />
 
