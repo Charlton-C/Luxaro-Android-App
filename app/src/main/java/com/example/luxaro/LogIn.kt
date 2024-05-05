@@ -36,6 +36,8 @@ class LogIn : AppCompatActivity() {
                         Toast.makeText(this@LogIn, "Log In Failed", Toast.LENGTH_LONG).show()
                         Log.e("Error: ", it.exception.toString())
                     }
+                }.addOnFailureListener{exception ->
+                    Log.e("Firebase auth", "Error logging in", exception)
                 }
             }
         }
