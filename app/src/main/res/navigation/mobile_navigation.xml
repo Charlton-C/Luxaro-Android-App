@@ -13,8 +13,7 @@
     <fragment
         android:id="@+id/navigation_favorites"
         android:name="com.example.luxaro.ui.favorites.FavoritesFragment"
-        android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        android:label="@string/title_favorites" />
 
     <fragment
         android:id="@+id/navigation_profile"
