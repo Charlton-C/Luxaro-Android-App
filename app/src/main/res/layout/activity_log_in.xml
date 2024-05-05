@@ -118,14 +118,15 @@
 
          </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/logInButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:backgroundTint="@color/blue_cola"
-            android:text="@string/log_in"
-            android:textSize="19sp" />
+         <Button
+             android:id="@+id/logInButton"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_horizontal"
+             android:layout_marginTop="60dp"
+             android:backgroundTint="@color/blue_cola"
+             android:text="@string/log_in"
+             android:textSize="15sp" />
 
 
         <TextView
