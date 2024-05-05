@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="35dp"
             android:layout_marginEnd="30dp"
             android:text="@string/email"
             android:textSize="20sp" />
@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="70dp"
             android:backgroundTint="@color/blue_cola"
             android:text="@string/log_in"
             android:textSize="15sp" />
@@ -132,7 +132,7 @@
             android:id="@+id/footer_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="110dp"
             android:gravity="center_horizontal">
 
             <TextView
