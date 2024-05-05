@@ -43,10 +43,10 @@ class SignUp : AppCompatActivity() {
                         finish()
                     } else {
                         if (it.exception is FirebaseAuthUserCollisionException) {
-                            Toast.makeText(this@SignUp, "A user with this email already exists", Toast.LENGTH_LONG).show()
+                            binding.editTextTextEmailAddressLayout.error = "A user with this email already exists"
                         }
                         else{
-                            Toast.makeText(this@SignUp, "Sign Up Failed", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@SignUp, "Sign Up Failed\nTry again later", Toast.LENGTH_LONG).show()
                             Log.e("Firebase Auth Error", it.exception.toString())
                         }
                     }
