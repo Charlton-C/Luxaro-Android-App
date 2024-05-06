@@ -225,7 +225,7 @@ fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> 
                 .fillMaxHeight(),
         ) {
             Column(modifier = modifier
-                .width(285.dp)
+                .fillMaxWidth(.85f)
                 .fillMaxHeight()
             ) {
                 Text(
@@ -330,12 +330,12 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
             Text(
                 text = property.title,
                 modifier = modifier
-                    .width(295.dp),
+                    .fillMaxWidth(.83f),
                 fontSize = 24.sp,
             )
             IconButton(
                 modifier = modifier
-                    .padding(0.dp)
+                    .padding(start = 3.dp)
                     .align(Alignment.CenterVertically),
                 onClick = {
                     property.liked.value = !property.liked.value
