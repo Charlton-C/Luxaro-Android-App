@@ -35,7 +35,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -386,7 +385,7 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.persian_green))
         ) {
             Text(
-                text = "Contact Us",
+                text = stringResource(id = R.string.contact_us),
                 modifier = modifier
                     .background(Color.Transparent),
                 fontSize = 21.sp,
