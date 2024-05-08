@@ -11,6 +11,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
         lightdarkModeDrawerButton.setOnMenuItemClickListener {
-            Toast.makeText(this@MainActivity, R.string.light_mode_not_added_yet, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity, R.string.light_mode_coming_soon, Toast.LENGTH_SHORT).show()
             true
         }
 
