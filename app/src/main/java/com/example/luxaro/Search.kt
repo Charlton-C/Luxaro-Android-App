@@ -68,6 +68,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.luxaro.model.PropertyModelPackage
 import com.example.luxaro.ui.home.DisplaySpecificPropertyContactCard
 import com.example.luxaro.ui.home.DisplaySpecificPropertyDetailsCard
@@ -353,17 +355,20 @@ fun CreateSearchResultCard(property: PropertyModelPackage, onCardClickAction: ()
     Card(
         onClick = { onCardClickAction() },
         modifier = modifier
-            .padding(6.dp, 7.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(6.dp, 7.dp),
         colors = CardDefaults.cardColors(
             containerColor = colorResource(id = R.color.medium_persian_blue_2),
             contentColor = Color.White
         )
     ) {
         Row {
-            Image(
-                painter = painterResource(id = R.drawable.andre_benz_cxu6tnxhub0_unsplash),
-                contentDescription = null,
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(property.image)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = property.title + " - " + property.shortdescription,
                 modifier = modifier
                     .width(100.dp)
                     .height(70.dp),
