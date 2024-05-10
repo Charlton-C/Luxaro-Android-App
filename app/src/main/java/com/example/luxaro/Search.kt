@@ -103,6 +103,30 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
     val searchResults = remember { mutableStateOf(listOf<PropertyModelPackage>()) }
     val focusRequester = remember { FocusRequester() }
     val interactionSource = remember { MutableInteractionSource() }
+
+    Box {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(start = 12.dp, top = 20.dp, end = 12.dp, bottom = 0.dp),
+        ) {
+            IconButton(
+                modifier = modifier
+                    .align(Alignment.End)
+                    .padding(start = 0.dp, top = 0.dp, end = 5.dp, bottom = 12.dp),
+                onClick = { localContext?.finish() },
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.baseline_close_24),
+                    contentDescription = stringResource(id = R.string.close_search),
+                    modifier = modifier
+                        .size(38.dp)
+                        .padding(0.dp),
+                )
+            }
+        }
+    }
 }
 
 fun search(searchString: String, propertiesToSearch: List<PropertyModelPackage>, modifier: Modifier = Modifier): SnapshotStateList<PropertyModelPackage> {
