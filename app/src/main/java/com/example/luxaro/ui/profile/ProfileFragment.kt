@@ -130,6 +130,8 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 editButton = true,
                 readOnly = readOnlyName,
                 isError = newNameError,
+                editContentDescription = R.string.edit_name,
+                clearContentDescription = R.string.clear_name,
                 onDoneClickAction = {
                     if (!readOnlyName) {
                         val checkNewNameResult = checkNewName(name.value.toString(), newName.value)
@@ -200,6 +202,8 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 editButton = false,
                 readOnly = true,
                 isError = false,
+                editContentDescription = R.string.edit_email,
+                clearContentDescription = R.string.clear_email,
                 onDoneClickAction = {})
 
         }
@@ -215,7 +219,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 fontSize = 19.sp,
                 color = Color.White,
             )
-            DisplayTextInputField(input = oldPassword, placeHolderTextID = passwordPlaceHolder, editButton = true, readOnly = readOnlyPassword, isError = oldPasswordError, onDoneClickAction = {
+            DisplayTextInputField(input = oldPassword, placeHolderTextID = passwordPlaceHolder, editButton = true, readOnly = readOnlyPassword, isError = oldPasswordError, editContentDescription = R.string.change_password, clearContentDescription = R.string.clear_old_password, onDoneClickAction = {
                 if (!readOnlyPassword){
                     val checkNewPasswordResult = checkNewPassword(oldPassword.value, newPassword.value, confirmNewPassword.value)
                     when (checkNewPasswordResult){
@@ -329,7 +333,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         fontSize = 19.sp,
                         color = Color.White,
                     )
-                    DisplayTextInputField(input = newPassword, placeHolderTextID = R.string.new_password, editButton = false, readOnly = false, isError = newPasswordError,  onDoneClickAction = {})
+                    DisplayTextInputField(input = newPassword, placeHolderTextID = R.string.new_password, editButton = false, readOnly = false, isError = newPasswordError, editContentDescription = R.string.new_password, clearContentDescription = R.string.clear_new_password, onDoneClickAction = {})
                 }
                 Column(
                     modifier = modifier
@@ -343,7 +347,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         fontSize = 19.sp,
                         color = Color.White,
                     )
-                    DisplayTextInputField(input = confirmNewPassword, placeHolderTextID = R.string.confirm_password, editButton = false, readOnly = false, isError = confirmNewPasswordError, onDoneClickAction = {})
+                    DisplayTextInputField(input = confirmNewPassword, placeHolderTextID = R.string.confirm_password, editButton = false, readOnly = false, isError = confirmNewPasswordError, editContentDescription = R.string.confirm_new_password, clearContentDescription = R.string.clear_confirm_new_password, onDoneClickAction = {})
                 }
             }
         }
@@ -416,7 +420,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, editButton: Boolean, readOnly: Boolean, isError: Boolean, onDoneClickAction: () -> Unit, modifier: Modifier = Modifier){
+fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, editButton: Boolean, readOnly: Boolean, isError: Boolean, editContentDescription: Int, clearContentDescription: Int, onDoneClickAction: () -> Unit, modifier: Modifier = Modifier){
     val interactionSource = remember { MutableInteractionSource() }
     var editOrSaveIcon by remember { mutableStateOf(R.drawable.baseline_edit_square_24) }
     editOrSaveIcon = if(readOnly){ R.drawable.baseline_edit_square_24 } else { R.drawable.baseline_save_24 }
@@ -460,7 +464,7 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                             onClick = { input.value = "" }) {
                             Icon(
                                 imageVector = ImageVector.vectorResource(id = R.drawable.baseline_close_24),
-                                contentDescription = stringResource(id = R.string.clear_name),
+                                contentDescription = stringResource(id = clearContentDescription),
                                 modifier = modifier
                                     .padding(0.dp)
                                     .size(20.dp),
@@ -472,7 +476,7 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                             onClick = { onDoneClickAction() }) {
                             Icon(
                                 imageVector = ImageVector.vectorResource(id = editOrSaveIcon),
-                                contentDescription = stringResource(id = R.string.edit_name),
+                                contentDescription = stringResource(id = editContentDescription),
                                 modifier = modifier
                                     .padding(0.dp)
                                     .size(25.dp),
