@@ -88,6 +88,11 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_nav_menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             // Change the navigation bar color for android phone to match the drawer background color
@@ -97,6 +102,9 @@ class MainActivity : AppCompatActivity() {
             else{
                 window.navigationBarColor = resources.getColor(R.color.ocean_boat_blue_1)
             }
+            true
+        } else if(item.itemId == R.id.navigation_search){
+            startActivity(Intent(this@MainActivity, Search::class.java))
             true
         } else {
             super.onOptionsItemSelected(item)
