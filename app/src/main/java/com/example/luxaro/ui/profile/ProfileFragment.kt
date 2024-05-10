@@ -1,12 +1,16 @@
 package com.example.luxaro.ui.profile
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,6 +26,8 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -50,8 +56,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
+import com.example.luxaro.LogIn
 import com.example.luxaro.R
+import com.example.luxaro.SignUp
 import com.google.firebase.Firebase
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.auth
 import com.google.firebase.auth.userProfileChangeRequest
 
@@ -193,6 +202,150 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 isError = false,
                 onDoneClickAction = {})
 
+        }
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .align(Alignment.Start)
+                .padding(30.dp, 12.dp),
+        ) {
+            Text(
+                text = stringResource(id = passwordTitle),
+                modifier = modifier.padding(0.dp),
+                fontSize = 19.sp,
+                color = Color.White,
+            )
+            DisplayTextInputField(input = oldPassword, placeHolderTextID = passwordPlaceHolder, editButton = true, readOnly = readOnlyPassword, isError = oldPasswordError, onDoneClickAction = {
+                if (!readOnlyPassword){
+                    val checkNewPasswordResult = checkNewPassword(oldPassword.value, newPassword.value, confirmNewPassword.value)
+                    when (checkNewPasswordResult){
+                        "passed" -> {
+                            val credential = EmailAuthProvider.getCredential(email.value.toString(), oldPassword.value)
+                            auth.currentUser!!.reauthenticate(credential)
+                                .addOnSuccessListener {
+                                    auth.currentUser?.updatePassword(newPassword.value)!!
+                                        .addOnSuccessListener {
+                                            Toast.makeText(localContext, "Password Updated!", Toast.LENGTH_SHORT).show()
+                                            oldPasswordError = false
+                                            newPasswordError = false
+                                            confirmNewPasswordError = false
+                                            readOnlyPassword = true
+                                            displayChangePassword = false
+                                            passwordTitle = R.string.password
+                                            passwordPlaceHolder = R.string.password_hidden
+                                            oldPassword.value = ""
+                                        }
+                                        .addOnFailureListener {
+                                            Toast.makeText(localContext, "Failed to update password", Toast.LENGTH_SHORT).show()
+                                            oldPasswordError = false
+                                            newPasswordError = false
+                                            confirmNewPasswordError = false
+                                        }
+                                }.addOnFailureListener {
+                                    Toast.makeText(localContext, "Old password is wrong", Toast.LENGTH_SHORT).show()
+                                    oldPasswordError = true
+                                    oldPassword.value = ""
+                                }
+                        }
+                        "old password and new password match" -> {
+                            val credential = EmailAuthProvider.getCredential(email.value.toString(), oldPassword.value)
+                            auth.currentUser!!.reauthenticate(credential)
+                                .addOnSuccessListener {
+                                    Toast.makeText(localContext, "Password is unchanged", Toast.LENGTH_SHORT).show()
+                                    oldPasswordError = false
+                                    newPasswordError = false
+                                    confirmNewPasswordError = false
+                                    readOnlyPassword = true
+                                    displayChangePassword = false
+                                    passwordTitle = R.string.password
+                                    passwordPlaceHolder = R.string.password_hidden
+                                    oldPassword.value = ""
+                                }.addOnFailureListener {
+                                    oldPasswordError = true
+                                    Toast.makeText(localContext, "Old password is wrong", Toast.LENGTH_SHORT).show()
+                                }
+                        }
+                        "no new password" -> {
+                            Toast.makeText(localContext, "No new password", Toast.LENGTH_SHORT).show()
+                            oldPasswordError = false
+                            newPasswordError = true
+                            confirmNewPasswordError = true
+                            displayDeleteAccount = false
+                        }
+                        "new password is too short" -> {
+                            Toast.makeText(localContext, "New password is too short", Toast.LENGTH_SHORT).show()
+                            oldPasswordError = false
+                            newPasswordError = true
+                            confirmNewPasswordError = true
+                            displayDeleteAccount = false
+                        }
+                        "new password and confirm new password do not match" -> {
+                            Toast.makeText(localContext, "New password and confirm new password do not match", Toast.LENGTH_SHORT).show()
+                            oldPasswordError = false
+                            newPasswordError = false
+                            confirmNewPasswordError = true
+                            displayDeleteAccount = false
+                        }
+                        else -> {
+                            Toast.makeText(localContext, checkNewPasswordResult, Toast.LENGTH_SHORT).show()
+                            oldPasswordError = false
+                            newPasswordError = false
+                            confirmNewPasswordError = false
+                            readOnlyPassword = false
+                            displayChangePassword = true
+                            passwordTitle = R.string.old_password
+                            passwordPlaceHolder = R.string.old_password
+                            displayDeleteAccount = false
+                        }
+                    }
+                }
+                else{
+                    oldPasswordError = false
+                    newPasswordError = false
+                    confirmNewPasswordError = false
+                    readOnlyPassword = false
+                    displayChangePassword = true
+                    passwordTitle = R.string.old_password
+                    passwordPlaceHolder = R.string.old_password
+                    displayDeleteAccount = false
+                }
+            })
+        }
+        AnimatedVisibility(
+            visible = displayChangePassword,
+            enter = expandVertically(),
+            exit = shrinkVertically(),
+        ) {
+            Column {
+                Column(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Start)
+                        .padding(30.dp, 12.dp),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.new_password),
+                        modifier = modifier.padding(0.dp),
+                        fontSize = 19.sp,
+                        color = Color.White,
+                    )
+                    DisplayTextInputField(input = newPassword, placeHolderTextID = R.string.new_password, editButton = false, readOnly = false, isError = newPasswordError,  onDoneClickAction = {})
+                }
+                Column(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Start)
+                        .padding(30.dp, 12.dp),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.confirm_password),
+                        modifier = modifier.padding(0.dp),
+                        fontSize = 19.sp,
+                        color = Color.White,
+                    )
+                    DisplayTextInputField(input = confirmNewPassword, placeHolderTextID = R.string.confirm_password, editButton = false, readOnly = false, isError = confirmNewPasswordError, onDoneClickAction = {})
+                }
+            }
         }
     }
 }
