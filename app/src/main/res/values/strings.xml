@@ -43,4 +43,11 @@
     <string name="email_us">Email Us</string>
     <string name="text_us">Text Us</string>
     <string name="whatsapp">WhatsApp</string>
+    <string name="title_activity_search">Search</string>
+    <string name="close_search">Close search</string>
+    <string name="search_placeholder">Search…</string>
+    <string name="clear_search">Clear search</string>
+    <string name="search_for">Search for</string>
+    <string name="no_properties_found">No properties found</string>
+    <string name="try_searching_for_something_else">Try searching for something else</string>
 </resources>
