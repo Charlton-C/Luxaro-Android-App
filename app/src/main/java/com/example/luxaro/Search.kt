@@ -91,6 +91,7 @@ class Search : AppCompatActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DisplaySearch(modifier: Modifier = Modifier) {
     val localContext = (LocalContext.current as? Activity)
@@ -112,18 +113,121 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                 .padding(start = 12.dp, top = 20.dp, end = 12.dp, bottom = 0.dp),
         ) {
             IconButton(
+                onClick = { localContext?.finish() },
                 modifier = modifier
                     .align(Alignment.End)
                     .padding(start = 0.dp, top = 0.dp, end = 5.dp, bottom = 12.dp),
-                onClick = { localContext?.finish() },
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.baseline_close_24),
                     contentDescription = stringResource(id = R.string.close_search),
                     modifier = modifier
-                        .size(38.dp)
-                        .padding(0.dp),
+                        .padding(0.dp)
+                        .size(38.dp),
                 )
+            }
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(60.dp),
+            ) {
+                BasicTextField(
+                    value = searchText.value,
+                    onValueChange = { searchText.value = it },
+                    modifier = modifier
+                        .fillMaxWidth(0.865f)
+                        .align(Alignment.CenterVertically)
+                        .padding(10.dp)
+                        .focusRequester(focusRequester),
+                    interactionSource = interactionSource,
+                    singleLine = true,
+                    textStyle = LocalTextStyle.current.copy(color = Color.White, fontSize = 18.sp),
+                    cursorBrush = SolidColor(Color.White),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                    visualTransformation = VisualTransformation.None,
+                    keyboardActions = KeyboardActions(onSearch = {
+                        if (!TextUtils.isEmpty(searchText.value.trim()) and (searchText.value != searchTextOld.value)) {
+                            searchResults.value = search(searchText.value.filterNot { it.isWhitespace() }, propertiesAvailable)
+                            // Check if searchResults is empty and if it is display no search results found message
+                            displayNoPropertiesFound = searchResults.value.isEmpty()
+                            searchTextOld.value = searchText.value
+                            focusRequester.freeFocus()
+                        } else if (TextUtils.isEmpty(searchText.value)) {
+                            focusRequester.requestFocus()
+                        }
+                    }),
+                ) { innerTextField ->
+                    TextFieldDefaults.DecorationBox(
+                        value = searchText.value,
+                        visualTransformation = VisualTransformation.None,
+                        innerTextField = innerTextField,
+                        singleLine = true,
+                        enabled = true,
+                        interactionSource = interactionSource,
+                        contentPadding = PaddingValues(
+                            start = 15.dp,
+                            top = 8.dp,
+                            end = 0.dp,
+                            bottom = 8.dp
+                        ),
+                        placeholder = { Text(text = stringResource(id = R.string.search_placeholder)) },
+                        trailingIcon = {
+                            if (!TextUtils.isEmpty(searchText.value)) {
+                                IconButton(onClick = {
+                                    searchText.value = ""
+                                    focusRequester.requestFocus()
+                                }) {
+                                    Icon(
+                                        imageVector = ImageVector.vectorResource(id = R.drawable.baseline_close_24),
+                                        contentDescription = stringResource(id = R.string.clear_search),
+                                        modifier = modifier
+                                            .padding(0.dp)
+                                            .size(20.dp),
+                                    )
+                                }
+                            }
+                        },
+                        shape = RoundedCornerShape(8.dp),
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = colorResource(id = R.color.rich_electric_blue),
+                            unfocusedContainerColor = colorResource(id = R.color.rich_electric_blue),
+                            disabledContainerColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor = Color.Transparent,
+                            focusedPlaceholderColor = Color.White,
+                            unfocusedPlaceholderColor = Color.White,
+                            disabledPlaceholderColor = Color.Transparent,
+                            focusedTrailingIconColor = Color.White,
+                            unfocusedTrailingIconColor = Color.White,
+                            disabledTrailingIconColor = Color.Transparent,
+                        ),
+                    )
+                }
+                IconButton(modifier = modifier.align(Alignment.CenterVertically),
+                    onClick = {
+                        if (!TextUtils.isEmpty(searchText.value.trim()) and (searchText.value != searchTextOld.value)) {
+                            searchResults.value = search(searchText.value.filter { it.isWhitespace() }, propertiesAvailable)
+                            // Check if searchResults is empty and if it is display no search results found message
+                            displayNoPropertiesFound = searchResults.value.isEmpty()
+                            searchTextOld.value = searchText.value
+                            focusRequester.freeFocus()
+                        } else if (TextUtils.isEmpty(searchText.value)) {
+                            focusRequester.requestFocus()
+                        }
+                    }) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.baseline_search_24),
+                        contentDescription = stringResource(id = R.string.search_for) + " " + searchText.value,
+                        modifier = modifier
+                            .size(32.dp),
+                    )
+                }
+            }
+
+            // To focus the BasicTextField when the Search activity starts
+            LaunchedEffect(Unit) {
+                focusRequester.requestFocus()
             }
         }
     }
