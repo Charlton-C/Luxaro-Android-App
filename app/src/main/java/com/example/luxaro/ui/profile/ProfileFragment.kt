@@ -347,6 +347,23 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 }
             }
         }
+        Column(
+            modifier = modifier.padding(top = 65.dp)
+        ) {
+            Button(
+                onClick = {
+                    auth.signOut()
+                    localContext?.finish()
+                    localContext?.startActivity(Intent(localContext, LogIn::class.java))
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.blue_cola))
+            ) {
+                Text(
+                    text = stringResource(id = R.string.log_out),
+                    fontSize = 14.sp,
+                )
+            }
+        }
     }
 }
 
