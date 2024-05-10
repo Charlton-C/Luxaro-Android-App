@@ -89,6 +89,33 @@ class Search : AppCompatActivity() {
     }
 }
 
+fun search(searchString: String, propertiesToSearch: List<PropertyModelPackage>, modifier: Modifier = Modifier): SnapshotStateList<PropertyModelPackage> {
+    val propertiesFound = mutableStateListOf<PropertyModelPackage>()
+    for (propertyOriginal in propertiesToSearch){
+        if(propertyOriginal.title.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true) and !propertiesFound.contains(propertyOriginal)) {
+            propertiesFound.add(propertyOriginal)
+        }
+    }
+    for (propertyOriginal in propertiesToSearch){
+        if(propertyOriginal.shortdescription.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true) and !propertiesFound.contains(propertyOriginal)) {
+            propertiesFound.add(propertyOriginal)
+        }
+    }
+    for (propertyOriginal in propertiesToSearch){
+        if(propertyOriginal.longdescription.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true and !propertiesFound.contains(propertyOriginal))) {
+            propertiesFound.add(propertyOriginal)
+        }
+    }
+    for (propertyOriginal in propertiesToSearch){
+        if(propertyOriginal.price.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true and !propertiesFound.contains(propertyOriginal))) {
+            propertiesFound.add(propertyOriginal)
+        }
+    }
+    return propertiesFound.ifEmpty {
+        SnapshotStateList<PropertyModelPackage>()
+    }
+}
+
 @Composable
 fun CreateSearchResultCard(property: PropertyModelPackage, onCardClickAction: () -> Unit, modifier: Modifier = Modifier){
     Card(
