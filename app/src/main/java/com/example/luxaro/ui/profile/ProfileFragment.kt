@@ -6,17 +6,22 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -47,6 +53,7 @@ import androidx.fragment.app.Fragment
 import com.example.luxaro.R
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.auth.userProfileChangeRequest
 
 class ProfileFragment : Fragment() {
 
@@ -87,6 +94,86 @@ fun DisplayProfile(modifier: Modifier = Modifier){
     var displayDeleteAccount by remember { mutableStateOf(false) }
     newName.value = name.value.toString()
     newEmail.value = email.value.toString()
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .padding(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 58.dp)
+            .verticalScroll(rememberScrollState()),
+    ) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .align(Alignment.Start)
+                .padding(start = 30.dp, top = 8.dp, end = 30.dp, bottom = 12.dp),
+        ) {
+            Text(
+                text = stringResource(id = R.string.name),
+                modifier = modifier.padding(0.dp),
+                fontSize = 19.sp,
+                color = Color.White,
+            )
+            DisplayTextInputField(
+                input = newName,
+                placeHolderTextID = R.string.name,
+                editButton = true,
+                readOnly = readOnlyName,
+                isError = newNameError,
+                onDoneClickAction = {
+                    if (!readOnlyName) {
+                        val checkNewNameResult = checkNewName(name.value.toString(), newName.value)
+                        when (checkNewNameResult) {
+                            "passed" -> {
+                                auth.currentUser!!.updateProfile(
+                                    userProfileChangeRequest {
+                                        displayName = newName.value
+                                    }
+                                ).addOnSuccessListener {
+                                    Toast.makeText(
+                                        localContext,
+                                        "Name Updated!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    name.value = auth.currentUser?.displayName
+                                    newNameError = false
+                                    readOnlyName = true
+                                }.addOnFailureListener {
+                                    Toast.makeText(
+                                        localContext,
+                                        "Failed to update name",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    newNameError = false
+                                }
+                            }
+
+                            "old name and new name match" -> {
+                                Toast.makeText(
+                                    localContext,
+                                    "The name is unchanged",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                newNameError = false
+                                readOnlyName = true
+                            }
+
+                            else -> {
+                                Toast.makeText(localContext, checkNewNameResult, Toast.LENGTH_SHORT)
+                                    .show()
+                                newNameError = true
+                                readOnlyName = false
+                            }
+                        }
+                    } else {
+                        newNameError = false
+                        readOnlyName = false
+                    }
+                }
+            )
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
