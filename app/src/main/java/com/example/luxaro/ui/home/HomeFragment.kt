@@ -416,25 +416,23 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                         )
                     )
                 },
-                contentPadding = PaddingValues(0.dp),
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.vivid_cerulean)),
                 modifier = modifier
-                    .padding(25.dp, 0.dp)
+                    .fillMaxWidth()
                     .height(42.dp)
-                    .fillMaxWidth(),
+                    .padding(25.dp, 0.dp),
             ) {
                 Text(
                     text = stringResource(id = R.string.call_us),
                     modifier = modifier
                         .background(
-                            color = colorResource(id = R.color.vivid_cerulean),
+                            color = Color.Transparent,
                             shape = RoundedCornerShape(6.dp)
                         )
                         .fillMaxWidth()
-                        .padding(top = 6.dp)
-                        .align(Alignment.CenterVertically)
-                        .height(42.dp),
+                        .fillMaxHeight()
+                        .align(Alignment.CenterVertically),
                     fontSize = 21.sp,
                     textAlign = TextAlign.Center,
                 )
@@ -449,25 +447,23 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                         .putExtra(Intent.EXTRA_TEXT, inquiryOnText + " " + property.title)
                     localContext.startActivity(Intent.createChooser(intent, "Choose an Email client: "))
                 },
-                contentPadding = PaddingValues(0.dp),
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.vivid_cerulean)),
                 modifier = modifier
-                    .padding(25.dp, 0.dp)
+                    .fillMaxWidth()
                     .height(42.dp)
-                    .fillMaxWidth(),
+                    .padding(25.dp, 0.dp),
             ) {
                 Text(
                     text = stringResource(id = R.string.email_us),
                     modifier = modifier
                         .background(
-                            color = colorResource(id = R.color.vivid_cerulean),
+                            color = Color.Transparent,
                             shape = RoundedCornerShape(6.dp)
                         )
                         .fillMaxWidth()
-                        .padding(top = 6.dp)
-                        .align(Alignment.CenterVertically)
-                        .height(42.dp),
+                        .fillMaxHeight()
+                        .align(Alignment.CenterVertically),
                     fontSize = 21.sp,
                     textAlign = TextAlign.Center,
                 )
@@ -482,25 +478,23 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                         ).putExtra("sms_body", inquiryOnText + " " + property.title)
                     )
                 },
-                contentPadding = PaddingValues(0.dp),
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.vivid_cerulean)),
                 modifier = modifier
-                    .padding(25.dp, 0.dp)
+                    .fillMaxWidth()
                     .height(42.dp)
-                    .fillMaxWidth(),
+                    .padding(25.dp, 0.dp),
             ) {
                 Text(
                     text = stringResource(id = R.string.text_us),
                     modifier = modifier
                         .background(
-                            color = colorResource(id = R.color.vivid_cerulean),
+                            color = Color.Transparent,
                             shape = RoundedCornerShape(6.dp)
                         )
                         .fillMaxWidth()
-                        .padding(top = 6.dp)
-                        .align(Alignment.CenterVertically)
-                        .height(42.dp),
+                        .fillMaxHeight()
+                        .align(Alignment.CenterVertically),
                     fontSize = 21.sp,
                     textAlign = TextAlign.Center,
                 )
@@ -514,25 +508,23 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                                 property.phonenumber, inquiryOnText + " " + property.title)
                         )))
                 },
-                contentPadding = PaddingValues(0.dp),
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.malachite)),
                 modifier = modifier
-                    .padding(25.dp, 0.dp)
+                    .fillMaxWidth()
                     .height(42.dp)
-                    .fillMaxWidth(),
+                    .padding(25.dp, 0.dp),
             ) {
                 Text(
                     text = stringResource(id = R.string.whatsapp),
                     modifier = modifier
                         .background(
-                            color = colorResource(id = R.color.malachite),
+                            color = Color.Transparent,
                             shape = RoundedCornerShape(6.dp)
                         )
                         .fillMaxWidth()
-                        .padding(top = 6.dp)
-                        .align(Alignment.CenterVertically)
-                        .height(42.dp),
+                        .fillMaxHeight()
+                        .align(Alignment.CenterVertically),
                     fontSize = 21.sp,
                     textAlign = TextAlign.Center,
                 )
