@@ -364,6 +364,53 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 )
             }
         }
+        Column(
+            modifier = modifier.padding(top = 200.dp)
+        ) {
+            Button(onClick = {
+                displayDeleteAccount = !displayDeleteAccount
+                passwordTitle = R.string.password
+                passwordPlaceHolder = R.string.password_hidden
+                readOnlyPassword = true
+                displayChangePassword = false
+            },
+                modifier = modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(0.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.medium_persian_blue_2))
+            ) {
+                Text(
+                    text = stringResource(id = R.string.delete_account),
+                    fontSize = 14.sp,
+                )
+            }
+        }
+        AnimatedVisibility(
+            visible = displayDeleteAccount,
+            enter = expandVertically(),
+            exit = shrinkVertically(),
+            modifier = modifier.padding(top = 10.dp, bottom = 15.dp),
+        ) {
+            Column {
+                Button(
+                    onClick = {
+                        auth.currentUser!!.delete()
+                            .addOnSuccessListener {
+                                localContext?.finish()
+                                localContext?.startActivity(Intent(localContext, SignUp::class.java))
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(localContext, "Failed to delete account", Toast.LENGTH_SHORT).show()
+                            }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_candy_apple_red))
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.delete_account),
+                        fontSize = 15.sp,
+                    )
+                }
+            }
+        }
     }
 }
 
