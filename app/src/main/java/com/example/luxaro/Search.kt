@@ -133,3 +133,30 @@ fun CreateSearchResultCard(property: PropertyModelPackage, onCardClickAction: ()
         }
     }
 }
+
+
+@Composable
+fun DisplayNoPropertiesFound(displayThisPage: Boolean, modifier: Modifier = Modifier) {
+    if(displayThisPage) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier
+                .padding(top = 50.dp)
+                .fillMaxWidth(),
+        ) {
+            Text(
+                text = stringResource(id = R.string.no_properties_found),
+                modifier = modifier
+                    .padding(20.dp, 0.dp),
+                fontSize = 18.sp,
+            )
+            Spacer(modifier = modifier.height(6.dp))
+            Text(
+                text = stringResource(id = R.string.try_searching_for_something_else),
+                modifier = modifier
+                    .padding(20.dp, 0.dp),
+                fontSize = 18.sp,
+            )
+        }
+    }
+}
