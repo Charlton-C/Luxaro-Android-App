@@ -179,3 +179,13 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
         )
     }
 }
+
+fun checkNewName(oldName: String, newName: String): String {
+    if (newName == ""){
+        return "no new name"
+    }
+    if (newName == oldName){
+        return "old name and new name match"
+    }
+    return "passed"
+}
