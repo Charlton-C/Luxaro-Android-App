@@ -72,6 +72,7 @@ import com.example.luxaro.ui.home.DisplaySpecificPropertyContactCard
 import com.example.luxaro.ui.home.DisplaySpecificPropertyDetailsCard
 
 class Search : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -206,7 +207,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                 IconButton(modifier = modifier.align(Alignment.CenterVertically),
                     onClick = {
                         if (!TextUtils.isEmpty(searchText.value.trim()) and (searchText.value != searchTextOld.value)) {
-                            searchResults.value = search(searchText.value.filter { it.isWhitespace() }, propertiesAvailable)
+                            searchResults.value = search(searchText.value.filterNot { it.isWhitespace() }, propertiesAvailable)
                             // Check if searchResults is empty and if it is display no search results found message
                             displayNoPropertiesFound = searchResults.value.isEmpty()
                             searchTextOld.value = searchText.value
