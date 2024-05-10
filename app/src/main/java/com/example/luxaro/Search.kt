@@ -84,9 +84,25 @@ class Search : AppCompatActivity() {
                 modifier = Modifier.fillMaxSize(),
                 contentColor = Color.White,
                 color = colorResource(id = R.color.ateneo_blue),
-            ) {}
+            ) {
+                DisplaySearch()
+            }
         }
     }
+}
+
+@Composable
+fun DisplaySearch(modifier: Modifier = Modifier) {
+    val localContext = (LocalContext.current as? Activity)
+    val searchText = remember { mutableStateOf("") }
+    val searchTextOld = remember { mutableStateOf("") }
+    var displayNoPropertiesFound by remember { mutableStateOf(false) }
+    var displayMoreInfo by remember { mutableStateOf(false) }
+    var displayContactUs by remember { mutableStateOf(false) }
+    var specificPropertyToDisplay by remember { mutableStateOf(PropertyModelPackage()) }
+    val searchResults = remember { mutableStateOf(listOf<PropertyModelPackage>()) }
+    val focusRequester = remember { FocusRequester() }
+    val interactionSource = remember { MutableInteractionSource() }
 }
 
 fun search(searchString: String, propertiesToSearch: List<PropertyModelPackage>, modifier: Modifier = Modifier): SnapshotStateList<PropertyModelPackage> {
