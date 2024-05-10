@@ -224,6 +224,25 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                     )
                 }
             }
+            if(searchResults.value.isNotEmpty() and !displayNoPropertiesFound) {
+                Column(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .padding(start = 0.dp, top = 8.dp, end = 0.dp, bottom = 0.dp)
+                        .verticalScroll(rememberScrollState()),
+                ) {
+                    for (property in searchResults.value) {
+                        CreateSearchResultCard(property = property, onCardClickAction = {
+                            specificPropertyToDisplay = property
+                            displayMoreInfo = true
+                        })
+                    }
+                }
+            }
+            else{
+                DisplayNoPropertiesFound(displayNoPropertiesFound)
+            }
 
             // To focus the BasicTextField when the Search activity starts
             LaunchedEffect(Unit) {
