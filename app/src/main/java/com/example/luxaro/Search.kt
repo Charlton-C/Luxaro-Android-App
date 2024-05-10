@@ -88,3 +88,48 @@ class Search : AppCompatActivity() {
         }
     }
 }
+
+@Composable
+fun CreateSearchResultCard(property: PropertyModelPackage, onCardClickAction: () -> Unit, modifier: Modifier = Modifier){
+    Card(
+        onClick = { onCardClickAction() },
+        modifier = modifier
+            .padding(6.dp, 7.dp)
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.medium_persian_blue_2),
+            contentColor = Color.White
+        )
+    ) {
+        Row {
+            Image(
+                painter = painterResource(id = R.drawable.andre_benz_cxu6tnxhub0_unsplash),
+                contentDescription = null,
+                modifier = modifier
+                    .width(100.dp)
+                    .height(70.dp),
+                contentScale = ContentScale.Crop,
+            )
+            Spacer(modifier = modifier.width(8.dp))
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(end = 8.dp, top = 4.dp),
+            ) {
+                Text(
+                    text = property.title,
+                    maxLines = 1,
+                    fontSize = 18.sp,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Text(
+                    text = property.shortdescription,
+                    maxLines = 2,
+                    lineHeight = 18.sp,
+                    fontSize = 14.sp,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
+    }
+}
