@@ -189,3 +189,22 @@ fun checkNewName(oldName: String, newName: String): String {
     }
     return "passed"
 }
+
+fun checkNewPassword(oldPassword: String, newPassword: String, confirmPassword: String): String {
+    if (oldPassword == ""){
+        return "no new password"
+    }
+    if (newPassword == "") {
+        return "no new password"
+    }
+    if (newPassword.length <= 8) {
+        return "new password is too short"
+    }
+    if (newPassword == oldPassword){
+        return "old password and new password match"
+    }
+    if (newPassword != confirmPassword) {
+        return "new password and confirm new password do not match"
+    }
+    return "passed"
+}
