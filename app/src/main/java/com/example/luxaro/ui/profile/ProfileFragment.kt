@@ -173,6 +173,27 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 }
             )
         }
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .align(Alignment.Start)
+                .padding(30.dp, 12.dp),
+        ) {
+            Text(
+                text = stringResource(id = R.string.email),
+                modifier = modifier.padding(0.dp),
+                fontSize = 19.sp,
+                color = Color.White,
+            )
+            DisplayTextInputField(
+                input = newEmail,
+                placeHolderTextID = R.string.email,
+                editButton = false,
+                readOnly = true,
+                isError = false,
+                onDoneClickAction = {})
+
+        }
     }
 }
 
