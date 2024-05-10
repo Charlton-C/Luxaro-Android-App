@@ -249,6 +249,75 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                 focusRequester.requestFocus()
             }
         }
+        AnimatedVisibility(
+            visible = displayMoreInfo,
+            enter = expandVertically(),
+            exit = shrinkVertically(),
+        ) {
+            Box(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(0.dp)
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                Button(
+                    onClick = { displayMoreInfo = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                    shape = RoundedCornerShape(0.dp),
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = modifier
+                        .padding(0.dp)
+                        .matchParentSize(),
+                ) {}
+                Column(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center)
+                        .padding(14.dp, 25.dp),
+                )
+                {
+                    DisplaySpecificPropertyDetailsCard(
+                        property = specificPropertyToDisplay,
+                        onCardClickAction = { displayMoreInfo = false },
+                        onContactUsClickAction = { displayContactUs = true })
+                }
+            }
+        }
+        AnimatedVisibility(
+            visible = displayContactUs,
+            enter = expandVertically(),
+            exit = shrinkVertically(),
+        ) {
+            Box(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                Button(
+                    onClick = { displayContactUs = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                    shape = RoundedCornerShape(0.dp),
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = modifier
+                        .matchParentSize()
+                        .padding(0.dp),
+                ) {
+                    Column(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .align(Alignment.CenterVertically)
+                            .padding(30.dp, 20.dp),
+                    )
+                    {
+                        DisplaySpecificPropertyContactCard(property = specificPropertyToDisplay)
+                    }
+                }
+            }
+        }
     }
 }
 
