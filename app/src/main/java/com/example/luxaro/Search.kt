@@ -3,6 +3,7 @@ package com.example.luxaro
 import android.app.Activity
 import android.os.Bundle
 import android.text.TextUtils
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -104,6 +105,18 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
     val searchResults = remember { mutableStateOf(listOf<PropertyModelPackage>()) }
     val focusRequester = remember { FocusRequester() }
     val interactionSource = remember { MutableInteractionSource() }
+
+    // To handel back button clicks
+    BackHandler (
+        enabled = (displayContactUs or displayMoreInfo)
+    ) {
+        if (displayContactUs){
+            displayContactUs = false
+        }
+        else if (displayMoreInfo){
+            displayMoreInfo = false
+        }
+    }
 
     Box {
         Column(
