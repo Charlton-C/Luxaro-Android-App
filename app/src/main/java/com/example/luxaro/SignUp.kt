@@ -36,23 +36,21 @@ class SignUp : AppCompatActivity() {
             val email = binding.editTextTextEmailAddressInput.text.toString()
             val password = binding.editTextTextPasswordInput.text.toString()
             if (checkAllFields()) {
-                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        it.result.user?.updateProfile(
-                            UserProfileChangeRequest.Builder()
-                                .setDisplayName(name)
-                                .build()
-                        )
-                        startActivity(Intent(this@SignUp, MainActivity::class.java))
-                        finish()
-                    } else {
-                        if (it.exception is FirebaseAuthUserCollisionException) {
-                            binding.editTextTextEmailAddressLayout.error = "A user with this email already exists"
-                        }
-                        else{
-                            Toast.makeText(this@SignUp, "Sign Up Failed\nPlease try again later", Toast.LENGTH_LONG).show()
-                            Log.e("Firebase Auth Error", it.exception.toString())
-                        }
+                auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
+                    it.user?.updateProfile(
+                        UserProfileChangeRequest.Builder()
+                            .setDisplayName(name)
+                            .build()
+                    )
+                    startActivity(Intent(this@SignUp, MainActivity::class.java))
+                    finish()
+                }.addOnFailureListener{
+                    if (it is FirebaseAuthUserCollisionException) {
+                        binding.editTextTextEmailAddressLayout.error = "A user with this email already exists"
+                    }
+                    else{
+                        Toast.makeText(this@SignUp, "Sign Up Failed\nPlease try again later", Toast.LENGTH_LONG).show()
+                        Log.e("Firebase Auth Error: Sign Up", it.toString())
                     }
                 }
             }
