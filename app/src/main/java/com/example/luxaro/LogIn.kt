@@ -25,6 +25,8 @@ class LogIn : AppCompatActivity() {
         auth = Firebase.auth
 
         binding.logInButton.setOnClickListener {
+            binding.editTextTextEmailAddressLayout.isErrorEnabled = false
+            binding.editTextTextPasswordLayout.isErrorEnabled = false
             val email = binding.editTextTextEmailAddressInput.text.toString()
             val password = binding.editTextTextPasswordInput.text.toString()
             if (checkAllFields()) {
