@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -91,6 +92,19 @@ fun DisplayProperties(properties: List<PropertyModelPackage>, modifier: Modifier
     var displayMoreInfo by remember { mutableStateOf(false) }
     var displayContactUs by remember { mutableStateOf(false) }
     var specificPropertyToDisplay by remember { mutableStateOf(PropertyModelPackage()) }
+
+    // To handel back button clicks
+    BackHandler (
+        enabled = (displayContactUs or displayMoreInfo)
+    ) {
+        if (displayContactUs){
+            displayContactUs = false
+        }
+        else if (displayMoreInfo){
+            displayMoreInfo = false
+        }
+    }
+
     Box {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
