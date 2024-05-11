@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -103,6 +104,33 @@ fun DisplayProfile(modifier: Modifier = Modifier){
     var displayDeleteAccount by remember { mutableStateOf(false) }
     newName.value = name.value.toString()
     newEmail.value = email.value.toString()
+
+    // To handel back button clicks
+    BackHandler (
+        enabled = (!readOnlyName or !readOnlyPassword or displayDeleteAccount)
+    ) {
+        if (!readOnlyName){
+            newNameError = false
+            readOnlyName = true
+        }
+        else if (!readOnlyPassword){
+            oldPasswordError = false
+            newPasswordError = false
+            confirmNewPasswordError = false
+            readOnlyPassword = true
+            displayChangePassword = false
+            passwordTitle = R.string.password
+            passwordPlaceHolder = R.string.password_hidden
+            oldPassword.value = ""
+        }
+        else if (displayDeleteAccount){
+            displayDeleteAccount = !displayDeleteAccount
+            passwordTitle = R.string.password
+            passwordPlaceHolder = R.string.password_hidden
+            readOnlyPassword = true
+            displayChangePassword = false
+        }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -537,156 +565,3 @@ fun checkNewPassword(oldPassword: String, newPassword: String, confirmPassword: 
     }
     return "passed"
 }
-
-
-
-
-
-
-
-
-
-
-
-//Column(
-//    modifier = modifier
-//        .fillMaxWidth()
-//        .align(Alignment.Start)
-//        .padding(30.dp, 12.dp),
-//) {
-//    Text(
-//        text = stringResource(id = R.string.email),
-//        modifier = modifier
-//            .padding(0.dp),
-//        fontSize = 19.sp,
-//        color = Color.White,
-//    )
-//    DisplayTextInputField(input = newEmail, placeHolderTextID = R.string.email, editButton = true, readOnly = readOnlyEmail, isError = newEmailError, onDoneClickAction = {
-//        if (!readOnlyEmail){
-//            val checkNewEmailResult = checkNewEmail(email.value.toString(), newEmail.value, password.value)
-//            when (checkNewEmailResult){
-//                "passed" -> {
-//                    val credential = EmailAuthProvider.getCredential(email.value.toString(), password.value)
-//                    auth.currentUser!!.reauthenticate(credential)
-//                        .addOnSuccessListener {
-//                            auth.currentUser!!.updateEmail(newEmail.value)
-//                                .addOnSuccessListener {
-//                                    Toast.makeText(
-//                                        localContext,
-//                                        "Email Updated!",
-//                                        Toast.LENGTH_SHORT
-//                                    ).show()
-//                                    email.value = auth.currentUser?.email
-//                                    passwordError = false
-//                                    newEmailError = false
-//                                    readOnlyEmail = true
-//                                    displayConfirmPasswordBeforeChangingEmail = false
-//                                }.addOnFailureListener{
-//                                    Toast.makeText(localContext, "Failed to update email", Toast.LENGTH_SHORT).show()
-////                                            Toast.makeText(localContext, it.cause.toString(), Toast.LENGTH_SHORT).show()
-//                                    passwordError = false
-//                                    newEmailError = false
-//                                }
-//                            password.value = ""
-//                        }.addOnFailureListener {
-//                            Toast.makeText(localContext, "The password is wrong", Toast.LENGTH_SHORT).show()
-//                            passwordError = true
-//                            password.value = ""
-//                        }
-//
-//
-//
-////                            auth.currentUser!!.updateEmail(newEmail.value)
-////                                .addOnSuccessListener {
-////                                    Toast.makeText(
-////                                        localContext,
-////                                        "Email Updated!",
-////                                        Toast.LENGTH_SHORT
-////                                    ).show()
-////                                    email.value = auth.currentUser?.email
-////                                    newEmailError = false
-////                                    readOnlyEmail = true
-////                                }.addOnFailureListener{
-////                                    Toast.makeText(localContext, it.cause.toString(), Toast.LENGTH_SHORT).show()
-//////                                    Toast.makeText(localContext, "Failed to update email", Toast.LENGTH_SHORT).show()
-////                                }
-//
-//                }
-//                "old email and new email match" -> {
-//                    Toast.makeText(localContext, "The Email is unchanged!", Toast.LENGTH_SHORT).show()
-//                    passwordError = false
-//                    newEmailError = false
-//                    readOnlyEmail = true
-//                    displayConfirmPasswordBeforeChangingEmail = false
-//                }
-//                "no password entered" -> {
-//                    Toast.makeText(localContext, "Please confirm your password", Toast.LENGTH_SHORT).show()
-//                    passwordError = true
-//                    newEmailError = false
-//                    readOnlyEmail = false
-//                    displayConfirmPasswordBeforeChangingEmail = true
-//
-//                }
-//                else -> {
-//                    Toast.makeText(localContext, checkNewEmailResult, Toast.LENGTH_SHORT).show()
-//                    passwordError = false
-//                    newEmailError = false
-//                    readOnlyEmail = false
-//                    displayConfirmPasswordBeforeChangingEmail = true
-//                }
-//            }
-//        }
-//        else{
-//            passwordError = false
-//            newEmailError = false
-//            readOnlyEmail = false
-//            displayConfirmPasswordBeforeChangingEmail = true
-//        }
-//    })
-//}
-//AnimatedVisibility(
-//    visible = displayConfirmPasswordBeforeChangingEmail,
-//    enter = expandVertically(),
-//    exit = shrinkVertically(),
-//) {
-//    Column {
-//        Column(
-//            modifier = modifier
-//                .fillMaxWidth()
-//                .align(Alignment.Start)
-//                .padding(30.dp, 12.dp),
-//        ) {
-//            Text(
-//                text = stringResource(id = R.string.confirm_password),
-//                modifier = modifier
-//                    .padding(0.dp),
-//                fontSize = 19.sp,
-//                color = Color.White,
-//            )
-//            DisplayTextInputField(
-//                input = password,
-//                placeHolderTextID = R.string.confirm_password,
-//                editButton = false,
-//                readOnly = false,
-//                isError = passwordError,
-//                onDoneClickAction = {})
-//        }
-//    }
-//}
-
-
-//fun checkNewEmail(oldEmail: String, newEmail: String, password: String): String {
-//    if (newEmail == ""){
-//        return "no new email"
-//    }
-//    if(!Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()){
-//        return "email does not look like an email"
-//    }
-//    if (newEmail == oldEmail){
-//        return "old email and new email match"
-//    }
-//    if (password == ""){
-//        return "no password entered"
-//    }
-//    return "passed"
-//}
