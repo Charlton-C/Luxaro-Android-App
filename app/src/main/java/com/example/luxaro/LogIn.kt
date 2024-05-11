@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.example.luxaro.databinding.ActivityLogInBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.auth
 
 class LogIn : AppCompatActivity() {
@@ -30,16 +31,30 @@ class LogIn : AppCompatActivity() {
             val email = binding.editTextTextEmailAddressInput.text.toString()
             val password = binding.editTextTextPasswordInput.text.toString()
             if (checkAllFields()) {
-                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        startActivity(Intent(this@LogIn, MainActivity::class.java))
-                        finish()
-                    } else {
-                        Toast.makeText(this@LogIn, "Log In Failed", Toast.LENGTH_LONG).show()
-                        Log.e("Error: ", it.exception.toString())
+                // Check if the user has an account
+                auth.fetchSignInMethodsForEmail(email).addOnSuccessListener {
+                    if (it.signInMethods!!.size > 0){
+                        auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+                            startActivity(Intent(this@LogIn, MainActivity::class.java))
+                            finish()
+                        }.addOnFailureListener {it2 ->
+                            when (it2){
+                                is FirebaseAuthInvalidCredentialsException -> {
+                                    binding.editTextTextPasswordLayout.error = "Wrong password"
+                                }
+                                else -> {
+                                    Toast.makeText(this@LogIn, "Log in failed", Toast.LENGTH_SHORT).show()
+                                    Log.e("Firebase Auth Error: Log In", it2.toString())
+                                }
+                            }
+                        }
                     }
-                }.addOnFailureListener{exception ->
-                    Log.e("Firebase auth", "Error logging in", exception)
+                    else {
+                        binding.editTextTextEmailAddressLayout.error = "No user found"
+                    }
+                }.addOnFailureListener {
+                    Toast.makeText(this@LogIn, "Log in failed", Toast.LENGTH_SHORT).show()
+                    Log.e("Firebase Auth Error: Log In", it.toString())
                 }
             }
         }
