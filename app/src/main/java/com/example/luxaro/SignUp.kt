@@ -28,6 +28,10 @@ class SignUp : AppCompatActivity() {
         auth = Firebase.auth
 
         binding.signUpButton.setOnClickListener {
+            binding.editTextTextNameLayout.isErrorEnabled = false
+            binding.editTextTextEmailAddressLayout.isErrorEnabled = false
+            binding.editTextTextPasswordLayout.isErrorEnabled = false
+            binding.editTextTextConfirmPasswordLayout.isErrorEnabled = false
             val name = binding.editTextTextNameInput.text.toString()
             val email = binding.editTextTextEmailAddressInput.text.toString()
             val password = binding.editTextTextPasswordInput.text.toString()
@@ -46,7 +50,7 @@ class SignUp : AppCompatActivity() {
                             binding.editTextTextEmailAddressLayout.error = "A user with this email already exists"
                         }
                         else{
-                            Toast.makeText(this@SignUp, "Sign Up Failed\nTry again later", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@SignUp, "Sign Up Failed\nPlease try again later", Toast.LENGTH_LONG).show()
                             Log.e("Firebase Auth Error", it.exception.toString())
                         }
                     }
@@ -67,7 +71,7 @@ class SignUp : AppCompatActivity() {
     private fun checkAllFields(): Boolean {
         val email = binding.editTextTextEmailAddressInput.text.toString()
         if (binding.editTextTextNameInput.text.toString() == ""){
-            binding.editTextTextNameInput.error = "Please enter your name"
+            binding.editTextTextNameLayout.error = "Please enter your name"
             return false
         }
         if (email == ""){
