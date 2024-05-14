@@ -106,6 +106,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
     var confirmNewPasswordError by remember { mutableStateOf(false) }
     var displayDeleteAccount by remember { mutableStateOf(false) }
     var displayLogOutAnimation by remember { mutableStateOf(false) }
+    var displayDeleteAccountAnimation by remember { mutableStateOf(false) }
     newName.value = name.value.toString()
     newEmail.value = email.value.toString()
 
@@ -450,23 +451,30 @@ fun DisplayProfile(modifier: Modifier = Modifier){
             modifier = modifier.padding(top = 10.dp, bottom = 15.dp),
         ) {
             Column {
-                Button(
-                    onClick = {
-                        auth.currentUser!!.delete()
-                            .addOnSuccessListener {
-                                localContext?.startActivity(Intent(localContext, SignUp::class.java))
-                                localContext?.finish()
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(localContext, "Failed to delete account", Toast.LENGTH_SHORT).show()
-                            }
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_candy_apple_red))
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.delete_account),
-                        fontSize = 15.sp,
-                    )
+                if(!displayDeleteAccountAnimation){
+                    Button(
+                        onClick = {
+                            displayDeleteAccountAnimation = true
+                            auth.currentUser!!.delete()
+                                .addOnSuccessListener {
+                                    localContext?.startActivity(Intent(localContext, SignUp::class.java))
+                                    localContext?.finish()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(localContext, "Failed to delete account", Toast.LENGTH_SHORT).show()
+                                    displayDeleteAccountAnimation = false
+                                }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_candy_apple_red))
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.delete_account),
+                            fontSize = 15.sp,
+                        )
+                    }
+                }
+                if (displayDeleteAccountAnimation){
+                    CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = Color.White)
                 }
             }
         }
