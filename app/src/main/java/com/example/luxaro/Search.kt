@@ -58,6 +58,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -103,6 +104,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
     var displayContactUs by remember { mutableStateOf(false) }
     var specificPropertyToDisplay by remember { mutableStateOf(PropertyModelPackage()) }
     val searchResults = remember { mutableStateOf(listOf<PropertyModelPackage>()) }
+    val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -164,7 +166,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                             // Check if searchResults is empty and if it is display no search results found message
                             displayNoPropertiesFound = searchResults.value.isEmpty()
                             searchTextOld.value = searchText.value
-                            focusRequester.freeFocus()
+                            focusManager.clearFocus()
                         } else if (TextUtils.isEmpty(searchText.value)) {
                             focusRequester.requestFocus()
                         }
@@ -224,7 +226,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                             // Check if searchResults is empty and if it is display no search results found message
                             displayNoPropertiesFound = searchResults.value.isEmpty()
                             searchTextOld.value = searchText.value
-                            focusRequester.freeFocus()
+                            focusManager.clearFocus()
                         } else if (TextUtils.isEmpty(searchText.value)) {
                             focusRequester.requestFocus()
                         }
@@ -232,8 +234,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.baseline_search_24),
                         contentDescription = stringResource(id = R.string.search_for) + " " + searchText.value,
-                        modifier = modifier
-                            .size(32.dp),
+                        modifier = modifier.size(32.dp),
                     )
                 }
             }
@@ -249,6 +250,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                         CreateSearchResultCard(property = property, onCardClickAction = {
                             specificPropertyToDisplay = property
                             displayMoreInfo = true
+                            focusManager.clearFocus()
                         })
                     }
                 }
@@ -281,8 +283,8 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                     shape = RoundedCornerShape(0.dp),
                     contentPadding = PaddingValues(0.dp),
                     modifier = modifier
-                        .padding(0.dp)
-                        .matchParentSize(),
+                        .matchParentSize()
+                        .padding(0.dp),
                 ) {}
                 Column(
                     modifier = modifier
@@ -334,7 +336,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
     }
 }
 
-fun search(searchString: String, propertiesToSearch: List<PropertyModelPackage>, modifier: Modifier = Modifier): SnapshotStateList<PropertyModelPackage> {
+fun search(searchString: String, propertiesToSearch: List<PropertyModelPackage>): SnapshotStateList<PropertyModelPackage> {
     val propertiesFound = mutableStateListOf<PropertyModelPackage>()
     for (propertyOriginal in propertiesToSearch){
         if(propertyOriginal.title.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true) and !propertiesFound.contains(propertyOriginal)) {
@@ -356,9 +358,7 @@ fun search(searchString: String, propertiesToSearch: List<PropertyModelPackage>,
             propertiesFound.add(propertyOriginal)
         }
     }
-    return propertiesFound.ifEmpty {
-        SnapshotStateList<PropertyModelPackage>()
-    }
+    return propertiesFound.ifEmpty { SnapshotStateList() }
 }
 
 @Composable
@@ -416,20 +416,18 @@ fun DisplayNoPropertiesFound(displayThisPage: Boolean, modifier: Modifier = Modi
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
-                .padding(top = 50.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(top = 50.dp),
         ) {
             Text(
                 text = stringResource(id = R.string.no_properties_found),
-                modifier = modifier
-                    .padding(20.dp, 0.dp),
+                modifier = modifier.padding(20.dp, 0.dp),
                 fontSize = 18.sp,
             )
             Spacer(modifier = modifier.height(6.dp))
             Text(
                 text = stringResource(id = R.string.try_searching_for_something_else),
-                modifier = modifier
-                    .padding(20.dp, 0.dp),
+                modifier = modifier.padding(20.dp, 0.dp),
                 fontSize = 18.sp,
             )
         }
