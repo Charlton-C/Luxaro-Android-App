@@ -29,6 +29,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -90,8 +91,10 @@ fun DisplayProfile(modifier: Modifier = Modifier){
     var passwordTitle by remember { mutableStateOf(R.string.password) }
     var passwordPlaceHolder by remember { mutableStateOf(R.string.password_hidden) }
     var displayChangePassword by remember { mutableStateOf(false) }
+    var displaySavingPassword by remember { mutableStateOf(false) }
     val newName = remember { mutableStateOf("") }
-    var readOnlyName by remember { mutableStateOf(true) }
+    var readOnlyNewName by remember { mutableStateOf(true) }
+    var displaySavingNewName by remember { mutableStateOf(false) }
     var newNameError by remember { mutableStateOf(false) }
     val newEmail = remember { mutableStateOf("") }
     val oldPassword = remember { mutableStateOf("") }
@@ -107,11 +110,11 @@ fun DisplayProfile(modifier: Modifier = Modifier){
 
     // To handel back button clicks
     BackHandler (
-        enabled = (!readOnlyName or !readOnlyPassword or displayDeleteAccount)
+        enabled = (!readOnlyNewName or !readOnlyPassword or displayDeleteAccount)
     ) {
-        if (!readOnlyName){
+        if (!readOnlyNewName){
             newNameError = false
-            readOnlyName = true
+            readOnlyNewName = true
         }
         else if (!readOnlyPassword){
             oldPasswordError = false
@@ -156,13 +159,15 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 input = newName,
                 placeHolderTextID = R.string.name,
                 editButton = true,
-                readOnly = readOnlyName,
+                displaySavingAnimation = displaySavingNewName,
+                readOnly = readOnlyNewName,
                 isError = newNameError,
                 editContentDescription = R.string.edit_name,
                 clearContentDescription = R.string.clear_name,
                 onDoneClickAction = {
-                    if (!readOnlyName) {
+                    if (!readOnlyNewName) {
                         val checkNewNameResult = checkNewName(name.value.toString(), newName.value)
+                        displaySavingNewName = true
                         when (checkNewNameResult) {
                             "passed" -> {
                                 auth.currentUser!!.updateProfile(
@@ -170,44 +175,36 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                                         displayName = newName.value
                                     }
                                 ).addOnSuccessListener {
-                                    Toast.makeText(
-                                        localContext,
-                                        "Name Updated!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(localContext, "Name Updated!", Toast.LENGTH_SHORT).show()
                                     name.value = auth.currentUser?.displayName
+                                    displaySavingNewName = false
                                     newNameError = false
-                                    readOnlyName = true
+                                    readOnlyNewName = true
                                 }.addOnFailureListener {
-                                    Toast.makeText(
-                                        localContext,
-                                        "Failed to update name",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(localContext, "Failed to update name", Toast.LENGTH_SHORT).show()
+                                    displaySavingNewName = false
                                     newNameError = false
                                 }
                             }
 
                             "old name and new name match" -> {
-                                Toast.makeText(
-                                    localContext,
-                                    "The name is unchanged",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(localContext, "The name is unchanged", Toast.LENGTH_SHORT).show()
+                                displaySavingNewName = false
                                 newNameError = false
-                                readOnlyName = true
+                                readOnlyNewName = true
                             }
 
                             else -> {
-                                Toast.makeText(localContext, checkNewNameResult, Toast.LENGTH_SHORT)
-                                    .show()
+                                Toast.makeText(localContext, checkNewNameResult, Toast.LENGTH_SHORT).show()
+                                displaySavingNewName = false
                                 newNameError = true
-                                readOnlyName = false
+                                readOnlyNewName = false
                             }
                         }
                     } else {
+                        displaySavingNewName = false
                         newNameError = false
-                        readOnlyName = false
+                        readOnlyNewName = false
                     }
                 }
             )
@@ -228,6 +225,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 input = newEmail,
                 placeHolderTextID = R.string.email,
                 editButton = false,
+                displaySavingAnimation = false,
                 readOnly = true,
                 isError = false,
                 editContentDescription = R.string.edit_email,
@@ -247,9 +245,10 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 fontSize = 19.sp,
                 color = Color.White,
             )
-            DisplayTextInputField(input = oldPassword, placeHolderTextID = passwordPlaceHolder, editButton = true, readOnly = readOnlyPassword, isError = oldPasswordError, editContentDescription = R.string.change_password, clearContentDescription = R.string.clear_old_password, onDoneClickAction = {
+            DisplayTextInputField(input = oldPassword, placeHolderTextID = passwordPlaceHolder, editButton = true, displaySavingAnimation = displaySavingPassword, readOnly = readOnlyPassword, isError = oldPasswordError, editContentDescription = R.string.change_password, clearContentDescription = R.string.clear_old_password, onDoneClickAction = {
                 if (!readOnlyPassword){
                     val checkNewPasswordResult = checkNewPassword(oldPassword.value, newPassword.value, confirmNewPassword.value)
+                    displaySavingPassword = true
                     when (checkNewPasswordResult){
                         "passed" -> {
                             val credential = EmailAuthProvider.getCredential(email.value.toString(), oldPassword.value)
@@ -258,6 +257,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                                     auth.currentUser?.updatePassword(newPassword.value)!!
                                         .addOnSuccessListener {
                                             Toast.makeText(localContext, "Password Updated!", Toast.LENGTH_SHORT).show()
+                                            displaySavingPassword = false
                                             oldPasswordError = false
                                             newPasswordError = false
                                             confirmNewPasswordError = false
@@ -269,21 +269,35 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                                         }
                                         .addOnFailureListener {
                                             Toast.makeText(localContext, "Failed to update password", Toast.LENGTH_SHORT).show()
+                                            displaySavingPassword = false
                                             oldPasswordError = false
                                             newPasswordError = false
                                             confirmNewPasswordError = false
                                         }
                                 }.addOnFailureListener {
                                     Toast.makeText(localContext, "Old password is wrong", Toast.LENGTH_SHORT).show()
+                                    displaySavingPassword = false
                                     oldPasswordError = true
                                     oldPassword.value = ""
                                 }
+                        }
+                        "cancel" -> {
+                            displaySavingPassword = false
+                            oldPasswordError = false
+                            newPasswordError = false
+                            confirmNewPasswordError = false
+                            readOnlyPassword = true
+                            displayChangePassword = false
+                            passwordTitle = R.string.password
+                            passwordPlaceHolder = R.string.password_hidden
+                            displayDeleteAccount = false
                         }
                         "old password and new password match" -> {
                             val credential = EmailAuthProvider.getCredential(email.value.toString(), oldPassword.value)
                             auth.currentUser!!.reauthenticate(credential)
                                 .addOnSuccessListener {
                                     Toast.makeText(localContext, "Password is unchanged", Toast.LENGTH_SHORT).show()
+                                    displaySavingPassword = false
                                     oldPasswordError = false
                                     newPasswordError = false
                                     confirmNewPasswordError = false
@@ -293,12 +307,14 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                                     passwordPlaceHolder = R.string.password_hidden
                                     oldPassword.value = ""
                                 }.addOnFailureListener {
-                                    oldPasswordError = true
                                     Toast.makeText(localContext, "Old password is wrong", Toast.LENGTH_SHORT).show()
+                                    displaySavingPassword = false
+                                    oldPasswordError = true
                                 }
                         }
                         "no new password" -> {
                             Toast.makeText(localContext, "No new password", Toast.LENGTH_SHORT).show()
+                            displaySavingPassword = false
                             oldPasswordError = false
                             newPasswordError = true
                             confirmNewPasswordError = true
@@ -306,6 +322,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         }
                         "new password is too short" -> {
                             Toast.makeText(localContext, "New password is too short", Toast.LENGTH_SHORT).show()
+                            displaySavingPassword = false
                             oldPasswordError = false
                             newPasswordError = true
                             confirmNewPasswordError = true
@@ -313,6 +330,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         }
                         "new password and confirm new password do not match" -> {
                             Toast.makeText(localContext, "New password and confirm new password do not match", Toast.LENGTH_SHORT).show()
+                            displaySavingPassword = false
                             oldPasswordError = false
                             newPasswordError = false
                             confirmNewPasswordError = true
@@ -320,6 +338,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         }
                         else -> {
                             Toast.makeText(localContext, checkNewPasswordResult, Toast.LENGTH_SHORT).show()
+                            displaySavingPassword = false
                             oldPasswordError = false
                             newPasswordError = false
                             confirmNewPasswordError = false
@@ -332,6 +351,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                     }
                 }
                 else{
+                    displaySavingPassword = false
                     oldPasswordError = false
                     newPasswordError = false
                     confirmNewPasswordError = false
@@ -361,7 +381,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         fontSize = 19.sp,
                         color = Color.White,
                     )
-                    DisplayTextInputField(input = newPassword, placeHolderTextID = R.string.new_password, editButton = false, readOnly = false, isError = newPasswordError, editContentDescription = R.string.new_password, clearContentDescription = R.string.clear_new_password, onDoneClickAction = {})
+                    DisplayTextInputField(input = newPassword, placeHolderTextID = R.string.new_password, editButton = false, displaySavingAnimation = false, readOnly = false, isError = newPasswordError, editContentDescription = R.string.new_password, clearContentDescription = R.string.clear_new_password, onDoneClickAction = {})
                 }
                 Column(
                     modifier = modifier
@@ -375,7 +395,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         fontSize = 19.sp,
                         color = Color.White,
                     )
-                    DisplayTextInputField(input = confirmNewPassword, placeHolderTextID = R.string.confirm_password, editButton = false, readOnly = false, isError = confirmNewPasswordError, editContentDescription = R.string.confirm_new_password, clearContentDescription = R.string.clear_confirm_new_password, onDoneClickAction = {})
+                    DisplayTextInputField(input = confirmNewPassword, placeHolderTextID = R.string.confirm_password, editButton = false, displaySavingAnimation = false, readOnly = false, isError = confirmNewPasswordError, editContentDescription = R.string.confirm_new_password, clearContentDescription = R.string.clear_confirm_new_password, onDoneClickAction = {})
                 }
             }
         }
@@ -448,7 +468,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, editButton: Boolean, readOnly: Boolean, isError: Boolean, editContentDescription: Int, clearContentDescription: Int, onDoneClickAction: () -> Unit, modifier: Modifier = Modifier){
+fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, editButton: Boolean, displaySavingAnimation: Boolean, readOnly: Boolean, isError: Boolean, editContentDescription: Int, clearContentDescription: Int, onDoneClickAction: () -> Unit, modifier: Modifier = Modifier){
     val interactionSource = remember { MutableInteractionSource() }
     var editOrSaveIcon by remember { mutableStateOf(R.drawable.baseline_edit_square_24) }
     editOrSaveIcon = if(readOnly){ R.drawable.baseline_edit_square_24 } else { R.drawable.baseline_save_24 }
@@ -499,7 +519,7 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                             )
                         }
                     }
-                    if(editButton) {
+                    if(editButton and !displaySavingAnimation) {
                         IconButton(modifier = modifier.padding(0.dp),
                             onClick = { onDoneClickAction() }) {
                             Icon(
@@ -510,6 +530,14 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                                     .size(25.dp),
                             )
                         }
+                    }
+                    if (displaySavingAnimation){
+                        CircularProgressIndicator(
+                            modifier = modifier
+                                .align(Alignment.CenterVertically)
+                                .padding(end = 10.dp)
+                                .size(25.dp),
+                            color = Color.White)
                     }
                 }
             },
@@ -548,8 +576,11 @@ fun checkNewName(oldName: String, newName: String): String {
 }
 
 fun checkNewPassword(oldPassword: String, newPassword: String, confirmPassword: String): String {
+    if ((oldPassword == "") and (newPassword == "") and (confirmPassword == "")){
+        return "cancel"
+    }
     if (oldPassword == ""){
-        return "no new password"
+        return "no old password"
     }
     if (newPassword == "") {
         return "no new password"
