@@ -49,6 +49,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -86,6 +87,7 @@ class ProfileFragment : Fragment() {
 fun DisplayProfile(modifier: Modifier = Modifier){
     val auth = Firebase.auth
     val localContext = (LocalContext.current as? Activity)
+    val focusManager = LocalFocusManager.current
     val name = remember { mutableStateOf(auth.currentUser?.displayName) }
     val email = remember { mutableStateOf(auth.currentUser?.email) }
     var passwordTitle by remember { mutableStateOf(R.string.password) }
@@ -104,6 +106,8 @@ fun DisplayProfile(modifier: Modifier = Modifier){
     var newPasswordError by remember { mutableStateOf(false) }
     val confirmNewPassword = remember { mutableStateOf("") }
     var confirmNewPasswordError by remember { mutableStateOf(false) }
+    val confirmDeleteAccountPassword = remember { mutableStateOf("") }
+    var confirmDeleteAccountPasswordError by remember { mutableStateOf(false) }
     var displayDeleteAccount by remember { mutableStateOf(false) }
     var displayLogOutAnimation by remember { mutableStateOf(false) }
     var displayDeleteAccountAnimation by remember { mutableStateOf(false) }
@@ -114,9 +118,8 @@ fun DisplayProfile(modifier: Modifier = Modifier){
     BackHandler (
         enabled = (!readOnlyNewName or !readOnlyPassword or displayDeleteAccount)
     ) {
-        if (!readOnlyNewName){
-            newNameError = false
-            readOnlyNewName = true
+        if (displayDeleteAccount){
+            displayDeleteAccount = false
         }
         else if (!readOnlyPassword){
             oldPasswordError = false
@@ -128,12 +131,9 @@ fun DisplayProfile(modifier: Modifier = Modifier){
             passwordPlaceHolder = R.string.password_hidden
             oldPassword.value = ""
         }
-        else if (displayDeleteAccount){
-            displayDeleteAccount = !displayDeleteAccount
-            passwordTitle = R.string.password
-            passwordPlaceHolder = R.string.password_hidden
-            readOnlyPassword = true
-            displayChangePassword = false
+        else if (!readOnlyNewName){
+            newNameError = false
+            readOnlyNewName = true
         }
     }
 
@@ -448,23 +448,46 @@ fun DisplayProfile(modifier: Modifier = Modifier){
             visible = displayDeleteAccount,
             enter = expandVertically(),
             exit = shrinkVertically(),
-            modifier = modifier.padding(top = 10.dp, bottom = 15.dp),
+            modifier = modifier.padding(top = 8.dp, bottom = 70.dp),
         ) {
             Column {
+                Column(modifier = modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Start)
+                        .padding(start = 30.dp, top = 0.dp, end = 30.dp, bottom = 22.dp),) {
+                    DisplayTextInputField(input = confirmDeleteAccountPassword, placeHolderTextID = R.string.confirm_password, editButton = false, displaySavingAnimation = false, readOnly = false, isError = confirmDeleteAccountPasswordError, editContentDescription = R.string.confirm_password, clearContentDescription = R.string.clear_confirm_password, onDoneClickAction = { focusManager.clearFocus() })
+                }
                 if(!displayDeleteAccountAnimation){
                     Button(
                         onClick = {
-                            displayDeleteAccountAnimation = true
-                            auth.currentUser!!.delete()
-                                .addOnSuccessListener {
-                                    localContext?.startActivity(Intent(localContext, SignUp::class.java))
-                                    localContext?.finish()
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(localContext, "Failed to delete account", Toast.LENGTH_SHORT).show()
-                                    displayDeleteAccountAnimation = false
-                                }
+                            if (confirmDeleteAccountPassword.value.isNotEmpty()){
+                                confirmDeleteAccountPasswordError = false
+                                displayDeleteAccountAnimation = true
+                                val credential = EmailAuthProvider.getCredential(email.value.toString(), confirmDeleteAccountPassword.value)
+                                auth.currentUser!!.reauthenticate(credential)
+                                    .addOnSuccessListener {
+                                        auth.currentUser!!.delete()
+                                            .addOnSuccessListener {
+                                                confirmDeleteAccountPasswordError = false
+                                                displayDeleteAccountAnimation = false
+                                                localContext?.startActivity(Intent(localContext, SignUp::class.java))
+                                                localContext?.finish()
+                                            }.addOnFailureListener {
+                                                Toast.makeText(localContext, "Failed to delete account", Toast.LENGTH_SHORT).show()
+                                                confirmDeleteAccountPasswordError = false
+                                                displayDeleteAccountAnimation = false
+                                            }
+                                    }.addOnFailureListener {
+                                        Toast.makeText(localContext, "Please enter the correct password", Toast.LENGTH_SHORT).show()
+                                        confirmDeleteAccountPasswordError = true
+                                        displayDeleteAccountAnimation = false
+                                    }
+                            }
+                            else{
+                                confirmDeleteAccountPasswordError = true
+                            }
                         },
+                        modifier = modifier.align(Alignment.CenterHorizontally),
                         colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_candy_apple_red))
                     ) {
                         Text(
