@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -31,10 +32,12 @@ class LogIn : AppCompatActivity() {
             val email = binding.editTextTextEmailAddressInput.text.toString()
             val password = binding.editTextTextPasswordInput.text.toString()
             if (checkAllFields()) {
+                showLoggingInAnimation(true)
                 // Check if the user has an account
                 auth.fetchSignInMethodsForEmail(email).addOnSuccessListener {
                     if (it.signInMethods!!.size > 0){
                         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+                            showLoggingInAnimation(false)
                             startActivity(Intent(this@LogIn, MainActivity::class.java))
                             finish()
                         }.addOnFailureListener {it2 ->
@@ -47,12 +50,15 @@ class LogIn : AppCompatActivity() {
                                     Log.e("Firebase Auth Error: Log In", it2.toString())
                                 }
                             }
+                            showLoggingInAnimation(false)
                         }
                     }
                     else {
                         binding.editTextTextEmailAddressLayout.error = "No user found"
+                        showLoggingInAnimation(false)
                     }
                 }.addOnFailureListener {
+                    showLoggingInAnimation(false)
                     Toast.makeText(this@LogIn, "Log in failed", Toast.LENGTH_SHORT).show()
                     Log.e("Firebase Auth Error: Log In", it.toString())
                 }
@@ -84,5 +90,22 @@ class LogIn : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    private fun showLoggingInAnimation(show: Boolean){
+        // Start logging in animation
+        if (show){
+            binding.logInButton.visibility = View.GONE
+            binding.logInProgressBar.visibility = View.VISIBLE
+            binding.signUpButton.isEnabled = false
+            binding.signUpButton.isClickable = false
+        }
+        // End logging in animation
+        else{
+            binding.logInButton.visibility = View.VISIBLE
+            binding.logInProgressBar.visibility = View.GONE
+            binding.signUpButton.isEnabled = true
+            binding.signUpButton.isClickable = true
+        }
     }
 }
