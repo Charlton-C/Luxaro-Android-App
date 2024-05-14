@@ -25,7 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import com.example.luxaro.R
+import com.example.luxaro.areThereAnyLikedPropertiesToShow
 import com.example.luxaro.propertiesLikedByUser
+import com.example.luxaro.ui.home.DisplayFullPageLoading
 import com.example.luxaro.ui.home.DisplayProperties
 
 class FavoritesFragment : Fragment() {
@@ -38,11 +40,14 @@ class FavoritesFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                if (propertiesLikedByUser.isNotEmpty()) {
+                if (areThereAnyLikedPropertiesToShow.value == "true") {
                     DisplayProperties(properties = propertiesLikedByUser)
                 }
-                else{
-                    DisplayNoProperties()
+                else if (areThereAnyLikedPropertiesToShow.value == "false"){
+                    DisplayNoLikedProperties()
+                }
+                else if (areThereAnyLikedPropertiesToShow.value == ""){
+                    DisplayFullPageLoading()
                 }
             }
         }
@@ -51,7 +56,7 @@ class FavoritesFragment : Fragment() {
 
 
 @Composable
-fun DisplayNoProperties(modifier: Modifier = Modifier) {
+fun DisplayNoLikedProperties(modifier: Modifier = Modifier) {
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
