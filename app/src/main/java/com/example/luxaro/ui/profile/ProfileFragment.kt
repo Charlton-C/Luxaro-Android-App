@@ -105,6 +105,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
     val confirmNewPassword = remember { mutableStateOf("") }
     var confirmNewPasswordError by remember { mutableStateOf(false) }
     var displayDeleteAccount by remember { mutableStateOf(false) }
+    var displayLogOutAnimation by remember { mutableStateOf(false) }
     newName.value = name.value.toString()
     newEmail.value = email.value.toString()
 
@@ -402,18 +403,24 @@ fun DisplayProfile(modifier: Modifier = Modifier){
         Column(
             modifier = modifier.padding(top = 65.dp)
         ) {
-            Button(
-                onClick = {
-                    auth.signOut()
-                    localContext?.startActivity(Intent(localContext, LogIn::class.java))
-                    localContext?.finish()
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.blue_cola))
-            ) {
-                Text(
-                    text = stringResource(id = R.string.log_out),
-                    fontSize = 14.sp,
-                )
+            if(!displayLogOutAnimation) {
+                Button(
+                    onClick = {
+                        displayLogOutAnimation = true
+                        auth.signOut()
+                        localContext?.startActivity(Intent(localContext, LogIn::class.java))
+                        localContext?.finish()
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.blue_cola))
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.log_out),
+                        fontSize = 14.sp,
+                    )
+                }
+            }
+            if(displayLogOutAnimation){
+                CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = Color.White)
             }
         }
         Column(
