@@ -31,6 +31,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -58,6 +59,7 @@ import androidx.fragment.app.Fragment
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.luxaro.R
+import com.example.luxaro.areThereAnyPropertiesToShow
 import com.example.luxaro.likeProperty
 import com.example.luxaro.model.PropertyModelPackage
 import com.example.luxaro.propertiesAvailable
@@ -75,11 +77,14 @@ class HomeFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                if (propertiesAvailable.isNotEmpty()) {
+                if (areThereAnyPropertiesToShow.value == "true") {
                     DisplayProperties(properties = propertiesAvailable)
                 }
-                else{
+                else if (areThereAnyPropertiesToShow.value == "false"){
                     DisplayNoProperties()
+                }
+                else if (areThereAnyPropertiesToShow.value == ""){
+                    DisplayFullPageLoading()
                 }
             }
         }
@@ -574,5 +579,19 @@ fun DisplayNoProperties(modifier: Modifier = Modifier) {
             fontSize = 20.sp,
             color = Color.White,
         )
+    }
+}
+
+@Composable
+fun DisplayFullPageLoading(modifier: Modifier = Modifier){
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .padding(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 58.dp)
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .verticalScroll(rememberScrollState()))
+    {
+        CircularProgressIndicator(color = Color.White)
     }
 }
