@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -83,6 +84,8 @@ class MainActivity : AppCompatActivity() {
 }
 
 
+var areThereAnyPropertiesToShow = mutableStateOf("")
+var areThereAnyLikedPropertiesToShow = mutableStateOf("")
 var propertiesAvailable = mutableStateListOf<PropertyModelPackage>()
 var propertiesLikedByUser = mutableStateListOf<PropertyModelPackage>()
 var runFunGetPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable = getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable()
@@ -100,9 +103,11 @@ fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() 
                 singleProperty.longdescription = singleProperty.longdescription.replace("\\t", "\t").replace("\\b", "\b").replace("\\n", "\n").replace("\\r", "\r")
                 propertiesAvailable.add(singleProperty)
             }
+            areThereAnyPropertiesToShow.value = "true"
         }
         .addOnFailureListener { exception ->
             Log.e("Firestone", "Error getting properties.", exception)
+            areThereAnyPropertiesToShow.value = "false"
         }
 }
 
@@ -127,10 +132,12 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
                     }
                 }
             }
+            areThereAnyLikedPropertiesToShow.value = "true"
         }
 
         override fun onCancelled(error: DatabaseError) {
             Log.e("Firebase Realtime DB Error", error.toString())
+            areThereAnyLikedPropertiesToShow.value = "false"
         }
     })
 }
