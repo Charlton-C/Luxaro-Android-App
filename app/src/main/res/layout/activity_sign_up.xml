@@ -212,15 +212,31 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/signUpButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/signUpButtonAndProgressBarLinearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
-            android:backgroundTint="@color/blue_cola"
-            android:text="@string/sign_up"
-            android:textSize="15sp" />
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/signUpButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/blue_cola"
+                android:text="@string/sign_up"
+                android:textSize="15sp" />
+
+            <ProgressBar
+                android:id="@+id/signUpProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/white" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/footer_linear_layout"

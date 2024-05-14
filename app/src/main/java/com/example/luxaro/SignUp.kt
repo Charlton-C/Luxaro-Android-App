@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -36,12 +37,14 @@ class SignUp : AppCompatActivity() {
             val email = binding.editTextTextEmailAddressInput.text.toString()
             val password = binding.editTextTextPasswordInput.text.toString()
             if (checkAllFields()) {
+                showSigningUpAnimation(true)
                 auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
                     it.user?.updateProfile(
                         UserProfileChangeRequest.Builder()
                             .setDisplayName(name)
                             .build()
                     )
+                    showSigningUpAnimation(false)
                     startActivity(Intent(this@SignUp, MainActivity::class.java))
                     finish()
                 }.addOnFailureListener{
@@ -52,6 +55,7 @@ class SignUp : AppCompatActivity() {
                         Toast.makeText(this@SignUp, "Sign Up Failed\nPlease try again later", Toast.LENGTH_LONG).show()
                         Log.e("Firebase Auth Error: Sign Up", it.toString())
                     }
+                    showSigningUpAnimation(false)
                 }
             }
 
@@ -96,5 +100,22 @@ class SignUp : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    private fun showSigningUpAnimation(show: Boolean){
+        // Start signing up animation
+        if (show){
+            binding.signUpButton.visibility = View.GONE
+            binding.signUpProgressBar.visibility = View.VISIBLE
+            binding.logInButton.isEnabled = false
+            binding.logInButton.isClickable = false
+        }
+        // End signing up animation
+        else{
+            binding.signUpButton.visibility = View.VISIBLE
+            binding.signUpProgressBar.visibility = View.GONE
+            binding.logInButton.isEnabled = true
+            binding.logInButton.isClickable = true
+        }
     }
 }
