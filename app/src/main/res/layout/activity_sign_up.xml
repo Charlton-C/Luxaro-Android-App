@@ -36,7 +36,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextNameLayout"
-            android:theme="@style/TextInputLayoutTheme"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -47,7 +47,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextNameInput"
-                android:theme="@style/TextInputEditTextTheme"
+                style="@style/TextInputEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -72,7 +72,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextEmailAddressLayout"
-            android:theme="@style/TextInputLayoutTheme"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -83,7 +83,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextEmailAddressInput"
-                android:theme="@style/TextInputEditTextTheme"
+                style="@style/TextInputEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -108,7 +108,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextPasswordLayout"
-            android:theme="@style/TextInputLayoutTheme"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -120,7 +120,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextPasswordInput"
-                android:theme="@style/TextInputEditTextTheme"
+                style="@style/TextInputEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -145,7 +145,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextConfirmPasswordLayout"
-            android:theme="@style/TextInputLayoutTheme"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -157,7 +157,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextConfirmPasswordInput"
-                android:theme="@style/TextInputEditTextTheme"
+                style="@style/TextInputEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -180,7 +180,7 @@
 
             <Button
                 android:id="@+id/signUpButton"
-                android:theme="@style/MainButtonTheme"
+                style="@style/MainButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_up"
@@ -188,7 +188,7 @@
 
             <ProgressBar
                 android:id="@+id/signUpProgressBar"
-                android:theme="@style/ProgressBarTheme"
+                style="@style/ProgressBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
