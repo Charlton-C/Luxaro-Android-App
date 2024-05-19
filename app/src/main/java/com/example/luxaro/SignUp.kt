@@ -49,11 +49,11 @@ class SignUp : AppCompatActivity() {
                     finish()
                 }.addOnFailureListener{
                     if (it is FirebaseAuthUserCollisionException) {
-                        binding.editTextTextEmailAddressLayout.error = "A user with this email already exists"
+                        binding.editTextTextEmailAddressLayout.error = resources.getString(R.string.a_user_with_this_email_already_exists)
                     }
                     else{
-                        Toast.makeText(this@SignUp, "Sign Up Failed\nPlease try again later", Toast.LENGTH_LONG).show()
-                        Log.e("Firebase Auth Error: Sign Up", it.toString())
+                        Toast.makeText(this@SignUp, resources.getString(R.string.sign_up_failed_LineBreak_please_try_again_later), Toast.LENGTH_SHORT).show()
+                        Log.e(resources.getString(R.string.firebase_auth_error_colon_sign_up), it.toString())
                     }
                     showSigningUpAnimation(false)
                 }
@@ -73,29 +73,29 @@ class SignUp : AppCompatActivity() {
     private fun checkAllFields(): Boolean {
         val email = binding.editTextTextEmailAddressInput.text.toString()
         if (binding.editTextTextNameInput.text.toString() == ""){
-            binding.editTextTextNameLayout.error = "Please enter your name"
+            binding.editTextTextNameLayout.error = resources.getString(R.string.please_enter_your_name)
             return false
         }
         if (email == ""){
-            binding.editTextTextEmailAddressLayout.error = "Please enter your email"
+            binding.editTextTextEmailAddressLayout.error = resources.getString(R.string.please_enter_your_email)
             return false
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            binding.editTextTextEmailAddressLayout.error = "Please enter your email using the correct format"
+            binding.editTextTextEmailAddressLayout.error = resources.getString(R.string.please_enter_your_email_using_the_correct_format)
             return false
         }
         if (binding.editTextTextPasswordInput.text.toString() == ""){
-            binding.editTextTextPasswordLayout.error = "Please enter a password"
+            binding.editTextTextPasswordLayout.error = resources.getString(R.string.please_enter_a_password)
             binding.editTextTextPasswordLayout.errorIconDrawable = null
             return false
         }
         if(binding.editTextTextPasswordInput.length() <= 8){
-            binding.editTextTextPasswordLayout.error = "Password is too short"
+            binding.editTextTextPasswordLayout.error = resources.getString(R.string.password_is_too_short)
             binding.editTextTextPasswordLayout.errorIconDrawable = null
             return false
         }
         if(binding.editTextTextConfirmPasswordInput.text.toString() != binding.editTextTextPasswordInput.text.toString()){
-            binding.editTextTextConfirmPasswordLayout.error = "Passwords don't match"
+            binding.editTextTextConfirmPasswordLayout.error = resources.getString(R.string.passwords_dont_match)
             binding.editTextTextConfirmPasswordLayout.errorIconDrawable = null
             return false
         }
