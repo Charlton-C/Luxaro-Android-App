@@ -9,7 +9,6 @@
     <string name="log_in_failed">Log in Failed"</string>
     <string name="firebase_auth_error_colon_log_in">Firebase Auth Error: Log In</string>
     <string name="no_user_found">No user found</string>
-    <string name="please_enter_your_email">Please enter your email</string>
     <string name="please_enter_your_password">Please enter your password</string>
     <string name="sign_up">Sign Up</string>
     <string name="a_user_with_this_email_already_exists">A user with this email already exists</string>
@@ -56,6 +55,7 @@
     <string name="inquiry_on">Inquiry on</string>
     <string name="call_us">Call Us</string>
     <string name="email_us">Email Us</string>
+    <string name="choose_an_email_client">Choose an Email client:</string>
     <string name="text_us">Text Us</string>
     <string name="whatsapp">WhatsApp</string>
     <string name="title_activity_search">Search</string>

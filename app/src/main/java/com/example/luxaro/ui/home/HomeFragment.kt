@@ -464,7 +464,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                         .putExtra(Intent.EXTRA_EMAIL, arrayOf(property.emailaddress))
                         .putExtra(Intent.EXTRA_SUBJECT, inquiryOnText + " " + property.title)
                         .putExtra(Intent.EXTRA_TEXT, inquiryOnText + " " + property.title)
-                    localContext.startActivity(Intent.createChooser(intent, "Choose an Email client: "))
+                    localContext.startActivity(Intent.createChooser(intent, localContext.getString(R.string.choose_an_email_client)))
                 },
                 shape = RoundedCornerShape(6.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.vivid_cerulean)),
