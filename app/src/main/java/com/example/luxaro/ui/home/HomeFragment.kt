@@ -592,6 +592,6 @@ fun DisplayFullPageLoading(modifier: Modifier = Modifier){
             .fillMaxHeight()
             .verticalScroll(rememberScrollState()))
     {
-        CircularProgressIndicator(color = Color.White)
+        CircularProgressIndicator(color = colorResource(id = R.color.rich_electric_blue))
     }
 }

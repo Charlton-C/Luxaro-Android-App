@@ -234,7 +234,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:indeterminate="true"
-                android:indeterminateTint="@color/white" />
+                android:indeterminateTint="@color/rich_electric_blue" />
 
         </LinearLayout>
 

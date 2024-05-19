@@ -421,7 +421,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 }
             }
             if(displayLogOutAnimation){
-                CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = Color.White)
+                CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = colorResource(id = R.color.rich_electric_blue))
             }
         }
         Column(
@@ -452,9 +452,9 @@ fun DisplayProfile(modifier: Modifier = Modifier){
         ) {
             Column {
                 Column(modifier = modifier
-                        .fillMaxWidth()
-                        .align(Alignment.Start)
-                        .padding(start = 30.dp, top = 0.dp, end = 30.dp, bottom = 22.dp),) {
+                    .fillMaxWidth()
+                    .align(Alignment.Start)
+                    .padding(start = 30.dp, top = 0.dp, end = 30.dp, bottom = 22.dp),) {
                     DisplayTextInputField(input = confirmDeleteAccountPassword, placeHolderTextID = R.string.confirm_password, editButton = false, displaySavingAnimation = false, readOnly = false, isError = confirmDeleteAccountPasswordError, editContentDescription = R.string.confirm_password, clearContentDescription = R.string.clear_confirm_password, onDoneClickAction = { focusManager.clearFocus() })
                 }
                 if(!displayDeleteAccountAnimation){
@@ -497,7 +497,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                     }
                 }
                 if (displayDeleteAccountAnimation){
-                    CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = Color.White)
+                    CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = colorResource(id = R.color.rich_electric_blue))
                 }
             }
         }
@@ -575,7 +575,7 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                                 .align(Alignment.CenterVertically)
                                 .padding(end = 10.dp)
                                 .size(25.dp),
-                            color = Color.White)
+                            color = colorResource(id = R.color.rich_electric_blue))
                     }
                 }
             },
