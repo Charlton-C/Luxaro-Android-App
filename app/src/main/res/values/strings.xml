@@ -2,6 +2,8 @@
     <string name="app_name">Luxaro</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="firestone_error_getting_properties">Firestone: Error getting properties</string>
+    <string name="firebase_realtime_db_error">Firebase: Realtime DB Error</string>
     <string name="dark_mode">Dark mode</string>
     <string name="light_mode_coming_soon">Light mode coming soon</string>
     <string name="log_in">Log In</string>

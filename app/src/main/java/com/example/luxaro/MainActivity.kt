@@ -1,6 +1,7 @@
 package com.example.luxaro
 
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
@@ -106,7 +107,7 @@ fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() 
             areThereAnyPropertiesToShow.value = "true"
         }
         .addOnFailureListener { exception ->
-            Log.e("Firestone", "Error getting properties.", exception)
+            Log.e(Resources.getSystem().getString(R.string.firestone_error_getting_properties), exception.toString())
             areThereAnyPropertiesToShow.value = "false"
         }
 }
@@ -136,7 +137,7 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
         }
 
         override fun onCancelled(error: DatabaseError) {
-            Log.e("Firebase Realtime DB Error", error.toString())
+            Log.e(Resources.getSystem().getString(R.string.firebase_realtime_db_error), error.toString())
             areThereAnyLikedPropertiesToShow.value = "false"
         }
     })
