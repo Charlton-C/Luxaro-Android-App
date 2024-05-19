@@ -528,7 +528,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                         )))
                 },
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.malachite)),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.lime_green)),
                 modifier = modifier
                     .fillMaxWidth()
                     .height(42.dp)
