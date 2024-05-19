@@ -17,11 +17,9 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view_bottom"
+            style="@style/BottomNavigationViewStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/ocean_boat_blue_1"
-            app:itemIconTint="@color/white"
-            app:itemTextColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

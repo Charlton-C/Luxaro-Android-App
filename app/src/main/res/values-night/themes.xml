@@ -44,4 +44,10 @@
     <style name="ProgressBarStyle">
         <item name="android:indeterminateTint">@color/rich_electric_blue</item>
     </style>
+
+    <style name="BottomNavigationViewStyle">
+        <item name="android:background">@color/ocean_boat_blue_1</item>
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
+    </style>
 </resources>
