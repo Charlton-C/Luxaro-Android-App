@@ -24,14 +24,16 @@ class FavoritesFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                if (areThereAnyLikedPropertiesToShow.value == "true") {
-                    DisplayProperties(properties = propertiesLikedByUser)
-                }
-                else if (areThereAnyLikedPropertiesToShow.value == "false"){
-                    DisplayNoProperties(R.string.no_properties_to_show, R.string.try_liking_one)
-                }
-                else if (areThereAnyLikedPropertiesToShow.value == ""){
-                    DisplayFullPageLoading()
+                when (areThereAnyLikedPropertiesToShow.value){
+                    "true" -> {
+                        DisplayProperties(properties = propertiesLikedByUser)
+                    }
+                    "false" -> {
+                        DisplayNoProperties(R.string.no_properties_to_show, R.string.try_liking_one)
+                    }
+                    "" -> {
+                        DisplayFullPageLoading()
+                    }
                 }
             }
         }
