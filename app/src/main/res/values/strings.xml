@@ -60,7 +60,7 @@
     <string name="title_profile">Profile</string>
     <string name="like">like</string>
     <string name="unlike">unlike</string>
-    <string name="no_properties_to_display">No properties to show</string>
+    <string name="no_properties_to_show">No properties to show</string>
     <string name="try_checking_again_later">Try checking again later</string>
     <string name="try_liking_one">Try liking one</string>
     <string name="contact_us">Contact Us</string>

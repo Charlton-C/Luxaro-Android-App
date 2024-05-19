@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
                     DisplayProperties(properties = propertiesAvailable)
                 }
                 else if (areThereAnyPropertiesToShow.value == "false"){
-                    DisplayNoProperties()
+                    DisplayNoProperties(R.string.no_properties_to_show, R.string.try_checking_again_later)
                 }
                 else if (areThereAnyPropertiesToShow.value == ""){
                     DisplayFullPageLoading()
@@ -555,7 +555,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
 
 
 @Composable
-fun DisplayNoProperties(modifier: Modifier = Modifier) {
+fun DisplayNoProperties(messegeOneResource: Int, messegeTwoResource: Int, modifier: Modifier = Modifier) {
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -565,7 +565,7 @@ fun DisplayNoProperties(modifier: Modifier = Modifier) {
             .verticalScroll(rememberScrollState()))
     {
         Text(
-            text = stringResource(id = R.string.no_properties_to_display),
+            text = stringResource(id = messegeOneResource),
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 24.sp,
@@ -573,7 +573,7 @@ fun DisplayNoProperties(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = modifier.height(15.dp))
         Text(
-            text = stringResource(id = R.string.try_checking_again_later),
+            text = stringResource(id = messegeTwoResource),
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 20.sp,
