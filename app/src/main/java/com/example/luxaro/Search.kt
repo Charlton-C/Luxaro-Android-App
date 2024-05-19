@@ -348,22 +348,22 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
 fun search(searchString: String, propertiesToSearch: List<PropertyModelPackage>): SnapshotStateList<PropertyModelPackage> {
     val propertiesFound = mutableStateListOf<PropertyModelPackage>()
     for (propertyOriginal in propertiesToSearch){
-        if(propertyOriginal.title.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true) and !propertiesFound.contains(propertyOriginal)) {
+        if(!propertiesFound.contains(propertyOriginal) and propertyOriginal.title.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true)) {
             propertiesFound.add(propertyOriginal)
         }
     }
     for (propertyOriginal in propertiesToSearch){
-        if(propertyOriginal.shortdescription.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true) and !propertiesFound.contains(propertyOriginal)) {
+        if(!propertiesFound.contains(propertyOriginal) and propertyOriginal.shortdescription.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true)) {
             propertiesFound.add(propertyOriginal)
         }
     }
     for (propertyOriginal in propertiesToSearch){
-        if(propertyOriginal.longdescription.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true and !propertiesFound.contains(propertyOriginal))) {
+        if(!propertiesFound.contains(propertyOriginal) and propertyOriginal.longdescription.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true)) {
             propertiesFound.add(propertyOriginal)
         }
     }
     for (propertyOriginal in propertiesToSearch){
-        if(propertyOriginal.price.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true and !propertiesFound.contains(propertyOriginal))) {
+        if(!propertiesFound.contains(propertyOriginal) and propertyOriginal.price.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true)) {
             propertiesFound.add(propertyOriginal)
         }
     }
