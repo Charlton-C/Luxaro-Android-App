@@ -34,6 +34,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -99,6 +100,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
     val localContext = (LocalContext.current as? Activity)
     val searchText = remember { mutableStateOf("") }
     val searchTextOld = remember { mutableStateOf("") }
+    var displaySearchingForPropertiesAnimation by remember { mutableStateOf(false) }
     var displayNoPropertiesFound by remember { mutableStateOf(false) }
     var displayMoreInfo by remember { mutableStateOf(false) }
     var displayContactUs by remember { mutableStateOf(false) }
@@ -162,7 +164,9 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                     visualTransformation = VisualTransformation.None,
                     keyboardActions = KeyboardActions(onSearch = {
                         if (!TextUtils.isEmpty(searchText.value.trim()) and (searchText.value != searchTextOld.value)) {
+                            displaySearchingForPropertiesAnimation = true
                             searchResults.value = search(searchText.value.filterNot { it.isWhitespace() }, propertiesAvailable)
+                            displaySearchingForPropertiesAnimation = false
                             // Check if searchResults is empty and if it is display no search results found message
                             displayNoPropertiesFound = searchResults.value.isEmpty()
                             searchTextOld.value = searchText.value
@@ -222,7 +226,9 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                 IconButton(modifier = modifier.align(Alignment.CenterVertically),
                     onClick = {
                         if (!TextUtils.isEmpty(searchText.value.trim()) and (searchText.value != searchTextOld.value)) {
+                            displaySearchingForPropertiesAnimation = true
                             searchResults.value = search(searchText.value.filterNot { it.isWhitespace() }, propertiesAvailable)
+                            displaySearchingForPropertiesAnimation = false
                             // Check if searchResults is empty and if it is display no search results found message
                             displayNoPropertiesFound = searchResults.value.isEmpty()
                             searchTextOld.value = searchText.value
@@ -238,7 +244,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                     )
                 }
             }
-            if(searchResults.value.isNotEmpty() and !displayNoPropertiesFound) {
+            if(searchResults.value.isNotEmpty() and !displaySearchingForPropertiesAnimation and !displayNoPropertiesFound) {
                 Column(
                     modifier = modifier
                         .fillMaxWidth()
@@ -254,6 +260,9 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                         })
                     }
                 }
+            }
+            else if (displaySearchingForPropertiesAnimation) {
+                CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally).padding(top = 50.dp), color = colorResource(id = R.color.rich_electric_blue))
             }
             else{
                 DisplayNoPropertiesFound(displayNoPropertiesFound)
