@@ -79,7 +79,7 @@ class Search : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        window.navigationBarColor = resources.getColor(R.color.ateneo_blue);
+        window.navigationBarColor = resources.getColor(R.color.ateneo_blue)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         delegate.applyDayNight()
         setContent {
