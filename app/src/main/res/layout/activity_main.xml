@@ -41,12 +41,10 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/activity_main_navigation_view"
+        style="@style/NavigationViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
-        android:background="@color/medium_persian_blue_2"
         app:menu="@menu/activity_main_drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -50,4 +50,10 @@
         <item name="itemIconTint">@color/white</item>
         <item name="itemTextColor">@color/white</item>
     </style>
+
+    <style name="NavigationViewStyle">
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
+        <item name="android:background">@color/medium_persian_blue_2</item>
+    </style>
 </resources>
