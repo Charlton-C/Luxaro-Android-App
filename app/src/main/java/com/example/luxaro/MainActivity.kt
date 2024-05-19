@@ -104,7 +104,7 @@ fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() 
                 singleProperty.longdescription = singleProperty.longdescription.replace("\\t", "\t").replace("\\b", "\b").replace("\\n", "\n").replace("\\r", "\r")
                 propertiesAvailable.add(singleProperty)
             }
-            areThereAnyPropertiesToShow.value = "true"
+            areThereAnyPropertiesToShow.value = propertiesAvailable.isNotEmpty().toString()
         }
         .addOnFailureListener { exception ->
             Log.e(Resources.getSystem().getString(R.string.firestone_error_getting_properties), exception.toString())
@@ -124,7 +124,7 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
                 }
             }
             for (id in likedPropertiesIds){
-                propertiesLikedByUser.add(propertiesAvailable.find{ property -> id == property.id }!!)
+                propertiesLikedByUser.add(propertiesAvailable.find{ property -> id == property.id.replace('/', '_').replace('.', '_').replace('#', '_').replace('$', '_').replace('[', '_').replace(']', '_') }!!)
             }
             for (propertyOriginal in propertiesAvailable){
                 for (property in propertiesLikedByUser){
@@ -133,7 +133,7 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
                     }
                 }
             }
-            areThereAnyLikedPropertiesToShow.value = "true"
+            areThereAnyLikedPropertiesToShow.value = propertiesLikedByUser.isNotEmpty().toString()
         }
 
         override fun onCancelled(error: DatabaseError) {
@@ -149,6 +149,7 @@ fun likeProperty(property: PropertyModelPackage){
     val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
     firebaseRealtimeDatabaseReference.setValue("true")
     propertiesLikedByUser.add(property)
+    areThereAnyLikedPropertiesToShow.value = propertiesLikedByUser.isNotEmpty().toString()
 }
 
 fun unlikeProperty(property: PropertyModelPackage){
@@ -157,4 +158,5 @@ fun unlikeProperty(property: PropertyModelPackage){
     val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
     firebaseRealtimeDatabaseReference.setValue("false")
     propertiesLikedByUser.remove(property)
+    areThereAnyLikedPropertiesToShow.value = propertiesLikedByUser.isNotEmpty().toString()
 }
