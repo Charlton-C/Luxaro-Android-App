@@ -36,37 +36,27 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextEmailAddressLayout"
+            android:theme="@style/TextInputLayoutTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="30dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="30dp"
-            android:textColorHint="@color/white"
-            app:boxCornerRadiusBottomEnd="6dp"
-            app:boxCornerRadiusBottomStart="6dp"
-            app:boxCornerRadiusTopEnd="6dp"
-            app:boxCornerRadiusTopStart="6dp"
-            app:boxStrokeColor="@color/white"
-            app:boxStrokeWidth="0dp"
-            app:cursorColor="@color/white"
-            app:cursorErrorColor="@color/white"
-            app:hintTextColor="@color/white">
+            app:boxStrokeWidth="0dp" >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextEmailAddressInput"
+                android:theme="@style/TextInputEditTextTheme"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:autofillHints="emailAddress"
-                android:backgroundTint="@color/medium_persian_blue_1"
                 android:inputType="textEmailAddress"
                 android:paddingStart="12dp"
                 android:paddingTop="9dp"
                 android:paddingEnd="12dp"
-                android:paddingBottom="9dp"
-                android:textColor="@color/white"
-                app:boxStrokeColor="@color/white" />
+                android:paddingBottom="9dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,39 +72,28 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextPasswordLayout"
+            android:theme="@style/TextInputLayoutTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="30dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="30dp"
-            android:textColorHint="@color/white"
-            app:boxCornerRadiusBottomEnd="6dp"
-            app:boxCornerRadiusBottomStart="6dp"
-            app:boxCornerRadiusTopEnd="6dp"
-            app:boxCornerRadiusTopStart="6dp"
-            app:boxStrokeColor="@color/white"
             app:boxStrokeWidth="0dp"
-            app:cursorColor="@color/white"
-            app:cursorErrorColor="@color/white"
-            app:hintTextColor="@color/white"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/white">
+            app:passwordToggleEnabled="true" >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextPasswordInput"
+                android:theme="@style/TextInputEditTextTheme"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:autofillHints="password"
-                android:backgroundTint="@color/medium_persian_blue_1"
                 android:inputType="textPassword"
                 android:paddingStart="12dp"
                 android:paddingTop="9dp"
                 android:paddingEnd="12dp"
-                android:paddingBottom="9dp"
-                android:textColor="@color/white"
-                app:boxStrokeColor="@color/white" />
+                android:paddingBottom="9dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,19 +107,19 @@
 
             <Button
                 android:id="@+id/logInButton"
+                android:theme="@style/MainButtonTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/blue_cola"
                 android:text="@string/log_in"
                 android:textSize="15sp" />
 
             <ProgressBar
                 android:id="@+id/logInProgressBar"
+                android:theme="@style/ProgressBarTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/white" />
+                android:indeterminate="true" />
 
         </LinearLayout>
 
@@ -170,7 +149,6 @@
                 android:paddingEnd="10dp"
                 android:text="@string/sign_up"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:textColor="@color/white"
                 android:textSize="14sp" />
 
         </LinearLayout>
