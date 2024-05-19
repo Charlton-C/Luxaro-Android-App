@@ -77,14 +77,16 @@ class HomeFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                if (areThereAnyPropertiesToShow.value == "true") {
-                    DisplayProperties(properties = propertiesAvailable)
-                }
-                else if (areThereAnyPropertiesToShow.value == "false"){
-                    DisplayNoProperties(R.string.no_properties_to_show, R.string.try_checking_again_later)
-                }
-                else if (areThereAnyPropertiesToShow.value == ""){
-                    DisplayFullPageLoading()
+                when (areThereAnyPropertiesToShow.value){
+                    "true" -> {
+                        DisplayProperties(properties = propertiesAvailable)
+                    }
+                    "false" -> {
+                        DisplayNoProperties(R.string.no_properties_to_show, R.string.try_checking_again_later)
+                    }
+                    "" -> {
+                        DisplayFullPageLoading()
+                    }
                 }
             }
         }
