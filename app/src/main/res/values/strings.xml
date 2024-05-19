@@ -5,6 +5,12 @@
     <string name="dark_mode">Dark mode</string>
     <string name="light_mode_coming_soon">Light mode coming soon</string>
     <string name="log_in">Log In</string>
+    <string name="wrong_password">Wrong Password</string>
+    <string name="log_in_failed">Log in Failed"</string>
+    <string name="firebase_auth_error_colon_log_in">Firebase Auth Error: Log In</string>
+    <string name="no_user_found">No user found</string>
+    <string name="please_enter_your_email">Please enter your email</string>
+    <string name="please_enter_your_password">Please enter your password</string>
     <string name="sign_up">Sign Up</string>
     <string name="a_user_with_this_email_already_exists">A user with this email already exists</string>
     <string name="sign_up_failed_LineBreak_please_try_again_later">Sign Up Failed\nPlease try again later</string>
