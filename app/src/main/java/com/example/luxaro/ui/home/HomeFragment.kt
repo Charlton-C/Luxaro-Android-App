@@ -63,6 +63,7 @@ import com.example.luxaro.areThereAnyPropertiesToShow
 import com.example.luxaro.likeProperty
 import com.example.luxaro.model.PropertyModelPackage
 import com.example.luxaro.propertiesAvailable
+import com.example.luxaro.ui.theme.LocalCustomColors
 import com.example.luxaro.ui.theme.LuxaroTheme
 import com.example.luxaro.unlikeProperty
 import java.util.Locale
@@ -224,8 +225,8 @@ fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> 
         .fillMaxWidth()
         .clickable { onCardClickAction() },
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.medium_persian_blue_1),
-            contentColor = Color.White
+            containerColor = LocalCustomColors.current.previewCardBackground,
+            contentColor = LocalCustomColors.current.previewCardTextColor
         )) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -285,6 +286,7 @@ fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> 
                     Icon(
                         imageVector = ImageVector.vectorResource(id = favoriteIcon.value),
                         contentDescription = stringResource(likedText.value),
+                        tint = LocalCustomColors.current.previewCardIconColor,
                         modifier = modifier
                             .size(35.dp)
                             .fillMaxHeight()
