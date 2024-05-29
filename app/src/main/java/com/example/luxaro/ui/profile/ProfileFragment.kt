@@ -62,6 +62,7 @@ import androidx.fragment.app.Fragment
 import com.example.luxaro.LogIn
 import com.example.luxaro.R
 import com.example.luxaro.SignUp
+import com.example.luxaro.ui.theme.LuxaroTheme
 import com.google.firebase.Firebase
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.auth
@@ -77,7 +78,9 @@ class ProfileFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                DisplayProfile()
+                LuxaroTheme {
+                    DisplayProfile()
+                }
             }
         }
     }
@@ -452,9 +455,9 @@ fun DisplayProfile(modifier: Modifier = Modifier){
         ) {
             Column {
                 Column(modifier = modifier
-                        .fillMaxWidth()
-                        .align(Alignment.Start)
-                        .padding(start = 30.dp, top = 0.dp, end = 30.dp, bottom = 22.dp),) {
+                    .fillMaxWidth()
+                    .align(Alignment.Start)
+                    .padding(start = 30.dp, top = 0.dp, end = 30.dp, bottom = 22.dp),) {
                     DisplayTextInputField(input = confirmDeleteAccountPassword, placeHolderTextID = R.string.confirm_password, editButton = false, displaySavingAnimation = false, readOnly = false, isError = confirmDeleteAccountPasswordError, editContentDescription = R.string.confirm_password, clearContentDescription = R.string.clear_confirm_password, onDoneClickAction = { focusManager.clearFocus() })
                 }
                 if(!displayDeleteAccountAnimation){

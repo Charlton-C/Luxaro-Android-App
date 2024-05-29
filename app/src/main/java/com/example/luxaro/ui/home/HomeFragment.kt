@@ -63,6 +63,7 @@ import com.example.luxaro.areThereAnyPropertiesToShow
 import com.example.luxaro.likeProperty
 import com.example.luxaro.model.PropertyModelPackage
 import com.example.luxaro.propertiesAvailable
+import com.example.luxaro.ui.theme.LuxaroTheme
 import com.example.luxaro.unlikeProperty
 import java.util.Locale
 
@@ -77,14 +78,16 @@ class HomeFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                if (areThereAnyPropertiesToShow.value == "true") {
-                    DisplayProperties(properties = propertiesAvailable)
-                }
-                else if (areThereAnyPropertiesToShow.value == "false"){
-                    DisplayNoProperties()
-                }
-                else if (areThereAnyPropertiesToShow.value == ""){
-                    DisplayFullPageLoading()
+                LuxaroTheme {
+                    if (areThereAnyPropertiesToShow.value == "true") {
+                        DisplayProperties(properties = propertiesAvailable)
+                    }
+                    else if (areThereAnyPropertiesToShow.value == "false"){
+                        DisplayNoProperties()
+                    }
+                    else if (areThereAnyPropertiesToShow.value == ""){
+                        DisplayFullPageLoading()
+                    }
                 }
             }
         }

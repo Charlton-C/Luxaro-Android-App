@@ -29,6 +29,7 @@ import com.example.luxaro.areThereAnyLikedPropertiesToShow
 import com.example.luxaro.propertiesLikedByUser
 import com.example.luxaro.ui.home.DisplayFullPageLoading
 import com.example.luxaro.ui.home.DisplayProperties
+import com.example.luxaro.ui.theme.LuxaroTheme
 
 class FavoritesFragment : Fragment() {
 
@@ -40,14 +41,16 @@ class FavoritesFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                if (areThereAnyLikedPropertiesToShow.value == "true") {
-                    DisplayProperties(properties = propertiesLikedByUser)
-                }
-                else if (areThereAnyLikedPropertiesToShow.value == "false"){
-                    DisplayNoLikedProperties()
-                }
-                else if (areThereAnyLikedPropertiesToShow.value == ""){
-                    DisplayFullPageLoading()
+                LuxaroTheme {
+                    if (areThereAnyLikedPropertiesToShow.value == "true") {
+                        DisplayProperties(properties = propertiesLikedByUser)
+                    }
+                    else if (areThereAnyLikedPropertiesToShow.value == "false"){
+                        DisplayNoLikedProperties()
+                    }
+                    else if (areThereAnyLikedPropertiesToShow.value == ""){
+                        DisplayFullPageLoading()
+                    }
                 }
             }
         }

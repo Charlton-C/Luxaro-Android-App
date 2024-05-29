@@ -72,6 +72,7 @@ import coil.request.ImageRequest
 import com.example.luxaro.model.PropertyModelPackage
 import com.example.luxaro.ui.home.DisplaySpecificPropertyContactCard
 import com.example.luxaro.ui.home.DisplaySpecificPropertyDetailsCard
+import com.example.luxaro.ui.theme.LuxaroTheme
 
 class Search : AppCompatActivity() {
 
@@ -82,12 +83,14 @@ class Search : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         delegate.applyDayNight()
         setContent {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                contentColor = Color.White,
-                color = colorResource(id = R.color.ateneo_blue),
-            ) {
-                DisplaySearch()
+            LuxaroTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    contentColor = Color.White,
+                    color = colorResource(id = R.color.ateneo_blue),
+                ) {
+                    DisplaySearch()
+                }
             }
         }
     }
