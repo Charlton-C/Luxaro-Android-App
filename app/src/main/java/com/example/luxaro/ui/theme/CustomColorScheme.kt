@@ -5,10 +5,10 @@ import androidx.compose.ui.graphics.Color
 
 data class CustomColorScheme(
     var sideNavigationBackground: Color = Color.Unspecified,
-    var pageLoadingAnimationColor: Color = Color.Unspecified,
-    var pageBackground: Color = Color.Unspecified,
-    var pageTextColor: Color = Color.Unspecified,
-    var pageIconColor: Color = Color.Unspecified,
+    var windowLoadingAnimationColor: Color = Color.Unspecified,
+    var windowBackground: Color = Color.Unspecified,
+    var windowTextColor: Color = Color.Unspecified,
+    var windowIconColor: Color = Color.Unspecified,
     var previewCardBackground: Color = Color.Unspecified,
     var previewCardTextColor: Color = Color.Unspecified,
     var previewCardIconColor: Color = Color.Unspecified,

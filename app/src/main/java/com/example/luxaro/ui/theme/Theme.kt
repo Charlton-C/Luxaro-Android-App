@@ -14,10 +14,10 @@ import androidx.core.view.WindowCompat
 
 private val DarkBlueColorScheme = CustomColorScheme(
     sideNavigationBackground = MediumPersianBlue2,
-    pageLoadingAnimationColor = Color.White,
-    pageBackground = AteneoBlue,
-    pageTextColor = Color.White,
-    pageIconColor = Color.White,
+    windowLoadingAnimationColor = Color.White,
+    windowBackground = AteneoBlue,
+    windowTextColor = Color.White,
+    windowIconColor = Color.White,
     previewCardBackground = MediumPersianBlue1,
     previewCardTextColor = Color.White,
     previewCardIconColor = Color.White,
@@ -53,10 +53,10 @@ private val DarkBlueColorScheme = CustomColorScheme(
 
 private val LightBlueColorScheme = CustomColorScheme(
     sideNavigationBackground = Color.Unspecified,
-    pageLoadingAnimationColor = Color.Unspecified,
-    pageBackground = Color.Unspecified,
-    pageTextColor = Color.Unspecified,
-    pageIconColor = Color.Unspecified,
+    windowLoadingAnimationColor = Color.Unspecified,
+    windowBackground = Color.Unspecified,
+    windowTextColor = Color.Unspecified,
+    windowIconColor = Color.Unspecified,
     previewCardBackground = Color.Unspecified,
     previewCardTextColor = Color.Unspecified,
     previewCardIconColor = Color.Unspecified,

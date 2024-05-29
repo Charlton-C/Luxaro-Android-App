@@ -73,7 +73,7 @@ fun DisplayNoLikedProperties(modifier: Modifier = Modifier) {
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 24.sp,
-            color = LocalCustomColors.current.pageTextColor,
+            color = LocalCustomColors.current.windowTextColor,
         )
         Spacer(modifier = modifier.height(15.dp))
         Text(
@@ -81,7 +81,7 @@ fun DisplayNoLikedProperties(modifier: Modifier = Modifier) {
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 20.sp,
-            color = LocalCustomColors.current.pageTextColor,
+            color = LocalCustomColors.current.windowTextColor,
         )
     }
 }
