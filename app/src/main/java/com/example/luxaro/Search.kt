@@ -72,6 +72,7 @@ import coil.request.ImageRequest
 import com.example.luxaro.model.PropertyModelPackage
 import com.example.luxaro.ui.home.DisplaySpecificPropertyContactCard
 import com.example.luxaro.ui.home.DisplaySpecificPropertyDetailsCard
+import com.example.luxaro.ui.theme.LocalCustomColors
 import com.example.luxaro.ui.theme.LuxaroTheme
 
 class Search : AppCompatActivity() {
@@ -86,8 +87,8 @@ class Search : AppCompatActivity() {
             LuxaroTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    contentColor = Color.White,
-                    color = colorResource(id = R.color.ateneo_blue),
+                    contentColor = LocalCustomColors.current.windowTextColor,
+                    color = LocalCustomColors.current.windowBackground,
                 ) {
                     DisplaySearch()
                 }
@@ -139,6 +140,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.baseline_close_24),
                     contentDescription = stringResource(id = R.string.close_search),
+                    tint = LocalCustomColors.current.closeSearchIconColor,
                     modifier = modifier
                         .padding(0.dp)
                         .size(38.dp),
@@ -159,8 +161,8 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                         .focusRequester(focusRequester),
                     interactionSource = interactionSource,
                     singleLine = true,
-                    textStyle = LocalTextStyle.current.copy(color = Color.White, fontSize = 18.sp),
-                    cursorBrush = SolidColor(Color.White),
+                    textStyle = LocalTextStyle.current.copy(color = LocalCustomColors.current.searchTextFieldTextColor, fontSize = 18.sp),
+                    cursorBrush = SolidColor(LocalCustomColors.current.searchTextFieldCursorColor),
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                     visualTransformation = VisualTransformation.None,
                     keyboardActions = KeyboardActions(onSearch = {
@@ -198,6 +200,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                                     Icon(
                                         imageVector = ImageVector.vectorResource(id = R.drawable.baseline_close_24),
                                         contentDescription = stringResource(id = R.string.clear_search),
+                                        tint = LocalCustomColors.current.searchTextFieldIconColor,
                                         modifier = modifier
                                             .padding(0.dp)
                                             .size(20.dp),
@@ -207,17 +210,17 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                         },
                         shape = RoundedCornerShape(8.dp),
                         colors = TextFieldDefaults.colors(
-                            focusedContainerColor = colorResource(id = R.color.rich_electric_blue),
-                            unfocusedContainerColor = colorResource(id = R.color.rich_electric_blue),
+                            focusedContainerColor = LocalCustomColors.current.searchTextFieldBackground,
+                            unfocusedContainerColor = LocalCustomColors.current.searchTextFieldBackground,
                             disabledContainerColor = Color.Transparent,
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                             disabledIndicatorColor = Color.Transparent,
-                            focusedPlaceholderColor = Color.White,
-                            unfocusedPlaceholderColor = Color.White,
+                            focusedPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            unfocusedPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor,
                             disabledPlaceholderColor = Color.Transparent,
-                            focusedTrailingIconColor = Color.White,
-                            unfocusedTrailingIconColor = Color.White,
+                            focusedTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                            unfocusedTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
                             disabledTrailingIconColor = Color.Transparent,
                         ),
                     )
@@ -237,6 +240,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.baseline_search_24),
                         contentDescription = stringResource(id = R.string.search_for) + " " + searchText.value,
+                        tint = LocalCustomColors.current.searchIconColor,
                         modifier = modifier.size(32.dp),
                     )
                 }
