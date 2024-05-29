@@ -55,11 +55,11 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
@@ -79,8 +79,6 @@ class Search : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-        window.navigationBarColor = resources.getColor(R.color.ateneo_blue);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         delegate.applyDayNight()
         setContent {
@@ -90,6 +88,8 @@ class Search : AppCompatActivity() {
                     contentColor = LocalCustomColors.current.windowTextColor,
                     color = LocalCustomColors.current.windowBackground,
                 ) {
+                    supportActionBar?.hide()
+                    window.navigationBarColor = LocalCustomColors.current.windowBackground.toArgb()
                     DisplaySearch()
                 }
             }
