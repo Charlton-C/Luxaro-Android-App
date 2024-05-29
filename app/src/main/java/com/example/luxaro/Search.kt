@@ -430,12 +430,14 @@ fun DisplayNoPropertiesFound(displayThisPage: Boolean, modifier: Modifier = Modi
                 text = stringResource(id = R.string.no_properties_found),
                 modifier = modifier.padding(20.dp, 0.dp),
                 fontSize = 18.sp,
+                color = LocalCustomColors.current.windowTextColor
             )
             Spacer(modifier = modifier.height(6.dp))
             Text(
                 text = stringResource(id = R.string.try_searching_for_something_else),
                 modifier = modifier.padding(20.dp, 0.dp),
                 fontSize = 18.sp,
+                color = LocalCustomColors.current.windowTextColor
             )
         }
     }
