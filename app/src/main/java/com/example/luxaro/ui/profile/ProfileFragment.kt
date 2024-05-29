@@ -88,7 +88,7 @@ class ProfileFragment : Fragment() {
 }
 
 @Composable
-fun DisplayProfile(modifier: Modifier = Modifier){
+fun DisplayProfile(modifier: Modifier = Modifier) {
     val auth = Firebase.auth
     val localContext = (LocalContext.current as? Activity)
     val focusManager = LocalFocusManager.current
@@ -513,7 +513,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, editButton: Boolean, displaySavingAnimation: Boolean, readOnly: Boolean, isError: Boolean, editContentDescription: Int, clearContentDescription: Int, onDoneClickAction: () -> Unit, modifier: Modifier = Modifier){
+fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, editButton: Boolean, displaySavingAnimation: Boolean, readOnly: Boolean, isError: Boolean, editContentDescription: Int, clearContentDescription: Int, onDoneClickAction: () -> Unit, modifier: Modifier = Modifier) {
     val interactionSource = remember { MutableInteractionSource() }
     var editOrSaveIcon by remember { mutableStateOf(R.drawable.baseline_edit_square_24) }
     editOrSaveIcon = if(readOnly){ R.drawable.baseline_edit_square_24 } else { R.drawable.baseline_save_24 }
@@ -527,8 +527,8 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
         interactionSource = interactionSource,
         singleLine = true,
         readOnly = readOnly,
-        textStyle = LocalTextStyle.current.copy(color = Color.White, fontSize = 19.sp),
-        cursorBrush = SolidColor(Color.White),
+        textStyle = LocalTextStyle.current.copy(color = LocalCustomColors.current.profileTextFieldTextColor, fontSize = 19.sp),
+        cursorBrush = SolidColor(LocalCustomColors.current.profileTextFieldCursorColor),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         visualTransformation = VisualTransformation.None,
         keyboardActions = KeyboardActions(onDone = { onDoneClickAction() }),
@@ -558,6 +558,7 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                             Icon(
                                 imageVector = ImageVector.vectorResource(id = R.drawable.baseline_close_24),
                                 contentDescription = stringResource(id = clearContentDescription),
+                                tint = LocalCustomColors.current.profileTextFieldIconColor,
                                 modifier = modifier
                                     .padding(0.dp)
                                     .size(20.dp),
@@ -570,6 +571,7 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                             Icon(
                                 imageVector = ImageVector.vectorResource(id = editOrSaveIcon),
                                 contentDescription = stringResource(id = editContentDescription),
+                                tint = LocalCustomColors.current.profileTextFieldIconColor,
                                 modifier = modifier
                                     .padding(0.dp)
                                     .size(25.dp),
@@ -582,29 +584,29 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                                 .align(Alignment.CenterVertically)
                                 .padding(end = 10.dp)
                                 .size(25.dp),
-                            color = Color.White)
+                            color = LocalCustomColors.current.profileTextFieldLoadingAnimationColor)
                     }
                 }
             },
             shape = RoundedCornerShape(6.dp),
             colors = TextFieldDefaults.colors(
-                focusedContainerColor = colorResource(id = R.color.rich_electric_blue),
-                unfocusedContainerColor = colorResource(id = R.color.rich_electric_blue),
-                errorContainerColor = colorResource(id = R.color.rich_electric_blue),
+                focusedContainerColor = LocalCustomColors.current.profileTextFieldBackground,
+                unfocusedContainerColor = LocalCustomColors.current.profileTextFieldBackground,
+                errorContainerColor = LocalCustomColors.current.profileTextFieldBackground,
                 disabledContainerColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 errorIndicatorColor = Color.Red,
                 disabledIndicatorColor = Color.Transparent,
-                focusedPlaceholderColor = Color.White,
-                unfocusedPlaceholderColor = Color.White,
-                errorPlaceholderColor = Color.White,
+                focusedPlaceholderColor = LocalCustomColors.current.profileTextFieldTextColor,
+                unfocusedPlaceholderColor = LocalCustomColors.current.profileTextFieldTextColor,
+                errorPlaceholderColor = LocalCustomColors.current.profileTextFieldTextColor,
                 disabledPlaceholderColor = Color.Transparent,
-                focusedTrailingIconColor = Color.White,
-                unfocusedTrailingIconColor = Color.White,
+                focusedTrailingIconColor = LocalCustomColors.current.profileTextFieldIconColor,
+                unfocusedTrailingIconColor = LocalCustomColors.current.profileTextFieldIconColor,
                 errorTrailingIconColor = Color.Red,
                 disabledTrailingIconColor = Color.Transparent,
-                errorTextColor = Color.White,
+                errorTextColor = LocalCustomColors.current.profileTextFieldTextColor,
             ),
         )
     }
