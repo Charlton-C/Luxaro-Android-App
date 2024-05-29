@@ -62,6 +62,7 @@ import androidx.fragment.app.Fragment
 import com.example.luxaro.LogIn
 import com.example.luxaro.R
 import com.example.luxaro.SignUp
+import com.example.luxaro.ui.theme.LocalCustomColors
 import com.example.luxaro.ui.theme.LuxaroTheme
 import com.google.firebase.Firebase
 import com.google.firebase.auth.EmailAuthProvider
@@ -158,7 +159,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 text = stringResource(id = R.string.name),
                 modifier = modifier.padding(0.dp),
                 fontSize = 19.sp,
-                color = Color.White,
+                color = LocalCustomColors.current.profileTextFieldTitleTextColor,
             )
             DisplayTextInputField(
                 input = newName,
@@ -224,7 +225,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 text = stringResource(id = R.string.email),
                 modifier = modifier.padding(0.dp),
                 fontSize = 19.sp,
-                color = Color.White,
+                color = LocalCustomColors.current.profileTextFieldTitleTextColor,
             )
             DisplayTextInputField(
                 input = newEmail,
@@ -248,7 +249,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 text = stringResource(id = passwordTitle),
                 modifier = modifier.padding(0.dp),
                 fontSize = 19.sp,
-                color = Color.White,
+                color = LocalCustomColors.current.profileTextFieldTitleTextColor,
             )
             DisplayTextInputField(input = oldPassword, placeHolderTextID = passwordPlaceHolder, editButton = true, displaySavingAnimation = displaySavingPassword, readOnly = readOnlyPassword, isError = oldPasswordError, editContentDescription = R.string.change_password, clearContentDescription = R.string.clear_old_password, onDoneClickAction = {
                 if (!readOnlyPassword){
@@ -384,7 +385,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         text = stringResource(id = R.string.new_password),
                         modifier = modifier.padding(0.dp),
                         fontSize = 19.sp,
-                        color = Color.White,
+                        color = LocalCustomColors.current.profileTextFieldTitleTextColor,
                     )
                     DisplayTextInputField(input = newPassword, placeHolderTextID = R.string.new_password, editButton = false, displaySavingAnimation = false, readOnly = false, isError = newPasswordError, editContentDescription = R.string.new_password, clearContentDescription = R.string.clear_new_password, onDoneClickAction = {})
                 }
@@ -398,7 +399,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         text = stringResource(id = R.string.confirm_password),
                         modifier = modifier.padding(0.dp),
                         fontSize = 19.sp,
-                        color = Color.White,
+                        color = LocalCustomColors.current.profileTextFieldTitleTextColor,
                     )
                     DisplayTextInputField(input = confirmNewPassword, placeHolderTextID = R.string.confirm_password, editButton = false, displaySavingAnimation = false, readOnly = false, isError = confirmNewPasswordError, editContentDescription = R.string.confirm_new_password, clearContentDescription = R.string.clear_confirm_new_password, onDoneClickAction = {})
                 }
@@ -415,16 +416,17 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         localContext?.startActivity(Intent(localContext, LogIn::class.java))
                         localContext?.finish()
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.blue_cola))
+                    colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.logOutButtonBackground)
                 ) {
                     Text(
                         text = stringResource(id = R.string.log_out),
                         fontSize = 14.sp,
+                        color = LocalCustomColors.current.logOutButtonTextColor,
                     )
                 }
             }
             if(displayLogOutAnimation){
-                CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = Color.White)
+                CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = LocalCustomColors.current.windowLoadingAnimationColor)
             }
         }
         Column(
@@ -439,11 +441,12 @@ fun DisplayProfile(modifier: Modifier = Modifier){
             },
                 modifier = modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(0.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.medium_persian_blue_2))
+                colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.deleteAccountPreviewButtonBackground)
             ) {
                 Text(
                     text = stringResource(id = R.string.delete_account),
                     fontSize = 14.sp,
+                    color = LocalCustomColors.current.deleteAccountPreviewButtonTextColor,
                 )
             }
         }
@@ -457,7 +460,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 Column(modifier = modifier
                     .fillMaxWidth()
                     .align(Alignment.Start)
-                    .padding(start = 30.dp, top = 0.dp, end = 30.dp, bottom = 22.dp),) {
+                    .padding(start = 30.dp, top = 0.dp, end = 30.dp, bottom = 22.dp)) {
                     DisplayTextInputField(input = confirmDeleteAccountPassword, placeHolderTextID = R.string.confirm_password, editButton = false, displaySavingAnimation = false, readOnly = false, isError = confirmDeleteAccountPasswordError, editContentDescription = R.string.confirm_password, clearContentDescription = R.string.clear_confirm_password, onDoneClickAction = { focusManager.clearFocus() })
                 }
                 if(!displayDeleteAccountAnimation){
@@ -491,16 +494,17 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                             }
                         },
                         modifier = modifier.align(Alignment.CenterHorizontally),
-                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_candy_apple_red))
+                        colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.deleteAccountButtonBackground)
                     ) {
                         Text(
                             text = stringResource(id = R.string.delete_account),
                             fontSize = 15.sp,
+                            color = LocalCustomColors.current.deleteAccountButtonTextColor,
                         )
                     }
                 }
                 if (displayDeleteAccountAnimation){
-                    CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = Color.White)
+                    CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = LocalCustomColors.current.windowLoadingAnimationColor)
                 }
             }
         }
