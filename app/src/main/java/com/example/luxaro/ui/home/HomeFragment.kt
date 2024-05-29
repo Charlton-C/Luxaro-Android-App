@@ -577,7 +577,7 @@ fun DisplayNoProperties(modifier: Modifier = Modifier) {
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 24.sp,
-            color = Color.White,
+            color = LocalCustomColors.current.pageTextColor,
         )
         Spacer(modifier = modifier.height(15.dp))
         Text(
@@ -585,7 +585,7 @@ fun DisplayNoProperties(modifier: Modifier = Modifier) {
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 20.sp,
-            color = Color.White,
+            color = LocalCustomColors.current.pageTextColor,
         )
     }
 }
