@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
@@ -29,6 +28,7 @@ import com.example.luxaro.areThereAnyLikedPropertiesToShow
 import com.example.luxaro.propertiesLikedByUser
 import com.example.luxaro.ui.home.DisplayFullPageLoading
 import com.example.luxaro.ui.home.DisplayProperties
+import com.example.luxaro.ui.theme.LocalCustomColors
 import com.example.luxaro.ui.theme.LuxaroTheme
 
 class FavoritesFragment : Fragment() {
@@ -73,7 +73,7 @@ fun DisplayNoLikedProperties(modifier: Modifier = Modifier) {
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 24.sp,
-            color = Color.White,
+            color = LocalCustomColors.current.pageTextColor,
         )
         Spacer(modifier = modifier.height(15.dp))
         Text(
@@ -81,7 +81,7 @@ fun DisplayNoLikedProperties(modifier: Modifier = Modifier) {
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 20.sp,
-            color = Color.White,
+            color = LocalCustomColors.current.pageTextColor,
         )
     }
 }
