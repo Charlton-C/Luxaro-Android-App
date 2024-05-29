@@ -315,8 +315,8 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
         modifier = modifier
             .padding(bottom = 62.dp),
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.medium_persian_blue_1),
-            contentColor = Color.White
+            containerColor = LocalCustomColors.current.moreInfoCardBackground,
+            contentColor = LocalCustomColors.current.moreInfoCardTextColor
         )
     ) {
         Box {
@@ -339,6 +339,7 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.baseline_close_24),
                     contentDescription = stringResource(id = R.string.close),
+                    tint = LocalCustomColors.current.moreInfoCardIconColor,
                     modifier = modifier
                         .size(36.dp),
                 )
@@ -373,6 +374,7 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
                 Icon(
                     imageVector = ImageVector.vectorResource(id = favoriteIcon.value),
                     contentDescription = stringResource(likedText.value),
+                    tint = LocalCustomColors.current.moreInfoCardIconColor,
                     modifier = modifier
                         .size(45.dp)
                         .padding(0.dp),
@@ -406,10 +408,11 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
             onClick = { onContactUsClickAction() },
             modifier = modifier
                 .align(alignment = Alignment.CenterHorizontally),
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.persian_green))
+            colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.moreInfoCardContactUsButtonBackground)
         ) {
             Text(
                 text = stringResource(id = R.string.contact_us),
+                color = LocalCustomColors.current.moreInfoCardContactUsButtonTextColor,
                 modifier = modifier
                     .background(Color.Transparent),
                 fontSize = 21.sp,
