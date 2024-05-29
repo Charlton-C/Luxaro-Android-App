@@ -28,6 +28,7 @@ data class CustomColorScheme(
     var profileTextFieldIconColor: Color = Color.Unspecified,
     var profileTextFieldLoadingAnimationColor: Color = Color.Unspecified,
     var logOutButtonBackground: Color = Color.Unspecified,
+    var logOutButtonTextColor: Color = Color.Unspecified,
     var deleteAccountPreviewButtonBackground: Color = Color.Unspecified,
     var deleteAccountPreviewButtonTextColor: Color = Color.Unspecified,
     var deleteAccountButtonBackground: Color = Color.Unspecified,
