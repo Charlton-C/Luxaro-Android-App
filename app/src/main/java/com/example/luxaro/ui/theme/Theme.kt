@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
@@ -47,6 +48,40 @@ private val DarkBlueColorScheme = CustomColorScheme(
     searchResultCardTextColor = Color.White,
 )
 
+private val LightBlueColorScheme = CustomColorScheme(
+    sideNavigationBackground = Color.Unspecified,
+    pageLoadingAnimationColor = Color.Unspecified,
+    previewCardBackground = Color.Unspecified,
+    previewCardTextColor = Color.Unspecified,
+    previewCardIconColor = Color.Unspecified,
+    moreInfoCardBackground = Color.Unspecified,
+    moreInfoCardTextColor = Color.Unspecified,
+    moreInfoCardIconColor = Color.Unspecified,
+    moreInfoCardContactUsButtonBackground = Color.Unspecified,
+    moreInfoCardContactUsButtonTextColor = Color.Unspecified,
+    contactUsCardBackground = Color.Unspecified,
+    contactUsCardButtonBackground = Color.Unspecified,
+    contactUsCardButtonTextColor = Color.Unspecified,
+    contactUsCardWhatsappButtonBackground = Color.Unspecified,
+    profileTextFieldTitleTextColor = Color.Unspecified,
+    profileTextFieldBackground = Color.Unspecified,
+    profileTextFieldTextColor = Color.Unspecified,
+    profileTextFieldIconColor = Color.Unspecified,
+    profileTextFieldLoadingAnimationColor = Color.Unspecified,
+    logOutButtonBackground = Color.Unspecified,
+    deleteAccountPreviewButtonBackground = Color.Unspecified,
+    deleteAccountPreviewButtonTextColor = Color.Unspecified,
+    deleteAccountButtonBackground = Color.Unspecified,
+    deleteAccountButtonTextColor = Color.Unspecified,
+    closeSearchIconColor = Color.Unspecified,
+    searchTextFieldBackground = Color.Unspecified,
+    searchTextFieldTextColor = Color.Unspecified,
+    searchTextFieldIconColor = Color.Unspecified,
+    searchIconColor = Color.Unspecified,
+    searchResultCardBackground = Color.Unspecified,
+    searchResultCardTextColor = Color.Unspecified,
+)
+
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -78,6 +113,7 @@ fun LuxaroTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (darkTheme) LightColorScheme else DarkColorScheme
+    val customColor = if (darkTheme) DarkBlueColorScheme else LightBlueColorScheme
 
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -87,9 +123,11 @@ fun LuxaroTheme(
         }
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(LocalCustomColors provides customColor) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 }
