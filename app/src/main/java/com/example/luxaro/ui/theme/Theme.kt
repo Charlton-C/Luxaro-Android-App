@@ -10,10 +10,47 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+
+private val DarkBlueColorScheme = CustomColorScheme(
+    sideNavigationBackground = MediumPersianBlue2,
+    pageLoadingAnimationColor = Color.White,
+    previewCardBackground = MediumPersianBlue1,
+    previewCardTextColor = Color.White,
+    previewCardIconColor = Color.White,
+    moreInfoCardBackground = MediumPersianBlue1,
+    moreInfoCardTextColor = Color.White,
+    moreInfoCardIconColor = Color.White,
+    moreInfoCardContactUsButtonBackground = PersianGreen,
+    moreInfoCardContactUsButtonTextColor = Color.White,
+    contactUsCardBackground = OceanBoatBlue2,
+    contactUsCardButtonBackground = VividCerulean,
+    contactUsCardButtonTextColor = Color.White,
+    contactUsCardWhatsappButtonBackground = Malachite,
+    profileTextFieldTitleTextColor = Color.White,
+    profileTextFieldBackground = RichElectricBlue,
+    profileTextFieldCursorColor = Color.White,
+    profileTextFieldTextColor = Color.White,
+    profileTextFieldIconColor = Color.White,
+    profileTextFieldLoadingAnimationColor = Color.White,
+    logOutButtonBackground = BlueCola,
+    deleteAccountPreviewButtonBackground = MediumPersianBlue2,
+    deleteAccountPreviewButtonTextColor = Color.White,
+    deleteAccountButtonBackground = DarkCandyAppleRed,
+    deleteAccountButtonTextColor = Color.White,
+    closeSearchIconColor = Color.White,
+    searchTextFieldBackground = RichElectricBlue,
+    searchTextFieldCursorColor = Color.White,
+    searchTextFieldTextColor = Color.White,
+    searchTextFieldIconColor = Color.White,
+    searchIconColor = Color.White,
+    searchResultCardBackground = MediumPersianBlue2,
+    searchResultCardTextColor = Color.White,
+)
+
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -58,7 +95,6 @@ fun LuxaroTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
