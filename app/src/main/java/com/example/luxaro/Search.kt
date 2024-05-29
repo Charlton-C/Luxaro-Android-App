@@ -369,15 +369,15 @@ fun search(searchString: String, propertiesToSearch: List<PropertyModelPackage>)
 }
 
 @Composable
-fun CreateSearchResultCard(property: PropertyModelPackage, onCardClickAction: () -> Unit, modifier: Modifier = Modifier){
+fun CreateSearchResultCard(property: PropertyModelPackage, onCardClickAction: () -> Unit, modifier: Modifier = Modifier) {
     Card(
         onClick = { onCardClickAction() },
         modifier = modifier
             .fillMaxWidth()
             .padding(6.dp, 7.dp),
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.medium_persian_blue_2),
-            contentColor = Color.White
+            containerColor = LocalCustomColors.current.searchResultCardBackground,
+            contentColor = LocalCustomColors.current.searchResultCardTextColor
         )
     ) {
         Row {
