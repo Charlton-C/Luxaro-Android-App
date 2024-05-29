@@ -429,8 +429,8 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
     Card(modifier = modifier
             .padding(bottom = 62.dp),
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.ocean_boat_blue_2),
-            contentColor = Color.White
+            containerColor = LocalCustomColors.current.contactUsCardBackground,
+            contentColor = LocalCustomColors.current.contactUsCardButtonTextColor
         )) {
         Spacer(modifier = modifier.height(45.dp))
         Column(modifier = modifier.align(Alignment.CenterHorizontally)) {
@@ -444,7 +444,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     )
                 },
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.vivid_cerulean)),
+                colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.contactUsCardButtonBackground),
                 modifier = modifier
                     .fillMaxWidth()
                     .height(42.dp)
@@ -475,7 +475,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     localContext.startActivity(Intent.createChooser(intent, "Choose an Email client: "))
                 },
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.vivid_cerulean)),
+                colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.contactUsCardButtonBackground),
                 modifier = modifier
                     .fillMaxWidth()
                     .height(42.dp)
@@ -506,7 +506,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     )
                 },
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.vivid_cerulean)),
+                colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.contactUsCardButtonBackground),
                 modifier = modifier
                     .fillMaxWidth()
                     .height(42.dp)
@@ -536,7 +536,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                         )))
                 },
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.malachite)),
+                colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.contactUsCardWhatsappButtonBackground),
                 modifier = modifier
                     .fillMaxWidth()
                     .height(42.dp)
