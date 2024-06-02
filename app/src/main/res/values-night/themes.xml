@@ -18,9 +18,11 @@
         <item name="android:navigationBarColor">@color/ocean_boat_blue_1</item>
     </style>
 
-    <style name="TextInputLayoutStyle">
-        <item name="backgroundTint">@color/medium_persian_blue_1</item>
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/medium_persian_blue_1</item>
         <item name="boxStrokeColor">@color/white</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
         <item name="cursorColor">@color/white</item>
         <item name="cursorErrorColor">@color/white</item>
         <item name="passwordToggleTint">@color/white</item>
@@ -35,6 +37,7 @@
     <style name="TextInputEditTextStyle">
         <item name="backgroundTint">@color/medium_persian_blue_1</item>
         <item name="boxStrokeColor">@color/white</item>
+        <item name="boxStrokeWidth">0dp</item>
     </style>
 
     <style name="MainButtonStyle">
