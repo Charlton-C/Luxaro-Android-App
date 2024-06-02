@@ -28,8 +28,8 @@
             android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:text="@string/name"
             android:textSize="20sp" />
@@ -41,9 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="30dp"
-            app:boxStrokeWidth="0dp" >
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp" >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextNameInput"
@@ -64,8 +63,8 @@
             android:id="@+id/emailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="30dp"
             android:text="@string/email"
             android:textSize="20sp" />
@@ -76,10 +75,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="12dp"
             android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            app:boxStrokeWidth="0dp" >
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp" >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextEmailAddressInput"
@@ -100,8 +98,8 @@
             android:id="@+id/passwordTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="30dp"
             android:text="@string/password"
             android:textSize="20sp" />
@@ -113,9 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
-            app:boxStrokeWidth="0dp"
             app:passwordToggleEnabled="true" >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -137,8 +134,8 @@
             android:id="@+id/confirmPasswordTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="30dp"
             android:text="@string/confirm_password"
             android:textSize="20sp" />
@@ -149,10 +146,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="12dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
-            app:boxStrokeWidth="0dp"
             app:passwordToggleEnabled="true" >
 
             <com.google.android.material.textfield.TextInputEditText
