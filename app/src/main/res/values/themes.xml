@@ -55,4 +55,10 @@
         <item name="itemIconTint">@color/ocean_boat_blue_3</item>
         <item name="itemTextColor">@color/ocean_boat_blue_3</item>
     </style>
+
+    <style name="NavigationViewStyle">
+        <item name="android:background">@color/white_500</item>
+        <item name="itemIconTint">@color/ocean_boat_blue_3</item>
+        <item name="itemTextColor">@color/black</item>
+    </style>
 </resources>
