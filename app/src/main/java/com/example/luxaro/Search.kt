@@ -38,9 +38,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -177,19 +177,13 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                         }
                     }),
                 ) { innerTextField ->
-                    TextFieldDefaults.DecorationBox(
+                    OutlinedTextFieldDefaults.DecorationBox(
                         value = searchText.value,
-                        visualTransformation = VisualTransformation.None,
                         innerTextField = innerTextField,
-                        singleLine = true,
                         enabled = true,
+                        singleLine = true,
+                        visualTransformation = VisualTransformation.None,
                         interactionSource = interactionSource,
-                        contentPadding = PaddingValues(
-                            start = 15.dp,
-                            top = 8.dp,
-                            end = 0.dp,
-                            bottom = 8.dp
-                        ),
                         placeholder = { Text(text = stringResource(id = R.string.search_placeholder)) },
                         trailingIcon = {
                             if (!TextUtils.isEmpty(searchText.value)) {
@@ -208,20 +202,55 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                                 }
                             }
                         },
-                        shape = RoundedCornerShape(8.dp),
-                        colors = TextFieldDefaults.colors(
+                        contentPadding = PaddingValues(
+                            start = 15.dp,
+                            top = 8.dp,
+                            end = 0.dp,
+                            bottom = 8.dp
+                        ),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedTextColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            unfocusedTextColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            disabledTextColor = LocalCustomColors.current.searchTextFieldTextColor.copy(alpha = 0.5f),
+                            errorTextColor = LocalCustomColors.current.searchTextFieldTextColor,
                             focusedContainerColor = LocalCustomColors.current.searchTextFieldBackground,
                             unfocusedContainerColor = LocalCustomColors.current.searchTextFieldBackground,
-                            disabledContainerColor = Color.Transparent,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            disabledIndicatorColor = Color.Transparent,
-                            focusedPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor,
-                            unfocusedPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor,
-                            disabledPlaceholderColor = Color.Transparent,
+                            disabledContainerColor = LocalCustomColors.current.searchTextFieldBackground.copy(alpha = 0.5f),
+                            errorContainerColor = LocalCustomColors.current.searchTextFieldBackground,
+                            cursorColor = LocalCustomColors.current.searchTextFieldCursorColor,
+                            errorCursorColor = LocalCustomColors.current.searchTextFieldCursorColor,
+                            focusedBorderColor = LocalCustomColors.current.searchTextFieldBorderColor,
+                            unfocusedBorderColor = LocalCustomColors.current.searchTextFieldBorderColor,
+                            disabledBorderColor = LocalCustomColors.current.searchTextFieldBorderColor.copy(alpha = 0.5f),
+                            errorBorderColor = LocalCustomColors.current.searchTextFieldBorderColor,
+                            focusedLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                            unfocusedLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                            disabledLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor.copy(alpha = 0.5f),
+                            errorLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
                             focusedTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
                             unfocusedTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
-                            disabledTrailingIconColor = Color.Transparent,
+                            disabledTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor.copy(alpha = 0.5f),
+                            errorTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                            focusedLabelColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            unfocusedLabelColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            disabledLabelColor = LocalCustomColors.current.searchTextFieldTextColor.copy(alpha = 0.5f),
+                            errorLabelColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            focusedPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            unfocusedPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            disabledPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor.copy(alpha = 0.5f),
+                            errorPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            focusedSupportingTextColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            unfocusedSupportingTextColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            disabledSupportingTextColor = LocalCustomColors.current.searchTextFieldTextColor.copy(0.5f),
+                            errorSupportingTextColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            focusedPrefixColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            unfocusedPrefixColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            disabledPrefixColor = LocalCustomColors.current.searchTextFieldTextColor.copy(0.5f),
+                            errorPrefixColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            focusedSuffixColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            unfocusedSuffixColor = LocalCustomColors.current.searchTextFieldTextColor,
+                            disabledSuffixColor = LocalCustomColors.current.searchTextFieldTextColor.copy(0.5f),
+                            errorSuffixColor = LocalCustomColors.current.searchTextFieldTextColor,
                         ),
                     )
                 }
