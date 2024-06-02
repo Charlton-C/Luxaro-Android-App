@@ -20,7 +20,7 @@
 
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxBackgroundColor">@color/medium_persian_blue_1</item>
-        <item name="boxStrokeColor">@color/white</item>
+        <item name="boxStrokeColor">@color/white_200</item>
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">1dp</item>
         <item name="cursorColor">@color/white</item>
@@ -55,8 +55,8 @@
     </style>
 
     <style name="NavigationViewStyle">
+        <item name="android:background">@color/medium_persian_blue_2</item>
         <item name="itemIconTint">@color/white</item>
         <item name="itemTextColor">@color/white</item>
-        <item name="android:background">@color/medium_persian_blue_2</item>
     </style>
 </resources>
