@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -404,6 +405,7 @@ fun CreateSearchResultCard(property: PropertyModelPackage, onCardClickAction: ()
         modifier = modifier
             .fillMaxWidth()
             .padding(6.dp, 7.dp),
+        border = BorderStroke(1.dp, LocalCustomColors.current.searchResultCardBorderStrokeColor),
         colors = CardDefaults.cardColors(
             containerColor = LocalCustomColors.current.searchResultCardBackground,
             contentColor = LocalCustomColors.current.searchResultCardTextColor
