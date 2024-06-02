@@ -10,6 +10,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -48,7 +49,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -224,6 +224,7 @@ fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> 
         .padding(20.dp, 12.dp)
         .fillMaxWidth()
         .clickable { onCardClickAction() },
+        border = BorderStroke(1.dp, LocalCustomColors.current.previewCardBorderStrokeColor),
         colors = CardDefaults.cardColors(
             containerColor = LocalCustomColors.current.previewCardBackground,
             contentColor = LocalCustomColors.current.previewCardTextColor
@@ -314,6 +315,7 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
     Card(
         modifier = modifier
             .padding(bottom = 62.dp),
+        border = BorderStroke(1.dp, LocalCustomColors.current.moreInfoCardBorderStrokeColor),
         colors = CardDefaults.cardColors(
             containerColor = LocalCustomColors.current.moreInfoCardBackground,
             contentColor = LocalCustomColors.current.moreInfoCardTextColor
@@ -428,6 +430,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
     val inquiryOnText = stringResource(id = R.string.inquiry_on)
     Card(modifier = modifier
             .padding(bottom = 62.dp),
+        border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardBorderStrokeColor),
         colors = CardDefaults.cardColors(
             containerColor = LocalCustomColors.current.contactUsCardBackground,
             contentColor = LocalCustomColors.current.contactUsCardButtonTextColor
@@ -449,6 +452,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
+                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
             ) {
                 Text(
                     text = stringResource(id = R.string.call_us),
@@ -480,6 +484,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
+                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
             ) {
                 Text(
                     text = stringResource(id = R.string.email_us),
@@ -511,6 +516,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
+                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
             ) {
                 Text(
                     text = stringResource(id = R.string.text_us),
@@ -541,6 +547,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
+                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
             ) {
                 Text(
                     text = stringResource(id = R.string.whatsapp),
