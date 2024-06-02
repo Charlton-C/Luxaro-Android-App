@@ -12,6 +12,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,8 +35,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -44,14 +45,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
@@ -416,6 +415,7 @@ fun DisplayProfile(modifier: Modifier = Modifier) {
                         localContext?.startActivity(Intent(localContext, LogIn::class.java))
                         localContext?.finish()
                     },
+                    border = BorderStroke(1.dp, LocalCustomColors.current.logOutButtonBorderStrokeColor),
                     colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.logOutButtonBackground)
                 ) {
                     Text(
@@ -494,6 +494,7 @@ fun DisplayProfile(modifier: Modifier = Modifier) {
                             }
                         },
                         modifier = modifier.align(Alignment.CenterHorizontally),
+                        border = BorderStroke(1.dp, LocalCustomColors.current.deleteAccountButtonBorderStrokeColor),
                         colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.deleteAccountButtonBackground)
                     ) {
                         Text(
@@ -533,20 +534,14 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
         visualTransformation = VisualTransformation.None,
         keyboardActions = KeyboardActions(onDone = { onDoneClickAction() }),
     ) { innerTextField ->
-        TextFieldDefaults.DecorationBox(
+        OutlinedTextFieldDefaults.DecorationBox(
             value = input.value,
-            visualTransformation = VisualTransformation.None,
             innerTextField = innerTextField,
+            enabled = true,
             singleLine = true,
             isError = isError,
-            enabled = true,
+            visualTransformation = VisualTransformation.None,
             interactionSource = interactionSource,
-            contentPadding = PaddingValues(
-                start = 12.dp,
-                top = 8.dp,
-                end = 12.dp,
-                bottom = 8.dp
-            ),
             placeholder = { Text(text = stringResource(id = placeHolderTextID)) },
             trailingIcon = {
                 Row {
@@ -588,25 +583,55 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                     }
                 }
             },
-            shape = RoundedCornerShape(6.dp),
-            colors = TextFieldDefaults.colors(
+            contentPadding = PaddingValues(
+                start = 12.dp,
+                top = 8.dp,
+                end = 12.dp,
+                bottom = 8.dp
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                unfocusedTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                disabledTextColor = LocalCustomColors.current.profileTextFieldTextColor.copy(alpha = 0.5f),
+                errorTextColor = LocalCustomColors.current.profileTextFieldTextColor,
                 focusedContainerColor = LocalCustomColors.current.profileTextFieldBackground,
                 unfocusedContainerColor = LocalCustomColors.current.profileTextFieldBackground,
+                disabledContainerColor = LocalCustomColors.current.profileTextFieldBackground.copy(alpha = 0.5f),
                 errorContainerColor = LocalCustomColors.current.profileTextFieldBackground,
-                disabledContainerColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                errorIndicatorColor = Color.Red,
-                disabledIndicatorColor = Color.Transparent,
+                cursorColor = LocalCustomColors.current.profileTextFieldCursorColor,
+                errorCursorColor = LocalCustomColors.current.profileTextFieldCursorColor,
+                focusedBorderColor = LocalCustomColors.current.profileTextFieldBorderColor,
+                unfocusedBorderColor = LocalCustomColors.current.profileTextFieldBorderColor,
+                disabledBorderColor = LocalCustomColors.current.profileTextFieldBorderColor.copy(alpha = 0.5f),
+                errorBorderColor = LocalCustomColors.current.profileTextFieldBorderColor,
+                focusedLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                unfocusedLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                disabledLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor.copy(alpha = 0.5f),
+                errorLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                focusedTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                unfocusedTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                disabledTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor.copy(alpha = 0.5f),
+                errorTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                focusedLabelColor = LocalCustomColors.current.profileTextFieldTitleTextColor,
+                unfocusedLabelColor = LocalCustomColors.current.profileTextFieldTitleTextColor,
+                disabledLabelColor = LocalCustomColors.current.profileTextFieldTitleTextColor.copy(alpha = 0.5f),
+                errorLabelColor = LocalCustomColors.current.profileTextFieldTitleTextColor,
                 focusedPlaceholderColor = LocalCustomColors.current.profileTextFieldTextColor,
                 unfocusedPlaceholderColor = LocalCustomColors.current.profileTextFieldTextColor,
+                disabledPlaceholderColor = LocalCustomColors.current.profileTextFieldTextColor.copy(alpha = 0.5f),
                 errorPlaceholderColor = LocalCustomColors.current.profileTextFieldTextColor,
-                disabledPlaceholderColor = Color.Transparent,
-                focusedTrailingIconColor = LocalCustomColors.current.profileTextFieldIconColor,
-                unfocusedTrailingIconColor = LocalCustomColors.current.profileTextFieldIconColor,
-                errorTrailingIconColor = Color.Red,
-                disabledTrailingIconColor = Color.Transparent,
-                errorTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                focusedSupportingTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                unfocusedSupportingTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                disabledSupportingTextColor = LocalCustomColors.current.profileTextFieldTextColor.copy(alpha = 0.5f),
+                errorSupportingTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                focusedPrefixColor = LocalCustomColors.current.profileTextFieldTextColor,
+                unfocusedPrefixColor = LocalCustomColors.current.profileTextFieldTextColor,
+                disabledPrefixColor = LocalCustomColors.current.profileTextFieldTextColor.copy(alpha = 0.5f),
+                errorPrefixColor = LocalCustomColors.current.profileTextFieldTextColor,
+                focusedSuffixColor = LocalCustomColors.current.profileTextFieldTextColor,
+                unfocusedSuffixColor = LocalCustomColors.current.profileTextFieldTextColor,
+                disabledSuffixColor = LocalCustomColors.current.profileTextFieldTextColor.copy(alpha = 0.5f),
+                errorSuffixColor = LocalCustomColors.current.profileTextFieldTextColor,
             ),
         )
     }
