@@ -45,4 +45,8 @@
         <item name="strokeColor">@color/black_200</item>
         <item name="strokeWidth">1dp</item>
     </style>
+
+    <style name="ProgressBarStyle">
+        <item name="android:indeterminateTint">@color/ocean_boat_blue_3</item>
+    </style>
 </resources>
