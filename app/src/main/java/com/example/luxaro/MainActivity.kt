@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.navigation.findNavController
@@ -46,8 +45,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.ateneo_blue)))
-
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(window.statusBarColor))
 
         val navView: BottomNavigationView = binding.navViewBottom
 
@@ -61,10 +59,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        // Apply dark mode
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        delegate.applyDayNight()
     }
 
 
