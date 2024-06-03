@@ -16,6 +16,12 @@
         <item name="android:windowBackground">@color/ateneo_blue</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:navigationBarColor">@color/ocean_boat_blue_1</item>
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+    </style>
+
+    <style name="ActionBarTheme">
+        <item name="android:textColor">@color/white</item>
+        <item name="iconTint">@color/white</item>
     </style>
 
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
