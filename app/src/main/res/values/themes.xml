@@ -64,4 +64,12 @@
         <item name="itemIconTint">@color/ocean_boat_blue_3</item>
         <item name="itemTextColor">@color/black</item>
     </style>
+
+    <style name="ChangeThemeAlertDialogStyle" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="android:background">@color/white_500</item>
+    </style>
+    <style name="ChangeThemeAlertDialogValuesStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:checkMarkTint">@color/ocean_boat_blue_3</item>
+    </style>
 </resources>
