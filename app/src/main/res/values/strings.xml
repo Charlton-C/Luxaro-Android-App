@@ -2,8 +2,10 @@
     <string name="app_name">Luxaro</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="dark_mode">Dark mode</string>
-    <string name="light_mode_coming_soon">Light mode coming soon</string>
+    <string name="theme">Theme</string>
+    <string name="light_theme">Light Theme</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="system_default">System Default</string>
     <string name="log_in">Log In</string>
     <string name="sign_up">Sign Up</string>
     <string name="log_out">Log Out</string>
