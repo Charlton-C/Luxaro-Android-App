@@ -9,13 +9,10 @@
         <item name="colorSecondary">@color/medium_persian_blue_2</item>
         <item name="colorSecondaryVariant">@color/ocean_boat_blue_2</item>
         <item name="colorOnSecondary">@color/white</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/ateneo_blue</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowSplashScreenBackground">@color/ateneo_blue</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="31">@color/ateneo_blue</item>
         <item name="android:windowBackground">@color/ateneo_blue</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:navigationBarColor">@color/ocean_boat_blue_1</item>
         <item name="actionBarTheme">@style/ActionBarTheme</item>
     </style>
 
