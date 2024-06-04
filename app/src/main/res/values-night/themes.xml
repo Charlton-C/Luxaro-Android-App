@@ -62,4 +62,12 @@
         <item name="itemIconTint">@color/white</item>
         <item name="itemTextColor">@color/white</item>
     </style>
+
+    <style name="ChangeThemeAlertDialogStyle" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="android:background">@color/medium_persian_blue_2</item>
+    </style>
+    <style name="ChangeThemeAlertDialogValuesStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:checkMarkTint">@color/white</item>
+    </style>
 </resources>
