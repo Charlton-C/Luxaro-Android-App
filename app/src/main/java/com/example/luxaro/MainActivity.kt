@@ -1,21 +1,29 @@
 package com.example.luxaro
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import com.example.luxaro.databinding.ActivityMainBinding
 import com.example.luxaro.model.PropertyModelPackage
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.color.MaterialColors
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -27,7 +35,12 @@ import com.google.firebase.firestore.firestore
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var drawerLayout: DrawerLayout
+    private var selectedTheme: Int? = null
+    private lateinit var lightdarkModeDrawerButton: MenuItem
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var preferences: SharedPreferences
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
 
@@ -44,8 +57,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        selectedTheme = preferences.getInt("selected_theme", 2)
+        drawerLayout = binding.activityMainNavigationDrawer
+        lightdarkModeDrawerButton = binding.activityMainNavigationView.menu.findItem(R.id.navigation_drawer_theme_item_button)
+        actionBarDrawerToggle = ActionBarDrawerToggle(this@MainActivity, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
 
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(window.statusBarColor))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(MaterialColors.getColor(View(this), android.R.attr.windowBackground)))
 
         val navView: BottomNavigationView = binding.navViewBottom
 
@@ -55,20 +76,36 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home, R.id.navigation_favorites, R.id.navigation_profile
-            )
+            ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_nav_menu, menu)
         return true
     }
 
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
+        else {
+            super.onBackPressed()
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if(item.itemId == R.id.navigation_search){
+        return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            true
+        }
+        else if(item.itemId == R.id.navigation_search){
             startActivity(Intent(this@MainActivity, Search::class.java))
             true
         } else {
