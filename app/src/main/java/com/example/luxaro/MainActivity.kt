@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
             chooseThemeDialog(arrayOf(getString(R.string.light_theme), getString(R.string.dark_theme), getString(R.string.system_default)))
             true
         }
+        checkSavedTheme()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(MaterialColors.getColor(View(this), android.R.attr.windowBackground)))
@@ -211,7 +212,7 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
     firebaseRealtimeDatabaseReference.addListenerForSingleValueEvent(object :ValueEventListener{
         override fun onDataChange(snapshot: DataSnapshot) {
             snapshot.children.forEach {
-                if(it.getValue(String::class.java) == "true"){
+                if(it.getValue(String::class.java) == "true") {
                     likedPropertiesIds.add(it.key.toString())
                 }
             }
@@ -219,7 +220,7 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
                 propertiesLikedByUser.add(propertiesAvailable.find{ property -> id == property.id }!!)
             }
             for (propertyOriginal in propertiesAvailable) {
-                for (property in propertiesLikedByUser){
+                for (property in propertiesLikedByUser) {
                     if (property.id == propertyOriginal.id) {
                         propertyOriginal.liked.value = true
                     }
