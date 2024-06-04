@@ -8,8 +8,11 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.view.GravityCompat
@@ -64,6 +67,10 @@ class MainActivity : AppCompatActivity() {
         actionBarDrawerToggle = ActionBarDrawerToggle(this@MainActivity, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+        lightdarkModeDrawerButton.setOnMenuItemClickListener {
+            chooseThemeDialog(arrayOf(getString(R.string.light_theme), getString(R.string.dark_theme), getString(R.string.system_default)))
+            true
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(MaterialColors.getColor(View(this), android.R.attr.windowBackground)))
@@ -111,6 +118,41 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun chooseThemeDialog(themeNamesArray: Array<String>) {
+        val adapter = ArrayAdapter<CharSequence>(this, R.layout.select_theme_dialog, themeNamesArray)
+        val builder = AlertDialog.Builder(this, R.style.ChangeThemeAlertDialogStyle)
+        builder.setTitle(getString(R.string.theme))
+        builder.setSingleChoiceItems(adapter, selectedTheme!!) { dialog, whichTheme ->
+            when (whichTheme) {
+                0 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    delegate.applyDayNight()
+                    preferences.edit().putInt("selected_theme", 0).apply()
+                    selectedTheme = preferences.getInt("selected_theme", 2)
+                    lightdarkModeDrawerButton.setIcon(R.drawable.baseline_sunny_24)
+                    dialog.dismiss()
+                }
+                1 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    delegate.applyDayNight()
+                    preferences.edit().putInt("selected_theme", 1).apply()
+                    selectedTheme = preferences.getInt("selected_theme", 2)
+                    lightdarkModeDrawerButton.setIcon(R.drawable.moon_icon_filled_24)
+                    dialog.dismiss()
+                }
+                2 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                    delegate.applyDayNight()
+                    preferences.edit().putInt("selected_theme", 2).apply()
+                    selectedTheme = preferences.getInt("selected_theme", 2)
+                    lightdarkModeDrawerButton.setIcon(R.drawable.baseline_phone_android_24)
+                    dialog.dismiss()
+                }
+            }
+        }
+        builder.create().show()
     }
 }
 
