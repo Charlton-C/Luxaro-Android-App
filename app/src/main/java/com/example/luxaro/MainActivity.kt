@@ -154,6 +154,26 @@ class MainActivity : AppCompatActivity() {
         }
         builder.create().show()
     }
+
+    private fun checkSavedTheme() {
+        when (selectedTheme!!) {
+            0 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                delegate.applyDayNight()
+                lightdarkModeDrawerButton.setIcon(R.drawable.baseline_sunny_24)
+            }
+            1 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                delegate.applyDayNight()
+                lightdarkModeDrawerButton.setIcon(R.drawable.moon_icon_filled_24)
+            }
+            2 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                delegate.applyDayNight()
+                lightdarkModeDrawerButton.setIcon(R.drawable.baseline_phone_android_24)
+            }
+        }
+    }
 }
 
 
@@ -195,10 +215,10 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
                     likedPropertiesIds.add(it.key.toString())
                 }
             }
-            for (id in likedPropertiesIds){
+            for (id in likedPropertiesIds) {
                 propertiesLikedByUser.add(propertiesAvailable.find{ property -> id == property.id }!!)
             }
-            for (propertyOriginal in propertiesAvailable){
+            for (propertyOriginal in propertiesAvailable) {
                 for (property in propertiesLikedByUser){
                     if (property.id == propertyOriginal.id) {
                         propertyOriginal.liked.value = true
@@ -215,7 +235,7 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
     })
 }
 
-fun likeProperty(property: PropertyModelPackage){
+fun likeProperty(property: PropertyModelPackage) {
     val propertyID: String = property.id.replace('/', '_').replace('.', '_').replace('#', '_').replace('$', '_').replace('[', '_').replace(']', '_')
     val firebaseRealtimeDatabase = FirebaseDatabase.getInstance()
     val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
@@ -223,7 +243,7 @@ fun likeProperty(property: PropertyModelPackage){
     propertiesLikedByUser.add(property)
 }
 
-fun unlikeProperty(property: PropertyModelPackage){
+fun unlikeProperty(property: PropertyModelPackage) {
     val propertyID: String = property.id.replace('/', '_').replace('.', '_').replace('#', '_').replace('$', '_').replace('[', '_').replace(']', '_')
     val firebaseRealtimeDatabase = FirebaseDatabase.getInstance()
     val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
