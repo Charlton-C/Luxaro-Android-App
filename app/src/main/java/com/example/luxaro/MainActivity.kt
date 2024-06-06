@@ -208,7 +208,7 @@ fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() 
 fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
     val likedPropertiesIds = mutableStateListOf<String>()
     val firebaseRealtimeDatabase = FirebaseDatabase.getInstance()
-    val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.getReference(FirebaseAuth.getInstance().currentUser?.uid.toString())
+    val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child("likedproperties").child(FirebaseAuth.getInstance().currentUser?.uid.toString())
     firebaseRealtimeDatabaseReference.addListenerForSingleValueEvent(object :ValueEventListener{
         override fun onDataChange(snapshot: DataSnapshot) {
             snapshot.children.forEach {
