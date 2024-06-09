@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import com.example.luxaro.databinding.ActivitySignUpBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -65,9 +64,6 @@ class SignUp : AppCompatActivity() {
             startActivity(Intent(this@SignUp, LogIn::class.java))
             finish()
         }
-
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        delegate.applyDayNight()
     }
 
     private fun checkAllFields(): Boolean {

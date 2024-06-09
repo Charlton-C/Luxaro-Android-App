@@ -10,6 +10,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -48,7 +49,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -63,6 +63,8 @@ import com.example.luxaro.areThereAnyPropertiesToShow
 import com.example.luxaro.likeProperty
 import com.example.luxaro.model.PropertyModelPackage
 import com.example.luxaro.propertiesAvailable
+import com.example.luxaro.ui.theme.LocalCustomColors
+import com.example.luxaro.ui.theme.LuxaroTheme
 import com.example.luxaro.unlikeProperty
 import java.util.Locale
 
@@ -77,15 +79,16 @@ class HomeFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                when (areThereAnyPropertiesToShow.value){
-                    "true" -> {
-                        DisplayProperties(properties = propertiesAvailable)
-                    }
-                    "false" -> {
-                        DisplayNoProperties(R.string.no_properties_to_show, R.string.try_checking_again_later)
-                    }
-                    "" -> {
-                        DisplayFullPageLoading()
+                LuxaroTheme {
+                    when (areThereAnyPropertiesToShow.value){
+                        "true" -> {
+                            DisplayProperties(properties = propertiesAvailable)
+                        }
+                        "false" -> {
+                            DisplayNoProperties(R.string.no_properties_to_show, R.string.try_checking_again_later)
+                        }
+                        "" -> {
+                            DisplayFullPageLoading()
                     }
                 }
             }
@@ -222,9 +225,10 @@ fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> 
         .padding(20.dp, 12.dp)
         .fillMaxWidth()
         .clickable { onCardClickAction() },
+        border = BorderStroke(1.dp, LocalCustomColors.current.previewCardBorderStrokeColor),
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.medium_persian_blue_1),
-            contentColor = Color.White
+            containerColor = LocalCustomColors.current.previewCardBackground,
+            contentColor = LocalCustomColors.current.previewCardTextColor
         )) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -284,6 +288,7 @@ fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> 
                     Icon(
                         imageVector = ImageVector.vectorResource(id = favoriteIcon.value),
                         contentDescription = stringResource(likedText.value),
+                        tint = LocalCustomColors.current.previewCardIconColor,
                         modifier = modifier
                             .size(35.dp)
                             .fillMaxHeight()
@@ -311,9 +316,10 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
     Card(
         modifier = modifier
             .padding(bottom = 62.dp),
+        border = BorderStroke(1.dp, LocalCustomColors.current.moreInfoCardBorderStrokeColor),
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.medium_persian_blue_1),
-            contentColor = Color.White
+            containerColor = LocalCustomColors.current.moreInfoCardBackground,
+            contentColor = LocalCustomColors.current.moreInfoCardTextColor
         )
     ) {
         Box {
@@ -336,6 +342,7 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.baseline_close_24),
                     contentDescription = stringResource(id = R.string.close),
+                    tint = LocalCustomColors.current.moreInfoCardIconColor,
                     modifier = modifier
                         .size(36.dp),
                 )
@@ -370,6 +377,7 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
                 Icon(
                     imageVector = ImageVector.vectorResource(id = favoriteIcon.value),
                     contentDescription = stringResource(likedText.value),
+                    tint = LocalCustomColors.current.moreInfoCardIconColor,
                     modifier = modifier
                         .size(45.dp)
                         .padding(0.dp),
@@ -403,10 +411,11 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
             onClick = { onContactUsClickAction() },
             modifier = modifier
                 .align(alignment = Alignment.CenterHorizontally),
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.persian_green))
+            colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.moreInfoCardContactUsButtonBackground)
         ) {
             Text(
                 text = stringResource(id = R.string.contact_us),
+                color = LocalCustomColors.current.moreInfoCardContactUsButtonTextColor,
                 modifier = modifier
                     .background(Color.Transparent),
                 fontSize = 21.sp,
@@ -422,9 +431,10 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
     val inquiryOnText = stringResource(id = R.string.inquiry_on)
     Card(modifier = modifier
             .padding(bottom = 62.dp),
+        border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardBorderStrokeColor),
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.ocean_boat_blue_2),
-            contentColor = Color.White
+            containerColor = LocalCustomColors.current.contactUsCardBackground,
+            contentColor = LocalCustomColors.current.contactUsCardButtonTextColor
         )) {
         Spacer(modifier = modifier.height(45.dp))
         Column(modifier = modifier.align(Alignment.CenterHorizontally)) {
@@ -438,11 +448,12 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     )
                 },
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.vivid_cerulean)),
+                colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.contactUsCardButtonBackground),
                 modifier = modifier
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
+                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
             ) {
                 Text(
                     text = stringResource(id = R.string.call_us),
@@ -469,11 +480,12 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     localContext.startActivity(Intent.createChooser(intent, localContext.getString(R.string.choose_an_email_client)))
                 },
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.vivid_cerulean)),
+                colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.contactUsCardButtonBackground),
                 modifier = modifier
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
+                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
             ) {
                 Text(
                     text = stringResource(id = R.string.email_us),
@@ -500,11 +512,12 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     )
                 },
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.vivid_cerulean)),
+                colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.contactUsCardButtonBackground),
                 modifier = modifier
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
+                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
             ) {
                 Text(
                     text = stringResource(id = R.string.text_us),
@@ -530,11 +543,12 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                         )))
                 },
                 shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.lime_green)),
+                colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.contactUsCardWhatsappButtonBackground),
                 modifier = modifier
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
+                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
             ) {
                 Text(
                     text = stringResource(id = R.string.whatsapp),
@@ -571,7 +585,7 @@ fun DisplayNoProperties(messegeOneResource: Int, messegeTwoResource: Int, modifi
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 24.sp,
-            color = Color.White,
+            color = LocalCustomColors.current.windowTextColor,
         )
         Spacer(modifier = modifier.height(15.dp))
         Text(
@@ -579,7 +593,7 @@ fun DisplayNoProperties(messegeOneResource: Int, messegeTwoResource: Int, modifi
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 20.sp,
-            color = Color.White,
+            color = LocalCustomColors.current.windowTextColor,
         )
     }
 }
@@ -594,6 +608,6 @@ fun DisplayFullPageLoading(modifier: Modifier = Modifier){
             .fillMaxHeight()
             .verticalScroll(rememberScrollState()))
     {
-        CircularProgressIndicator(color = colorResource(id = R.color.rich_electric_blue))
+        CircularProgressIndicator(color = LocalCustomColors.current.windowLoadingAnimationColor)
     }
 }

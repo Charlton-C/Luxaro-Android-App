@@ -12,6 +12,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,8 +35,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -44,14 +45,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
@@ -62,6 +61,8 @@ import androidx.fragment.app.Fragment
 import com.example.luxaro.LogIn
 import com.example.luxaro.R
 import com.example.luxaro.SignUp
+import com.example.luxaro.ui.theme.LocalCustomColors
+import com.example.luxaro.ui.theme.LuxaroTheme
 import com.google.firebase.Firebase
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.auth
@@ -77,14 +78,16 @@ class ProfileFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                DisplayProfile()
+                LuxaroTheme {
+                    DisplayProfile()
+                }
             }
         }
     }
 }
 
 @Composable
-fun DisplayProfile(modifier: Modifier = Modifier){
+fun DisplayProfile(modifier: Modifier = Modifier) {
     val auth = Firebase.auth
     val localContext = (LocalContext.current as? Activity)
     val focusManager = LocalFocusManager.current
@@ -155,7 +158,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 text = stringResource(id = R.string.name),
                 modifier = modifier.padding(0.dp),
                 fontSize = 19.sp,
-                color = Color.White,
+                color = LocalCustomColors.current.profileTextFieldTitleTextColor,
             )
             DisplayTextInputField(
                 input = newName,
@@ -220,7 +223,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 text = stringResource(id = R.string.email),
                 modifier = modifier.padding(0.dp),
                 fontSize = 19.sp,
-                color = Color.White,
+                color = LocalCustomColors.current.profileTextFieldTitleTextColor,
             )
             DisplayTextInputField(
                 input = newEmail,
@@ -244,7 +247,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 text = stringResource(id = passwordTitle),
                 modifier = modifier.padding(0.dp),
                 fontSize = 19.sp,
-                color = Color.White,
+                color = LocalCustomColors.current.profileTextFieldTitleTextColor,
             )
             DisplayTextInputField(input = oldPassword, placeHolderTextID = passwordPlaceHolder, editButton = true, displaySavingAnimation = displaySavingPassword, readOnly = readOnlyPassword, isError = oldPasswordError, editContentDescription = R.string.change_password, clearContentDescription = R.string.clear_old_password, onDoneClickAction = {
                 if (!readOnlyPassword){
@@ -379,7 +382,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         text = stringResource(id = R.string.new_password),
                         modifier = modifier.padding(0.dp),
                         fontSize = 19.sp,
-                        color = Color.White,
+                        color = LocalCustomColors.current.profileTextFieldTitleTextColor,
                     )
                     DisplayTextInputField(input = newPassword, placeHolderTextID = R.string.new_password, editButton = false, displaySavingAnimation = false, readOnly = false, isError = newPasswordError, editContentDescription = R.string.new_password, clearContentDescription = R.string.clear_new_password, onDoneClickAction = {})
                 }
@@ -393,7 +396,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         text = stringResource(id = R.string.confirm_password),
                         modifier = modifier.padding(0.dp),
                         fontSize = 19.sp,
-                        color = Color.White,
+                        color = LocalCustomColors.current.profileTextFieldTitleTextColor,
                     )
                     DisplayTextInputField(input = confirmNewPassword, placeHolderTextID = R.string.confirm_password, editButton = false, displaySavingAnimation = false, readOnly = false, isError = confirmNewPasswordError, editContentDescription = R.string.confirm_new_password, clearContentDescription = R.string.clear_confirm_new_password, onDoneClickAction = {})
                 }
@@ -410,16 +413,18 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                         localContext?.startActivity(Intent(localContext, LogIn::class.java))
                         localContext?.finish()
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.blue_cola))
+                    border = BorderStroke(1.dp, LocalCustomColors.current.logOutButtonBorderStrokeColor),
+                    colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.logOutButtonBackground)
                 ) {
                     Text(
                         text = stringResource(id = R.string.log_out),
                         fontSize = 14.sp,
+                        color = LocalCustomColors.current.logOutButtonTextColor,
                     )
                 }
             }
             if(displayLogOutAnimation){
-                CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = colorResource(id = R.color.rich_electric_blue))
+                CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = LocalCustomColors.current.windowLoadingAnimationColor)
             }
         }
         Column(
@@ -434,11 +439,12 @@ fun DisplayProfile(modifier: Modifier = Modifier){
             },
                 modifier = modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(0.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.medium_persian_blue_2))
+                colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.deleteAccountPreviewButtonBackground)
             ) {
                 Text(
                     text = stringResource(id = R.string.delete_account),
                     fontSize = 14.sp,
+                    color = LocalCustomColors.current.deleteAccountPreviewButtonTextColor,
                 )
             }
         }
@@ -452,7 +458,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                 Column(modifier = modifier
                     .fillMaxWidth()
                     .align(Alignment.Start)
-                    .padding(start = 30.dp, top = 0.dp, end = 30.dp, bottom = 22.dp),) {
+                    .padding(start = 30.dp, top = 0.dp, end = 30.dp, bottom = 22.dp)) {
                     DisplayTextInputField(input = confirmDeleteAccountPassword, placeHolderTextID = R.string.confirm_password, editButton = false, displaySavingAnimation = false, readOnly = false, isError = confirmDeleteAccountPasswordError, editContentDescription = R.string.confirm_password, clearContentDescription = R.string.clear_confirm_password, onDoneClickAction = { focusManager.clearFocus() })
                 }
                 if(!displayDeleteAccountAnimation){
@@ -486,16 +492,18 @@ fun DisplayProfile(modifier: Modifier = Modifier){
                             }
                         },
                         modifier = modifier.align(Alignment.CenterHorizontally),
-                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark_candy_apple_red))
+                        border = BorderStroke(1.dp, LocalCustomColors.current.deleteAccountButtonBorderStrokeColor),
+                        colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.deleteAccountButtonBackground)
                     ) {
                         Text(
                             text = stringResource(id = R.string.delete_account),
                             fontSize = 15.sp,
+                            color = LocalCustomColors.current.deleteAccountButtonTextColor,
                         )
                     }
                 }
                 if (displayDeleteAccountAnimation){
-                    CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = colorResource(id = R.color.rich_electric_blue))
+                    CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally), color = LocalCustomColors.current.windowLoadingAnimationColor)
                 }
             }
         }
@@ -504,7 +512,7 @@ fun DisplayProfile(modifier: Modifier = Modifier){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, editButton: Boolean, displaySavingAnimation: Boolean, readOnly: Boolean, isError: Boolean, editContentDescription: Int, clearContentDescription: Int, onDoneClickAction: () -> Unit, modifier: Modifier = Modifier){
+fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, editButton: Boolean, displaySavingAnimation: Boolean, readOnly: Boolean, isError: Boolean, editContentDescription: Int, clearContentDescription: Int, onDoneClickAction: () -> Unit, modifier: Modifier = Modifier) {
     val interactionSource = remember { MutableInteractionSource() }
     var editOrSaveIcon by remember { mutableStateOf(R.drawable.baseline_edit_square_24) }
     editOrSaveIcon = if(readOnly){ R.drawable.baseline_edit_square_24 } else { R.drawable.baseline_save_24 }
@@ -518,26 +526,20 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
         interactionSource = interactionSource,
         singleLine = true,
         readOnly = readOnly,
-        textStyle = LocalTextStyle.current.copy(color = Color.White, fontSize = 19.sp),
-        cursorBrush = SolidColor(Color.White),
+        textStyle = LocalTextStyle.current.copy(color = LocalCustomColors.current.profileTextFieldTextColor, fontSize = 19.sp),
+        cursorBrush = SolidColor(LocalCustomColors.current.profileTextFieldCursorColor),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         visualTransformation = VisualTransformation.None,
         keyboardActions = KeyboardActions(onDone = { onDoneClickAction() }),
     ) { innerTextField ->
-        TextFieldDefaults.DecorationBox(
+        OutlinedTextFieldDefaults.DecorationBox(
             value = input.value,
-            visualTransformation = VisualTransformation.None,
             innerTextField = innerTextField,
+            enabled = true,
             singleLine = true,
             isError = isError,
-            enabled = true,
+            visualTransformation = VisualTransformation.None,
             interactionSource = interactionSource,
-            contentPadding = PaddingValues(
-                start = 12.dp,
-                top = 8.dp,
-                end = 12.dp,
-                bottom = 8.dp
-            ),
             placeholder = { Text(text = stringResource(id = placeHolderTextID)) },
             trailingIcon = {
                 Row {
@@ -549,6 +551,7 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                             Icon(
                                 imageVector = ImageVector.vectorResource(id = R.drawable.baseline_close_24),
                                 contentDescription = stringResource(id = clearContentDescription),
+                                tint = LocalCustomColors.current.profileTextFieldIconColor,
                                 modifier = modifier
                                     .padding(0.dp)
                                     .size(20.dp),
@@ -561,6 +564,7 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                             Icon(
                                 imageVector = ImageVector.vectorResource(id = editOrSaveIcon),
                                 contentDescription = stringResource(id = editContentDescription),
+                                tint = LocalCustomColors.current.profileTextFieldIconColor,
                                 modifier = modifier
                                     .padding(0.dp)
                                     .size(25.dp),
@@ -573,29 +577,59 @@ fun DisplayTextInputField(input: MutableState<String>, placeHolderTextID: Int, e
                                 .align(Alignment.CenterVertically)
                                 .padding(end = 10.dp)
                                 .size(25.dp),
-                            color = colorResource(id = R.color.rich_electric_blue))
+                            color = LocalCustomColors.current.profileTextFieldLoadingAnimationColor)
                     }
                 }
             },
-            shape = RoundedCornerShape(6.dp),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = colorResource(id = R.color.rich_electric_blue),
-                unfocusedContainerColor = colorResource(id = R.color.rich_electric_blue),
-                errorContainerColor = colorResource(id = R.color.rich_electric_blue),
-                disabledContainerColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                errorIndicatorColor = Color.Red,
-                disabledIndicatorColor = Color.Transparent,
-                focusedPlaceholderColor = Color.White,
-                unfocusedPlaceholderColor = Color.White,
-                errorPlaceholderColor = Color.White,
-                disabledPlaceholderColor = Color.Transparent,
-                focusedTrailingIconColor = Color.White,
-                unfocusedTrailingIconColor = Color.White,
-                errorTrailingIconColor = Color.Red,
-                disabledTrailingIconColor = Color.Transparent,
-                errorTextColor = Color.White,
+            contentPadding = PaddingValues(
+                start = 12.dp,
+                top = 8.dp,
+                end = 12.dp,
+                bottom = 8.dp
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                unfocusedTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                disabledTextColor = LocalCustomColors.current.profileTextFieldTextColor.copy(alpha = 0.5f),
+                errorTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                focusedContainerColor = LocalCustomColors.current.profileTextFieldBackground,
+                unfocusedContainerColor = LocalCustomColors.current.profileTextFieldBackground,
+                disabledContainerColor = LocalCustomColors.current.profileTextFieldBackground.copy(alpha = 0.5f),
+                errorContainerColor = LocalCustomColors.current.profileTextFieldBackground,
+                cursorColor = LocalCustomColors.current.profileTextFieldCursorColor,
+                errorCursorColor = LocalCustomColors.current.profileTextFieldCursorColor,
+                focusedBorderColor = LocalCustomColors.current.profileTextFieldBorderColor,
+                unfocusedBorderColor = LocalCustomColors.current.profileTextFieldBorderColor,
+                disabledBorderColor = LocalCustomColors.current.profileTextFieldBorderColor.copy(alpha = 0.5f),
+                errorBorderColor = LocalCustomColors.current.profileTextFieldBorderColor,
+                focusedLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                unfocusedLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                disabledLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor.copy(alpha = 0.5f),
+                errorLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                focusedTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                unfocusedTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                disabledTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor.copy(alpha = 0.5f),
+                errorTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
+                focusedLabelColor = LocalCustomColors.current.profileTextFieldTitleTextColor,
+                unfocusedLabelColor = LocalCustomColors.current.profileTextFieldTitleTextColor,
+                disabledLabelColor = LocalCustomColors.current.profileTextFieldTitleTextColor.copy(alpha = 0.5f),
+                errorLabelColor = LocalCustomColors.current.profileTextFieldTitleTextColor,
+                focusedPlaceholderColor = LocalCustomColors.current.profileTextFieldTextColor,
+                unfocusedPlaceholderColor = LocalCustomColors.current.profileTextFieldTextColor,
+                disabledPlaceholderColor = LocalCustomColors.current.profileTextFieldTextColor.copy(alpha = 0.5f),
+                errorPlaceholderColor = LocalCustomColors.current.profileTextFieldTextColor,
+                focusedSupportingTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                unfocusedSupportingTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                disabledSupportingTextColor = LocalCustomColors.current.profileTextFieldTextColor.copy(alpha = 0.5f),
+                errorSupportingTextColor = LocalCustomColors.current.profileTextFieldTextColor,
+                focusedPrefixColor = LocalCustomColors.current.profileTextFieldTextColor,
+                unfocusedPrefixColor = LocalCustomColors.current.profileTextFieldTextColor,
+                disabledPrefixColor = LocalCustomColors.current.profileTextFieldTextColor.copy(alpha = 0.5f),
+                errorPrefixColor = LocalCustomColors.current.profileTextFieldTextColor,
+                focusedSuffixColor = LocalCustomColors.current.profileTextFieldTextColor,
+                unfocusedSuffixColor = LocalCustomColors.current.profileTextFieldTextColor,
+                disabledSuffixColor = LocalCustomColors.current.profileTextFieldTextColor.copy(alpha = 0.5f),
+                errorSuffixColor = LocalCustomColors.current.profileTextFieldTextColor,
             ),
         )
     }
