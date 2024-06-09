@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/select_theme_dialog"
+    style="@style/ChangeThemeAlertDialogValuesStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/ChangeThemeAlertDialogValuesStyle"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+    android:checkMark="?android:attr/listChoiceIndicatorSingle"
     android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingStart="30dp"
     android:paddingEnd="25dp"
-    android:checkMark="?android:attr/listChoiceIndicatorSingle" />
+    android:textAppearance="?android:attr/textAppearanceListItemSmall" />
