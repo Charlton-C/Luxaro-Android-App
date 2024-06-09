@@ -180,27 +180,26 @@ fun DisplayProfile(modifier: Modifier = Modifier) {
                                         displayName = newName.value
                                     }
                                 ).addOnSuccessListener {
-                                    Toast.makeText(localContext, "Name Updated!", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(localContext, localContext?.getString(R.string.name_updated), Toast.LENGTH_SHORT).show()
                                     name.value = auth.currentUser?.displayName
                                     displaySavingNewName = false
                                     newNameError = false
                                     readOnlyNewName = true
                                 }.addOnFailureListener {
-                                    Toast.makeText(localContext, "Failed to update name", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(localContext, localContext?.getString(R.string.failed_to_update_name), Toast.LENGTH_SHORT).show()
                                     displaySavingNewName = false
                                     newNameError = false
                                 }
                             }
 
                             "old name and new name match" -> {
-                                Toast.makeText(localContext, "The name is unchanged", Toast.LENGTH_SHORT).show()
                                 displaySavingNewName = false
                                 newNameError = false
                                 readOnlyNewName = true
                             }
 
                             else -> {
-                                Toast.makeText(localContext, checkNewNameResult, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(localContext, localContext?.getString(R.string.failed_to_update_name), Toast.LENGTH_SHORT).show()
                                 displaySavingNewName = false
                                 newNameError = true
                                 readOnlyNewName = false
@@ -261,7 +260,7 @@ fun DisplayProfile(modifier: Modifier = Modifier) {
                                 .addOnSuccessListener {
                                     auth.currentUser?.updatePassword(newPassword.value)!!
                                         .addOnSuccessListener {
-                                            Toast.makeText(localContext, "Password Updated!", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(localContext, localContext?.getString(R.string.password_updated), Toast.LENGTH_SHORT).show()
                                             displaySavingPassword = false
                                             oldPasswordError = false
                                             newPasswordError = false
@@ -273,14 +272,14 @@ fun DisplayProfile(modifier: Modifier = Modifier) {
                                             oldPassword.value = ""
                                         }
                                         .addOnFailureListener {
-                                            Toast.makeText(localContext, "Failed to update password", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(localContext, localContext?.getString(R.string.failed_to_update_password), Toast.LENGTH_SHORT).show()
                                             displaySavingPassword = false
                                             oldPasswordError = false
                                             newPasswordError = false
                                             confirmNewPasswordError = false
                                         }
                                 }.addOnFailureListener {
-                                    Toast.makeText(localContext, "Old password is wrong", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(localContext, localContext?.getString(R.string.old_password_is_wrong), Toast.LENGTH_SHORT).show()
                                     displaySavingPassword = false
                                     oldPasswordError = true
                                     oldPassword.value = ""
@@ -301,7 +300,6 @@ fun DisplayProfile(modifier: Modifier = Modifier) {
                             val credential = EmailAuthProvider.getCredential(email.value.toString(), oldPassword.value)
                             auth.currentUser!!.reauthenticate(credential)
                                 .addOnSuccessListener {
-                                    Toast.makeText(localContext, "Password is unchanged", Toast.LENGTH_SHORT).show()
                                     displaySavingPassword = false
                                     oldPasswordError = false
                                     newPasswordError = false
@@ -312,13 +310,13 @@ fun DisplayProfile(modifier: Modifier = Modifier) {
                                     passwordPlaceHolder = R.string.password_hidden
                                     oldPassword.value = ""
                                 }.addOnFailureListener {
-                                    Toast.makeText(localContext, "Old password is wrong", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(localContext, localContext?.getString(R.string.old_password_is_wrong), Toast.LENGTH_SHORT).show()
                                     displaySavingPassword = false
                                     oldPasswordError = true
                                 }
                         }
                         "no new password" -> {
-                            Toast.makeText(localContext, "No new password", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(localContext, localContext?.getString(R.string.no_new_password), Toast.LENGTH_SHORT).show()
                             displaySavingPassword = false
                             oldPasswordError = false
                             newPasswordError = true
@@ -326,7 +324,7 @@ fun DisplayProfile(modifier: Modifier = Modifier) {
                             displayDeleteAccount = false
                         }
                         "new password is too short" -> {
-                            Toast.makeText(localContext, "New password is too short", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(localContext, localContext?.getString(R.string.new_password_is_too_short), Toast.LENGTH_SHORT).show()
                             displaySavingPassword = false
                             oldPasswordError = false
                             newPasswordError = true
@@ -334,7 +332,7 @@ fun DisplayProfile(modifier: Modifier = Modifier) {
                             displayDeleteAccount = false
                         }
                         "new password and confirm new password do not match" -> {
-                            Toast.makeText(localContext, "New password and confirm new password do not match", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(localContext, localContext?.getString(R.string.new_password_and_confirm_new_password_do_not_match), Toast.LENGTH_SHORT).show()
                             displaySavingPassword = false
                             oldPasswordError = false
                             newPasswordError = false
@@ -342,7 +340,7 @@ fun DisplayProfile(modifier: Modifier = Modifier) {
                             displayDeleteAccount = false
                         }
                         else -> {
-                            Toast.makeText(localContext, checkNewPasswordResult, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(localContext, localContext?.getString(R.string.failed_to_update_password), Toast.LENGTH_SHORT).show()
                             displaySavingPassword = false
                             oldPasswordError = false
                             newPasswordError = false
@@ -479,12 +477,12 @@ fun DisplayProfile(modifier: Modifier = Modifier) {
                                                 localContext?.startActivity(Intent(localContext, SignUp::class.java))
                                                 localContext?.finish()
                                             }.addOnFailureListener {
-                                                Toast.makeText(localContext, "Failed to delete account", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(localContext, localContext?.getString(R.string.failed_to_delete_account), Toast.LENGTH_SHORT).show()
                                                 confirmDeleteAccountPasswordError = false
                                                 displayDeleteAccountAnimation = false
                                             }
                                     }.addOnFailureListener {
-                                        Toast.makeText(localContext, "Please enter the correct password", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(localContext, localContext?.getString(R.string.please_enter_the_correct_password), Toast.LENGTH_SHORT).show()
                                         confirmDeleteAccountPasswordError = true
                                         displayDeleteAccountAnimation = false
                                     }

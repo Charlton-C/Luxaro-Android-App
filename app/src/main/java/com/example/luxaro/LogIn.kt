@@ -42,24 +42,24 @@ class LogIn : AppCompatActivity() {
                         }.addOnFailureListener {it2 ->
                             when (it2){
                                 is FirebaseAuthInvalidCredentialsException -> {
-                                    binding.editTextTextPasswordLayout.error = "Wrong password"
+                                    binding.editTextTextPasswordLayout.error = resources.getString(R.string.wrong_password)
                                 }
                                 else -> {
-                                    Toast.makeText(this@LogIn, "Log in failed", Toast.LENGTH_SHORT).show()
-                                    Log.e("Firebase Auth Error: Log In", it2.toString())
+                                    Toast.makeText(this@LogIn, resources.getString(R.string.log_in_failed), Toast.LENGTH_SHORT).show()
+                                    Log.e(resources.getString(R.string.firebase_auth_error_colon_log_in), it2.toString())
                                 }
                             }
                             showLoggingInAnimation(false)
                         }
                     }
                     else {
-                        binding.editTextTextEmailAddressLayout.error = "No user found"
+                        binding.editTextTextEmailAddressLayout.error = resources.getString(R.string.no_user_found)
                         showLoggingInAnimation(false)
                     }
                 }.addOnFailureListener {
                     showLoggingInAnimation(false)
-                    Toast.makeText(this@LogIn, "Log in failed", Toast.LENGTH_SHORT).show()
-                    Log.e("Firebase Auth Error: Log In", it.toString())
+                    Toast.makeText(this@LogIn, resources.getString(R.string.log_in_failed), Toast.LENGTH_SHORT).show()
+                    Log.e(resources.getString(R.string.firebase_auth_error_colon_log_in), it.toString())
                 }
             }
         }
@@ -73,15 +73,15 @@ class LogIn : AppCompatActivity() {
     private fun checkAllFields():Boolean{
         val email = binding.editTextTextEmailAddressInput.text.toString()
         if (email == ""){
-            binding.editTextTextEmailAddressLayout.error = "Please enter your email"
+            binding.editTextTextEmailAddressLayout.error = resources.getString(R.string.please_enter_your_email)
             return false
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            binding.editTextTextEmailAddressLayout.error = "Please enter your email using the correct format"
+            binding.editTextTextEmailAddressLayout.error = resources.getString(R.string.please_enter_your_email_using_the_correct_format)
             return false
         }
         if (binding.editTextTextPasswordInput.text.toString() == ""){
-            binding.editTextTextPasswordLayout.error = "Please enter your password"
+            binding.editTextTextPasswordLayout.error = resources.getString(R.string.please_enter_your_password)
             binding.editTextTextPasswordLayout.errorIconDrawable = null
             return false
         }

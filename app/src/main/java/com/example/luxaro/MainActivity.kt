@@ -2,6 +2,7 @@ package com.example.luxaro
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
@@ -197,10 +198,10 @@ fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() 
                 singleProperty.longdescription = singleProperty.longdescription.replace("\\t", "\t").replace("\\b", "\b").replace("\\n", "\n").replace("\\r", "\r")
                 propertiesAvailable.add(singleProperty)
             }
-            areThereAnyPropertiesToShow.value = "true"
+            areThereAnyPropertiesToShow.value = propertiesAvailable.isNotEmpty().toString()
         }
         .addOnFailureListener { exception ->
-            Log.e("Firestone", "Error getting properties.", exception)
+            Log.e(Resources.getSystem().getString(R.string.firestone_error_getting_properties), exception.toString())
             areThereAnyPropertiesToShow.value = "false"
         }
 }
@@ -216,8 +217,8 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
                     likedPropertiesIds.add(it.key.toString())
                 }
             }
-            for (id in likedPropertiesIds) {
-                propertiesLikedByUser.add(propertiesAvailable.find{ property -> id == property.id }!!)
+            for (id in likedPropertiesIds){
+                propertiesLikedByUser.add(propertiesAvailable.find{ property -> id == property.id.replace('/', '_').replace('.', '_').replace('#', '_').replace('$', '_').replace('[', '_').replace(']', '_') }!!)
             }
             for (propertyOriginal in propertiesAvailable) {
                 for (property in propertiesLikedByUser) {
@@ -226,11 +227,11 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
                     }
                 }
             }
-            areThereAnyLikedPropertiesToShow.value = "true"
+            areThereAnyLikedPropertiesToShow.value = propertiesLikedByUser.isNotEmpty().toString()
         }
 
         override fun onCancelled(error: DatabaseError) {
-            Log.e("Firebase Realtime DB Error", error.toString())
+            Log.e(Resources.getSystem().getString(R.string.firebase_realtime_db_error), error.toString())
             areThereAnyLikedPropertiesToShow.value = "false"
         }
     })
@@ -242,6 +243,7 @@ fun likeProperty(property: PropertyModelPackage) {
     val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child("likedproperties").child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
     firebaseRealtimeDatabaseReference.setValue("true")
     propertiesLikedByUser.add(property)
+    areThereAnyLikedPropertiesToShow.value = propertiesLikedByUser.isNotEmpty().toString()
 }
 
 fun unlikeProperty(property: PropertyModelPackage) {
@@ -250,4 +252,5 @@ fun unlikeProperty(property: PropertyModelPackage) {
     val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child("likedproperties").child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
     firebaseRealtimeDatabaseReference.setValue("false")
     propertiesLikedByUser.remove(property)
+    areThereAnyLikedPropertiesToShow.value = propertiesLikedByUser.isNotEmpty().toString()
 }

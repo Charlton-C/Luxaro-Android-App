@@ -80,14 +80,15 @@ class HomeFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 LuxaroTheme {
-                    if (areThereAnyPropertiesToShow.value == "true") {
-                        DisplayProperties(properties = propertiesAvailable)
-                    }
-                    else if (areThereAnyPropertiesToShow.value == "false"){
-                        DisplayNoProperties()
-                    }
-                    else if (areThereAnyPropertiesToShow.value == ""){
-                        DisplayFullPageLoading()
+                    when (areThereAnyPropertiesToShow.value){
+                        "true" -> {
+                            DisplayProperties(properties = propertiesAvailable)
+                        }
+                        "false" -> {
+                            DisplayNoProperties(R.string.no_properties_to_show, R.string.try_checking_again_later)
+                        }
+                        "" -> {
+                            DisplayFullPageLoading()
                     }
                 }
             }
@@ -476,7 +477,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                         .putExtra(Intent.EXTRA_EMAIL, arrayOf(property.emailaddress))
                         .putExtra(Intent.EXTRA_SUBJECT, inquiryOnText + " " + property.title)
                         .putExtra(Intent.EXTRA_TEXT, inquiryOnText + " " + property.title)
-                    localContext.startActivity(Intent.createChooser(intent, "Choose an Email client: "))
+                    localContext.startActivity(Intent.createChooser(intent, localContext.getString(R.string.choose_an_email_client)))
                 },
                 shape = RoundedCornerShape(6.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.contactUsCardButtonBackground),
@@ -570,7 +571,7 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
 
 
 @Composable
-fun DisplayNoProperties(modifier: Modifier = Modifier) {
+fun DisplayNoProperties(messegeOneResource: Int, messegeTwoResource: Int, modifier: Modifier = Modifier) {
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -580,7 +581,7 @@ fun DisplayNoProperties(modifier: Modifier = Modifier) {
             .verticalScroll(rememberScrollState()))
     {
         Text(
-            text = stringResource(id = R.string.no_properties_to_display),
+            text = stringResource(id = messegeOneResource),
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 24.sp,
@@ -588,7 +589,7 @@ fun DisplayNoProperties(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = modifier.height(15.dp))
         Text(
-            text = stringResource(id = R.string.try_checking_again_later),
+            text = stringResource(id = messegeTwoResource),
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 20.sp,
