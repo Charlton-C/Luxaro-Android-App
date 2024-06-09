@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         auth = Firebase.auth
         val user = Firebase.auth.currentUser
-        if(user == null){
+        if (user == null) {
             startActivity(Intent(this@MainActivity, LogIn::class.java))
             finish()
         }
@@ -64,18 +64,33 @@ class MainActivity : AppCompatActivity() {
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
         selectedTheme = preferences.getInt("selected_theme", 2)
         drawerLayout = binding.activityMainNavigationDrawer
-        lightdarkModeDrawerButton = binding.activityMainNavigationView.menu.findItem(R.id.navigation_drawer_theme_item_button)
-        actionBarDrawerToggle = ActionBarDrawerToggle(this@MainActivity, drawerLayout, R.string.open, R.string.close)
+        lightdarkModeDrawerButton =
+            binding.activityMainNavigationView.menu.findItem(R.id.navigation_drawer_theme_item_button)
+        actionBarDrawerToggle =
+            ActionBarDrawerToggle(this@MainActivity, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
         lightdarkModeDrawerButton.setOnMenuItemClickListener {
-            chooseThemeDialog(arrayOf(getString(R.string.light_theme), getString(R.string.dark_theme), getString(R.string.system_default)))
+            chooseThemeDialog(
+                arrayOf(
+                    getString(R.string.light_theme),
+                    getString(R.string.dark_theme),
+                    getString(R.string.system_default)
+                )
+            )
             true
         }
         checkSavedTheme()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(MaterialColors.getColor(View(this), android.R.attr.windowBackground)))
+        supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(
+                MaterialColors.getColor(
+                    View(this),
+                    android.R.attr.windowBackground
+                )
+            )
+        )
 
         val navView: BottomNavigationView = binding.navViewBottom
 
@@ -104,8 +119,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
-        }
-        else {
+        } else {
             super.onBackPressed()
         }
     }
@@ -113,8 +127,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
-        }
-        else if(item.itemId == R.id.navigation_search){
+        } else if (item.itemId == R.id.navigation_search) {
             startActivity(Intent(this@MainActivity, Search::class.java))
             true
         } else {
@@ -123,7 +136,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun chooseThemeDialog(themeNamesArray: Array<String>) {
-        val adapter = ArrayAdapter<CharSequence>(this, R.layout.select_theme_dialog, themeNamesArray)
+        val adapter =
+            ArrayAdapter<CharSequence>(this, R.layout.select_theme_dialog, themeNamesArray)
         val builder = AlertDialog.Builder(this, R.style.ChangeThemeAlertDialogStyle)
         builder.setTitle(getString(R.string.theme))
         builder.setSingleChoiceItems(adapter, selectedTheme!!) { dialog, whichTheme ->
@@ -136,6 +150,7 @@ class MainActivity : AppCompatActivity() {
                     lightdarkModeDrawerButton.setIcon(R.drawable.baseline_sunny_24)
                     dialog.dismiss()
                 }
+
                 1 -> {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     delegate.applyDayNight()
@@ -144,6 +159,7 @@ class MainActivity : AppCompatActivity() {
                     lightdarkModeDrawerButton.setIcon(R.drawable.moon_icon_filled_24)
                     dialog.dismiss()
                 }
+
                 2 -> {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                     delegate.applyDayNight()
@@ -164,11 +180,13 @@ class MainActivity : AppCompatActivity() {
                 delegate.applyDayNight()
                 lightdarkModeDrawerButton.setIcon(R.drawable.baseline_sunny_24)
             }
+
             1 -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 delegate.applyDayNight()
                 lightdarkModeDrawerButton.setIcon(R.drawable.moon_icon_filled_24)
             }
+
             2 -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 delegate.applyDayNight()
@@ -183,8 +201,10 @@ var areThereAnyPropertiesToShow = mutableStateOf("")
 var areThereAnyLikedPropertiesToShow = mutableStateOf("")
 var propertiesAvailable = mutableStateListOf<PropertyModelPackage>()
 var propertiesLikedByUser = mutableStateListOf<PropertyModelPackage>()
-var runFunGetPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable = getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable()
-var runFunGetPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable = getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable()
+var runFunGetPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable =
+    getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable()
+var runFunGetPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable =
+    getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable()
 
 fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() {
     val firebaseDB = Firebase.firestore
@@ -193,15 +213,24 @@ fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() 
             for (property in properties) {
                 val singleProperty = property.toObject(PropertyModelPackage::class.java)
                 singleProperty.id = property.id
-                singleProperty.title = singleProperty.title.replace("\\t", "\t").replace("\\b", "\b").replace("\\n", "\n").replace("\\r", "\r")
-                singleProperty.shortdescription = singleProperty.shortdescription.replace("\\t", "\t").replace("\\b", "\b").replace("\\n", "\n").replace("\\r", "\r")
-                singleProperty.longdescription = singleProperty.longdescription.replace("\\t", "\t").replace("\\b", "\b").replace("\\n", "\n").replace("\\r", "\r")
+                singleProperty.title =
+                    singleProperty.title.replace("\\t", "\t").replace("\\b", "\b")
+                        .replace("\\n", "\n").replace("\\r", "\r")
+                singleProperty.shortdescription =
+                    singleProperty.shortdescription.replace("\\t", "\t").replace("\\b", "\b")
+                        .replace("\\n", "\n").replace("\\r", "\r")
+                singleProperty.longdescription =
+                    singleProperty.longdescription.replace("\\t", "\t").replace("\\b", "\b")
+                        .replace("\\n", "\n").replace("\\r", "\r")
                 propertiesAvailable.add(singleProperty)
             }
             areThereAnyPropertiesToShow.value = propertiesAvailable.isNotEmpty().toString()
         }
         .addOnFailureListener { exception ->
-            Log.e(Resources.getSystem().getString(R.string.firestone_error_getting_properties), exception.toString())
+            Log.e(
+                Resources.getSystem().getString(R.string.firestone_error_getting_properties),
+                exception.toString()
+            )
             areThereAnyPropertiesToShow.value = "false"
         }
 }
@@ -209,16 +238,24 @@ fun getPropertiesAvailableFromFirebaseAndAddThemToPropertiesAvailableVariable() 
 fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
     val likedPropertiesIds = mutableStateListOf<String>()
     val firebaseRealtimeDatabase = FirebaseDatabase.getInstance()
-    val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child("likedproperties").child(FirebaseAuth.getInstance().currentUser?.uid.toString())
-    firebaseRealtimeDatabaseReference.addListenerForSingleValueEvent(object :ValueEventListener{
+    val firebaseRealtimeDatabaseReference =
+        firebaseRealtimeDatabase.reference.child("likedproperties")
+            .child(FirebaseAuth.getInstance().currentUser?.uid.toString())
+    firebaseRealtimeDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             snapshot.children.forEach {
-                if(it.getValue(String::class.java) == "true") {
+                if (it.getValue(String::class.java) == "true") {
                     likedPropertiesIds.add(it.key.toString())
                 }
             }
-            for (id in likedPropertiesIds){
-                propertiesLikedByUser.add(propertiesAvailable.find{ property -> id == property.id.replace('/', '_').replace('.', '_').replace('#', '_').replace('$', '_').replace('[', '_').replace(']', '_') }!!)
+            for (id in likedPropertiesIds) {
+                propertiesLikedByUser.add(propertiesAvailable.find { property ->
+                    id == property.id.replace(
+                        '/',
+                        '_'
+                    ).replace('.', '_').replace('#', '_').replace('$', '_').replace('[', '_')
+                        .replace(']', '_')
+                }!!)
             }
             for (propertyOriginal in propertiesAvailable) {
                 for (property in propertiesLikedByUser) {
@@ -231,25 +268,36 @@ fun getPropertiesLikedByUserAndAddThemToPropertiesLikedByUserVariable() {
         }
 
         override fun onCancelled(error: DatabaseError) {
-            Log.e(Resources.getSystem().getString(R.string.firebase_realtime_db_error), error.toString())
+            Log.e(
+                Resources.getSystem().getString(R.string.firebase_realtime_db_error),
+                error.toString()
+            )
             areThereAnyLikedPropertiesToShow.value = "false"
         }
     })
 }
 
 fun likeProperty(property: PropertyModelPackage) {
-    val propertyID: String = property.id.replace('/', '_').replace('.', '_').replace('#', '_').replace('$', '_').replace('[', '_').replace(']', '_')
+    val propertyID: String =
+        property.id.replace('/', '_').replace('.', '_').replace('#', '_').replace('$', '_')
+            .replace('[', '_').replace(']', '_')
     val firebaseRealtimeDatabase = FirebaseDatabase.getInstance()
-    val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child("likedproperties").child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
+    val firebaseRealtimeDatabaseReference =
+        firebaseRealtimeDatabase.reference.child("likedproperties")
+            .child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
     firebaseRealtimeDatabaseReference.setValue("true")
     propertiesLikedByUser.add(property)
     areThereAnyLikedPropertiesToShow.value = propertiesLikedByUser.isNotEmpty().toString()
 }
 
 fun unlikeProperty(property: PropertyModelPackage) {
-    val propertyID: String = property.id.replace('/', '_').replace('.', '_').replace('#', '_').replace('$', '_').replace('[', '_').replace(']', '_')
+    val propertyID: String =
+        property.id.replace('/', '_').replace('.', '_').replace('#', '_').replace('$', '_')
+            .replace('[', '_').replace(']', '_')
     val firebaseRealtimeDatabase = FirebaseDatabase.getInstance()
-    val firebaseRealtimeDatabaseReference = firebaseRealtimeDatabase.reference.child("likedproperties").child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
+    val firebaseRealtimeDatabaseReference =
+        firebaseRealtimeDatabase.reference.child("likedproperties")
+            .child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(propertyID)
     firebaseRealtimeDatabaseReference.setValue("false")
     propertiesLikedByUser.remove(property)
     areThereAnyLikedPropertiesToShow.value = propertiesLikedByUser.isNotEmpty().toString()
