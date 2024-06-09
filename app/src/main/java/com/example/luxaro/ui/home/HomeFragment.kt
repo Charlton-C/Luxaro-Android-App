@@ -80,15 +80,21 @@ class HomeFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 LuxaroTheme {
-                    when (areThereAnyPropertiesToShow.value){
+                    when (areThereAnyPropertiesToShow.value) {
                         "true" -> {
                             DisplayProperties(properties = propertiesAvailable)
                         }
+
                         "false" -> {
-                            DisplayNoProperties(R.string.no_properties_to_show, R.string.try_checking_again_later)
+                            DisplayNoProperties(
+                                R.string.no_properties_to_show,
+                                R.string.try_checking_again_later
+                            )
                         }
+
                         "" -> {
                             DisplayFullPageLoading()
+                        }
                     }
                 }
             }
@@ -104,13 +110,12 @@ fun DisplayProperties(properties: List<PropertyModelPackage>, modifier: Modifier
     var specificPropertyToDisplay by remember { mutableStateOf(PropertyModelPackage()) }
 
     // To handel back button clicks
-    BackHandler (
+    BackHandler(
         enabled = (displayContactUs or displayMoreInfo)
     ) {
-        if (displayContactUs){
+        if (displayContactUs) {
             displayContactUs = false
-        }
-        else if (displayMoreInfo){
+        } else if (displayMoreInfo) {
             displayMoreInfo = false
         }
     }
@@ -144,7 +149,7 @@ fun DisplayProperties(properties: List<PropertyModelPackage>, modifier: Modifier
                     .fillMaxHeight()
                     .background(Color.Black.copy(alpha = 0.5f))
                     .verticalScroll(rememberScrollState()),
-            ){
+            ) {
                 Button(
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
                     shape = RoundedCornerShape(0.dp),
@@ -156,10 +161,11 @@ fun DisplayProperties(properties: List<PropertyModelPackage>, modifier: Modifier
                         displayMoreInfo = false
                     },
                 ) {}
-                Column(modifier = modifier
-                    .padding(14.dp, 20.dp)
-                    .fillMaxWidth()
-                    .align(Alignment.Center),
+                Column(
+                    modifier = modifier
+                        .padding(14.dp, 20.dp)
+                        .fillMaxWidth()
+                        .align(Alignment.Center),
                 )
                 {
                     DisplaySpecificPropertyDetailsCard(
@@ -196,10 +202,11 @@ fun DisplayProperties(properties: List<PropertyModelPackage>, modifier: Modifier
                         displayContactUs = false
                     }
                 ) {}
-                Column(modifier = modifier
-                    .padding(30.dp, 20.dp)
-                    .fillMaxWidth()
-                    .align(Alignment.Center),
+                Column(
+                    modifier = modifier
+                        .padding(30.dp, 20.dp)
+                        .fillMaxWidth()
+                        .align(Alignment.Center),
                 )
                 {
                     DisplaySpecificPropertyContactCard(property = specificPropertyToDisplay)
@@ -210,26 +217,31 @@ fun DisplayProperties(properties: List<PropertyModelPackage>, modifier: Modifier
 }
 
 @Composable
-fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> Unit, modifier: Modifier = Modifier) {
+fun CreatePropertyCard(
+    property: PropertyModelPackage,
+    onCardClickAction: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val likedText = remember { mutableStateOf(R.string.like) }
     val favoriteIcon = remember { mutableStateOf(R.drawable.baseline_favorite_border_24) }
-    if(property.liked.value){
+    if (property.liked.value) {
         likedText.value = R.string.unlike
         favoriteIcon.value = R.drawable.baseline_favorite_24
-    }
-    else{
+    } else {
         likedText.value = R.string.like
         favoriteIcon.value = R.drawable.baseline_favorite_border_24
     }
-    Card(modifier = modifier
-        .padding(20.dp, 12.dp)
-        .fillMaxWidth()
-        .clickable { onCardClickAction() },
+    Card(
+        modifier = modifier
+            .padding(20.dp, 12.dp)
+            .fillMaxWidth()
+            .clickable { onCardClickAction() },
         border = BorderStroke(1.dp, LocalCustomColors.current.previewCardBorderStrokeColor),
         colors = CardDefaults.cardColors(
             containerColor = LocalCustomColors.current.previewCardBackground,
             contentColor = LocalCustomColors.current.previewCardTextColor
-        )) {
+        )
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(property.image)
@@ -248,9 +260,10 @@ fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> 
                 .fillMaxWidth()
                 .fillMaxHeight(),
         ) {
-            Column(modifier = modifier
-                .fillMaxWidth(.85f)
-                .fillMaxHeight()
+            Column(
+                modifier = modifier
+                    .fillMaxWidth(.85f)
+                    .fillMaxHeight()
             ) {
                 Text(
                     text = property.title,
@@ -274,10 +287,9 @@ fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> 
                 IconButton(
                     onClick = {
                         property.liked.value = !property.liked.value
-                        if(property.liked.value){
+                        if (property.liked.value) {
                             likeProperty(property = property)
-                        }
-                        else{
+                        } else {
                             unlikeProperty(property = property)
                         }
                     },
@@ -302,14 +314,18 @@ fun CreatePropertyCard(property: PropertyModelPackage, onCardClickAction: () -> 
 }
 
 @Composable
-fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardClickAction: () -> Unit, onContactUsClickAction: () -> Unit, modifier: Modifier = Modifier){
+fun DisplaySpecificPropertyDetailsCard(
+    property: PropertyModelPackage,
+    onCardClickAction: () -> Unit,
+    onContactUsClickAction: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val likedText = remember { mutableStateOf(R.string.like) }
     val favoriteIcon = remember { mutableStateOf(R.drawable.baseline_favorite_border_24) }
-    if(property.liked.value){
+    if (property.liked.value) {
         likedText.value = R.string.unlike
         favoriteIcon.value = R.drawable.baseline_favorite_24
-    }
-    else{
+    } else {
         likedText.value = R.string.like
         favoriteIcon.value = R.drawable.baseline_favorite_border_24
     }
@@ -366,10 +382,9 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
                     .align(Alignment.CenterVertically),
                 onClick = {
                     property.liked.value = !property.liked.value
-                    if(property.liked.value){
+                    if (property.liked.value) {
                         likeProperty(property = property)
-                    }
-                    else{
+                    } else {
                         unlikeProperty(property = property)
                     }
                 },
@@ -400,7 +415,11 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
         )
         Spacer(modifier = modifier.height(15.dp))
         Text(
-            text = property.currencysymbol+String.format(Locale.getDefault(), "%,.2f", property.price.toFloat()),
+            text = property.currencysymbol + String.format(
+                Locale.getDefault(),
+                "%,.2f",
+                property.price.toFloat()
+            ),
             modifier = modifier
                 .align(alignment = Alignment.CenterHorizontally)
                 .padding(20.dp, 0.dp),
@@ -426,16 +445,21 @@ fun DisplaySpecificPropertyDetailsCard(property: PropertyModelPackage, onCardCli
 }
 
 @Composable
-fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier: Modifier = Modifier){
+fun DisplaySpecificPropertyContactCard(
+    property: PropertyModelPackage,
+    modifier: Modifier = Modifier
+) {
     val localContext = LocalContext.current
     val inquiryOnText = stringResource(id = R.string.inquiry_on)
-    Card(modifier = modifier
+    Card(
+        modifier = modifier
             .padding(bottom = 62.dp),
         border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardBorderStrokeColor),
         colors = CardDefaults.cardColors(
             containerColor = LocalCustomColors.current.contactUsCardBackground,
             contentColor = LocalCustomColors.current.contactUsCardButtonTextColor
-        )) {
+        )
+    ) {
         Spacer(modifier = modifier.height(45.dp))
         Column(modifier = modifier.align(Alignment.CenterHorizontally)) {
             Button(
@@ -453,7 +477,10 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
-                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
+                border = BorderStroke(
+                    1.dp,
+                    LocalCustomColors.current.contactUsCardButtonBorderStrokeColor
+                ),
             ) {
                 Text(
                     text = stringResource(id = R.string.call_us),
@@ -477,7 +504,12 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                         .putExtra(Intent.EXTRA_EMAIL, arrayOf(property.emailaddress))
                         .putExtra(Intent.EXTRA_SUBJECT, inquiryOnText + " " + property.title)
                         .putExtra(Intent.EXTRA_TEXT, inquiryOnText + " " + property.title)
-                    localContext.startActivity(Intent.createChooser(intent, localContext.getString(R.string.choose_an_email_client)))
+                    localContext.startActivity(
+                        Intent.createChooser(
+                            intent,
+                            localContext.getString(R.string.choose_an_email_client)
+                        )
+                    )
                 },
                 shape = RoundedCornerShape(6.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.contactUsCardButtonBackground),
@@ -485,7 +517,10 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
-                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
+                border = BorderStroke(
+                    1.dp,
+                    LocalCustomColors.current.contactUsCardButtonBorderStrokeColor
+                ),
             ) {
                 Text(
                     text = stringResource(id = R.string.email_us),
@@ -517,7 +552,10 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
-                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
+                border = BorderStroke(
+                    1.dp,
+                    LocalCustomColors.current.contactUsCardButtonBorderStrokeColor
+                ),
             ) {
                 Text(
                     text = stringResource(id = R.string.text_us),
@@ -536,11 +574,16 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
             Spacer(modifier = modifier.height(35.dp))
             Button(
                 onClick = {
-                    localContext.startActivity(Intent(
-                        Intent.ACTION_VIEW, Uri.parse(
-                            String.format("https://api.whatsapp.com/send?phone=%s&text=%s",
-                                property.phonenumber, inquiryOnText + " " + property.title)
-                        )))
+                    localContext.startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW, Uri.parse(
+                                String.format(
+                                    "https://api.whatsapp.com/send?phone=%s&text=%s",
+                                    property.phonenumber, inquiryOnText + " " + property.title
+                                )
+                            )
+                        )
+                    )
                 },
                 shape = RoundedCornerShape(6.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = LocalCustomColors.current.contactUsCardWhatsappButtonBackground),
@@ -548,7 +591,10 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
                     .fillMaxWidth()
                     .height(42.dp)
                     .padding(25.dp, 0.dp),
-                border = BorderStroke(1.dp, LocalCustomColors.current.contactUsCardButtonBorderStrokeColor),
+                border = BorderStroke(
+                    1.dp,
+                    LocalCustomColors.current.contactUsCardButtonBorderStrokeColor
+                ),
             ) {
                 Text(
                     text = stringResource(id = R.string.whatsapp),
@@ -571,17 +617,23 @@ fun DisplaySpecificPropertyContactCard(property: PropertyModelPackage, modifier:
 
 
 @Composable
-fun DisplayNoProperties(messegeOneResource: Int, messegeTwoResource: Int, modifier: Modifier = Modifier) {
-    Column(verticalArrangement = Arrangement.Center,
+fun DisplayNoProperties(
+    messageOneResource: Int,
+    messageTwoResource: Int,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .padding(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 58.dp)
             .fillMaxWidth()
             .fillMaxHeight()
-            .verticalScroll(rememberScrollState()))
+            .verticalScroll(rememberScrollState())
+    )
     {
         Text(
-            text = stringResource(id = messegeOneResource),
+            text = stringResource(id = messageOneResource),
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 24.sp,
@@ -589,7 +641,7 @@ fun DisplayNoProperties(messegeOneResource: Int, messegeTwoResource: Int, modifi
         )
         Spacer(modifier = modifier.height(15.dp))
         Text(
-            text = stringResource(id = messegeTwoResource),
+            text = stringResource(id = messageTwoResource),
             modifier = modifier
                 .padding(20.dp, 0.dp),
             fontSize = 20.sp,
@@ -599,14 +651,16 @@ fun DisplayNoProperties(messegeOneResource: Int, messegeTwoResource: Int, modifi
 }
 
 @Composable
-fun DisplayFullPageLoading(modifier: Modifier = Modifier){
-    Column(verticalArrangement = Arrangement.Center,
+fun DisplayFullPageLoading(modifier: Modifier = Modifier) {
+    Column(
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .padding(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 58.dp)
             .fillMaxWidth()
             .fillMaxHeight()
-            .verticalScroll(rememberScrollState()))
+            .verticalScroll(rememberScrollState())
+    )
     {
         CircularProgressIndicator(color = LocalCustomColors.current.windowLoadingAnimationColor)
     }
