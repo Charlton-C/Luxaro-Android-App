@@ -42,7 +42,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp" >
+            android:layout_marginEnd="30dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextEmailAddressInput"
@@ -78,7 +78,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
-            app:passwordToggleEnabled="true" >
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextPasswordInput"
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="70dp"
-            android:gravity="center" >
+            android:gravity="center">
 
             <Button
                 android:id="@+id/logInButton"
@@ -116,8 +116,8 @@
                 style="@style/ProgressBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:indeterminate="true" />
+                android:indeterminate="true"
+                android:visibility="gone" />
 
         </LinearLayout>
 

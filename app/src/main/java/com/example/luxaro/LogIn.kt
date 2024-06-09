@@ -34,32 +34,48 @@ class LogIn : AppCompatActivity() {
                 showLoggingInAnimation(true)
                 // Check if the user has an account
                 auth.fetchSignInMethodsForEmail(email).addOnSuccessListener {
-                    if (it.signInMethods!!.size > 0){
+                    if (it.signInMethods!!.size > 0) {
                         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
                             showLoggingInAnimation(false)
                             startActivity(Intent(this@LogIn, MainActivity::class.java))
                             finish()
-                        }.addOnFailureListener {it2 ->
-                            when (it2){
+                        }.addOnFailureListener { it2 ->
+                            when (it2) {
                                 is FirebaseAuthInvalidCredentialsException -> {
-                                    binding.editTextTextPasswordLayout.error = resources.getString(R.string.wrong_password)
+                                    binding.editTextTextPasswordLayout.error =
+                                        resources.getString(R.string.wrong_password)
                                 }
+
                                 else -> {
-                                    Toast.makeText(this@LogIn, resources.getString(R.string.log_in_failed), Toast.LENGTH_SHORT).show()
-                                    Log.e(resources.getString(R.string.firebase_auth_error_colon_log_in), it2.toString())
+                                    Toast.makeText(
+                                        this@LogIn,
+                                        resources.getString(R.string.log_in_failed),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    Log.e(
+                                        resources.getString(R.string.firebase_auth_error_colon_log_in),
+                                        it2.toString()
+                                    )
                                 }
                             }
                             showLoggingInAnimation(false)
                         }
-                    }
-                    else {
-                        binding.editTextTextEmailAddressLayout.error = resources.getString(R.string.no_user_found)
+                    } else {
+                        binding.editTextTextEmailAddressLayout.error =
+                            resources.getString(R.string.no_user_found)
                         showLoggingInAnimation(false)
                     }
                 }.addOnFailureListener {
                     showLoggingInAnimation(false)
-                    Toast.makeText(this@LogIn, resources.getString(R.string.log_in_failed), Toast.LENGTH_SHORT).show()
-                    Log.e(resources.getString(R.string.firebase_auth_error_colon_log_in), it.toString())
+                    Toast.makeText(
+                        this@LogIn,
+                        resources.getString(R.string.log_in_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.e(
+                        resources.getString(R.string.firebase_auth_error_colon_log_in),
+                        it.toString()
+                    )
                 }
             }
         }
@@ -70,34 +86,37 @@ class LogIn : AppCompatActivity() {
         }
     }
 
-    private fun checkAllFields():Boolean{
+    private fun checkAllFields(): Boolean {
         val email = binding.editTextTextEmailAddressInput.text.toString()
-        if (email == ""){
-            binding.editTextTextEmailAddressLayout.error = resources.getString(R.string.please_enter_your_email)
+        if (email == "") {
+            binding.editTextTextEmailAddressLayout.error =
+                resources.getString(R.string.please_enter_your_email)
             return false
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            binding.editTextTextEmailAddressLayout.error = resources.getString(R.string.please_enter_your_email_using_the_correct_format)
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.editTextTextEmailAddressLayout.error =
+                resources.getString(R.string.please_enter_your_email_using_the_correct_format)
             return false
         }
-        if (binding.editTextTextPasswordInput.text.toString() == ""){
-            binding.editTextTextPasswordLayout.error = resources.getString(R.string.please_enter_your_password)
+        if (binding.editTextTextPasswordInput.text.toString() == "") {
+            binding.editTextTextPasswordLayout.error =
+                resources.getString(R.string.please_enter_your_password)
             binding.editTextTextPasswordLayout.errorIconDrawable = null
             return false
         }
         return true
     }
 
-    private fun showLoggingInAnimation(show: Boolean){
+    private fun showLoggingInAnimation(show: Boolean) {
         // Start logging in animation
-        if (show){
+        if (show) {
             binding.logInButton.visibility = View.GONE
             binding.logInProgressBar.visibility = View.VISIBLE
             binding.signUpButton.isEnabled = false
             binding.signUpButton.isClickable = false
         }
         // End logging in animation
-        else{
+        else {
             binding.logInButton.visibility = View.VISIBLE
             binding.logInProgressBar.visibility = View.GONE
             binding.signUpButton.isEnabled = true
