@@ -114,13 +114,12 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
     val interactionSource = remember { MutableInteractionSource() }
 
     // To handel back button clicks
-    BackHandler (
+    BackHandler(
         enabled = (displayContactUs or displayMoreInfo)
     ) {
-        if (displayContactUs){
+        if (displayContactUs) {
             displayContactUs = false
-        }
-        else if (displayMoreInfo){
+        } else if (displayMoreInfo) {
             displayMoreInfo = false
         }
     }
@@ -162,14 +161,20 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                         .focusRequester(focusRequester),
                     interactionSource = interactionSource,
                     singleLine = true,
-                    textStyle = LocalTextStyle.current.copy(color = LocalCustomColors.current.searchTextFieldTextColor, fontSize = 18.sp),
+                    textStyle = LocalTextStyle.current.copy(
+                        color = LocalCustomColors.current.searchTextFieldTextColor,
+                        fontSize = 18.sp
+                    ),
                     cursorBrush = SolidColor(LocalCustomColors.current.searchTextFieldCursorColor),
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                     visualTransformation = VisualTransformation.None,
                     keyboardActions = KeyboardActions(onSearch = {
                         if (!TextUtils.isEmpty(searchText.value.trim()) and (searchText.value != searchTextOld.value)) {
                             displaySearchingForPropertiesAnimation = true
-                            searchResults.value = search(searchText.value.filterNot { it.isWhitespace() }, propertiesAvailable)
+                            searchResults.value = search(
+                                searchText.value.filterNot { it.isWhitespace() },
+                                propertiesAvailable
+                            )
                             displaySearchingForPropertiesAnimation = false
                             // Check if searchResults is empty and if it is display no search results found message
                             displayNoPropertiesFound = searchResults.value.isEmpty()
@@ -214,45 +219,65 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedTextColor = LocalCustomColors.current.searchTextFieldTextColor,
                             unfocusedTextColor = LocalCustomColors.current.searchTextFieldTextColor,
-                            disabledTextColor = LocalCustomColors.current.searchTextFieldTextColor.copy(alpha = 0.5f),
+                            disabledTextColor = LocalCustomColors.current.searchTextFieldTextColor.copy(
+                                alpha = 0.5f
+                            ),
                             errorTextColor = LocalCustomColors.current.searchTextFieldTextColor,
                             focusedContainerColor = LocalCustomColors.current.searchTextFieldBackground,
                             unfocusedContainerColor = LocalCustomColors.current.searchTextFieldBackground,
-                            disabledContainerColor = LocalCustomColors.current.searchTextFieldBackground.copy(alpha = 0.5f),
+                            disabledContainerColor = LocalCustomColors.current.searchTextFieldBackground.copy(
+                                alpha = 0.5f
+                            ),
                             errorContainerColor = LocalCustomColors.current.searchTextFieldBackground,
                             cursorColor = LocalCustomColors.current.searchTextFieldCursorColor,
                             errorCursorColor = LocalCustomColors.current.searchTextFieldCursorColor,
                             focusedBorderColor = LocalCustomColors.current.searchTextFieldBorderColor,
                             unfocusedBorderColor = LocalCustomColors.current.searchTextFieldBorderColor,
-                            disabledBorderColor = LocalCustomColors.current.searchTextFieldBorderColor.copy(alpha = 0.5f),
+                            disabledBorderColor = LocalCustomColors.current.searchTextFieldBorderColor.copy(
+                                alpha = 0.5f
+                            ),
                             errorBorderColor = LocalCustomColors.current.searchTextFieldBorderColor,
                             focusedLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
                             unfocusedLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
-                            disabledLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor.copy(alpha = 0.5f),
+                            disabledLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor.copy(
+                                alpha = 0.5f
+                            ),
                             errorLeadingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
                             focusedTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
                             unfocusedTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
-                            disabledTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor.copy(alpha = 0.5f),
+                            disabledTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor.copy(
+                                alpha = 0.5f
+                            ),
                             errorTrailingIconColor = LocalCustomColors.current.searchTextFieldIconColor,
                             focusedLabelColor = LocalCustomColors.current.searchTextFieldTextColor,
                             unfocusedLabelColor = LocalCustomColors.current.searchTextFieldTextColor,
-                            disabledLabelColor = LocalCustomColors.current.searchTextFieldTextColor.copy(alpha = 0.5f),
+                            disabledLabelColor = LocalCustomColors.current.searchTextFieldTextColor.copy(
+                                alpha = 0.5f
+                            ),
                             errorLabelColor = LocalCustomColors.current.searchTextFieldTextColor,
                             focusedPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor,
                             unfocusedPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor,
-                            disabledPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor.copy(alpha = 0.5f),
+                            disabledPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor.copy(
+                                alpha = 0.5f
+                            ),
                             errorPlaceholderColor = LocalCustomColors.current.searchTextFieldTextColor,
                             focusedSupportingTextColor = LocalCustomColors.current.searchTextFieldTextColor,
                             unfocusedSupportingTextColor = LocalCustomColors.current.searchTextFieldTextColor,
-                            disabledSupportingTextColor = LocalCustomColors.current.searchTextFieldTextColor.copy(0.5f),
+                            disabledSupportingTextColor = LocalCustomColors.current.searchTextFieldTextColor.copy(
+                                0.5f
+                            ),
                             errorSupportingTextColor = LocalCustomColors.current.searchTextFieldTextColor,
                             focusedPrefixColor = LocalCustomColors.current.searchTextFieldTextColor,
                             unfocusedPrefixColor = LocalCustomColors.current.searchTextFieldTextColor,
-                            disabledPrefixColor = LocalCustomColors.current.searchTextFieldTextColor.copy(0.5f),
+                            disabledPrefixColor = LocalCustomColors.current.searchTextFieldTextColor.copy(
+                                0.5f
+                            ),
                             errorPrefixColor = LocalCustomColors.current.searchTextFieldTextColor,
                             focusedSuffixColor = LocalCustomColors.current.searchTextFieldTextColor,
                             unfocusedSuffixColor = LocalCustomColors.current.searchTextFieldTextColor,
-                            disabledSuffixColor = LocalCustomColors.current.searchTextFieldTextColor.copy(0.5f),
+                            disabledSuffixColor = LocalCustomColors.current.searchTextFieldTextColor.copy(
+                                0.5f
+                            ),
                             errorSuffixColor = LocalCustomColors.current.searchTextFieldTextColor,
                         ),
                     )
@@ -261,7 +286,10 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                     onClick = {
                         if (!TextUtils.isEmpty(searchText.value.trim()) and (searchText.value != searchTextOld.value)) {
                             displaySearchingForPropertiesAnimation = true
-                            searchResults.value = search(searchText.value.filterNot { it.isWhitespace() }, propertiesAvailable)
+                            searchResults.value = search(
+                                searchText.value.filterNot { it.isWhitespace() },
+                                propertiesAvailable
+                            )
                             displaySearchingForPropertiesAnimation = false
                             // Check if searchResults is empty and if it is display no search results found message
                             displayNoPropertiesFound = searchResults.value.isEmpty()
@@ -279,7 +307,7 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                     )
                 }
             }
-            if(searchResults.value.isNotEmpty() and !displaySearchingForPropertiesAnimation and !displayNoPropertiesFound) {
+            if (searchResults.value.isNotEmpty() and !displaySearchingForPropertiesAnimation and !displayNoPropertiesFound) {
                 Column(
                     modifier = modifier
                         .fillMaxWidth()
@@ -295,11 +323,14 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
                         })
                     }
                 }
-            }
-            else if (displaySearchingForPropertiesAnimation) {
-                CircularProgressIndicator(modifier = modifier.align(Alignment.CenterHorizontally).padding(top = 50.dp), color = colorResource(id = R.color.rich_electric_blue))
-            }
-            else{
+            } else if (displaySearchingForPropertiesAnimation) {
+                CircularProgressIndicator(
+                    modifier = modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 50.dp),
+                    color = LocalCustomColors.current.windowLoadingAnimationColor
+                )
+            } else {
                 DisplayNoPropertiesFound(displayNoPropertiesFound)
             }
 
@@ -380,25 +411,44 @@ fun DisplaySearch(modifier: Modifier = Modifier) {
     }
 }
 
-fun search(searchString: String, propertiesToSearch: List<PropertyModelPackage>): SnapshotStateList<PropertyModelPackage> {
+fun search(
+    searchString: String,
+    propertiesToSearch: List<PropertyModelPackage>
+): SnapshotStateList<PropertyModelPackage> {
     val propertiesFound = mutableStateListOf<PropertyModelPackage>()
-    for (propertyOriginal in propertiesToSearch){
-        if(!propertiesFound.contains(propertyOriginal) and propertyOriginal.title.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true)) {
+    for (propertyOriginal in propertiesToSearch) {
+        if (!propertiesFound.contains(propertyOriginal) and propertyOriginal.title.contains(
+                searchString.filterNot { it.isWhitespace() },
+                ignoreCase = true
+            )
+        ) {
             propertiesFound.add(propertyOriginal)
         }
     }
-    for (propertyOriginal in propertiesToSearch){
-        if(!propertiesFound.contains(propertyOriginal) and propertyOriginal.shortdescription.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true)) {
+    for (propertyOriginal in propertiesToSearch) {
+        if (!propertiesFound.contains(propertyOriginal) and propertyOriginal.shortdescription.contains(
+                searchString.filterNot { it.isWhitespace() },
+                ignoreCase = true
+            )
+        ) {
             propertiesFound.add(propertyOriginal)
         }
     }
-    for (propertyOriginal in propertiesToSearch){
-        if(!propertiesFound.contains(propertyOriginal) and propertyOriginal.longdescription.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true)) {
+    for (propertyOriginal in propertiesToSearch) {
+        if (!propertiesFound.contains(propertyOriginal) and propertyOriginal.longdescription.contains(
+                searchString.filterNot { it.isWhitespace() },
+                ignoreCase = true
+            )
+        ) {
             propertiesFound.add(propertyOriginal)
         }
     }
-    for (propertyOriginal in propertiesToSearch){
-        if(!propertiesFound.contains(propertyOriginal) and propertyOriginal.price.contains(searchString.filterNot { it.isWhitespace() }, ignoreCase = true)) {
+    for (propertyOriginal in propertiesToSearch) {
+        if (!propertiesFound.contains(propertyOriginal) and propertyOriginal.price.contains(
+                searchString.filterNot { it.isWhitespace() },
+                ignoreCase = true
+            )
+        ) {
             propertiesFound.add(propertyOriginal)
         }
     }
@@ -406,7 +456,11 @@ fun search(searchString: String, propertiesToSearch: List<PropertyModelPackage>)
 }
 
 @Composable
-fun CreateSearchResultCard(property: PropertyModelPackage, onCardClickAction: () -> Unit, modifier: Modifier = Modifier) {
+fun CreateSearchResultCard(
+    property: PropertyModelPackage,
+    onCardClickAction: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
         onClick = { onCardClickAction() },
         modifier = modifier
@@ -457,7 +511,7 @@ fun CreateSearchResultCard(property: PropertyModelPackage, onCardClickAction: ()
 
 @Composable
 fun DisplayNoPropertiesFound(displayThisPage: Boolean, modifier: Modifier = Modifier) {
-    if(displayThisPage) {
+    if (displayThisPage) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
